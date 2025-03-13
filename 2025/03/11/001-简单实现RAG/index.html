@@ -21,23 +21,25 @@
   
     <meta name="description" content="基于 Ollama 的 RAG 系统预备知识  RAG 系统架构  简化实现：  Embedding 模型使用的是 Ollama 提供的文本转向量服务； 向量库使用的是 faiss 而不是 PostgreSQL； LLM 模型使用的也是 Ollama 提供的大模型服务。  Ollama 模型下载CMD： 12ollama pull nomic-embed-text:latest # 文本转向量的模">
 <meta property="og:type" content="article">
-<meta property="og:title" content="简单实现 RAG">
+<meta property="og:title" content="【新手入门】简单实现 RAG">
 <meta property="og:url" content="http://example.com/2025/03/11/001-%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0RAG/index.html">
 <meta property="og:site_name" content="文心晋意">
 <meta property="og:description" content="基于 Ollama 的 RAG 系统预备知识  RAG 系统架构  简化实现：  Embedding 模型使用的是 Ollama 提供的文本转向量服务； 向量库使用的是 faiss 而不是 PostgreSQL； LLM 模型使用的也是 Ollama 提供的大模型服务。  Ollama 模型下载CMD： 12ollama pull nomic-embed-text:latest # 文本转向量的模">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/images/001.png">
+<meta property="og:image" content="http://example.com/2025/03/11/001-%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0RAG/1.png">
+<meta property="og:image" content="http://example.com/2025/03/11/001-%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0RAG/3.png">
+<meta property="og:image" content="http://example.com/2025/03/11/001-%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0RAG/4.png">
 <meta property="article:published_time" content="2025-03-11T11:52:33.000Z">
-<meta property="article:modified_time" content="2025-03-13T05:52:20.276Z">
+<meta property="article:modified_time" content="2025-03-13T09:57:11.927Z">
 <meta property="article:author" content="文晋">
 <meta property="article:tag" content="RAG">
 <meta property="article:tag" content="Ollama">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/images/001.png">
+<meta name="twitter:image" content="http://example.com/2025/03/11/001-%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0RAG/1.png">
   
   
   
-  <title>简单实现 RAG - 文心晋意</title>
+  <title>【新手入门】简单实现 RAG - 文心晋意</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -71,6 +73,10 @@
 
 
 
+  
+<link rel="stylesheet" href="/css/background.css">
+
+
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
@@ -91,13 +97,13 @@
 <meta name="generator" content="Hexo 7.3.0"></head>
 
 
-<body>
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
   
 
   <header>
     
 
-<div class="header-inner" style="height: 100vh;">
+<div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -197,13 +203,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/images/001.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">简单实现 RAG</span>
+            <span id="subtitle">【新手入门】简单实现 RAG</span>
           
         </div>
 
@@ -251,10 +257,6 @@
       </div>
 
       
-        <div class="scroll-down-bar">
-          <i class="iconfont icon-arrowdown"></i>
-        </div>
-      
     </div>
   </div>
 </div>
@@ -278,7 +280,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">简单实现 RAG</h1>
+            <h1 id="seo-header">【新手入门】简单实现 RAG</h1>
             
             
               <div class="markdown-body">
@@ -328,6 +330,27 @@ E6 错误代码：E6 错误代码表示电路板故障。这可能是由于电�
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%96%B0%E6%89%8B%E5%85%A5%E9%97%A8/" class="category-chain-item">新手入门</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
   
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
@@ -346,7 +369,7 @@ E6 错误代码：E6 错误代码表示电路板故障。这可能是由于电�
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>简单实现 RAG</div>
+      <div>【新手入门】简单实现 RAG</div>
       <div>http://example.com/2025/03/11/001-简单实现RAG/</div>
     </div>
     <div class="license-meta">
@@ -391,9 +414,9 @@ E6 错误代码：E6 错误代码表示电路板故障。这可能是由于电�
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/03/11/007-%E5%9F%BA%E4%BA%8EHexo%E7%9A%84%E4%B8%BB%E9%A2%98Fluid%E6%90%AD%E5%BB%BAGithub%E5%8D%9A%E5%AE%A2/" title="基于 Hexo 的主题 Fluid 搭建 Github 博客">
+                      <a href="/2025/03/11/007-%E5%9F%BA%E4%BA%8EHexo%E7%9A%84%E4%B8%BB%E9%A2%98Fluid%E6%90%AD%E5%BB%BAGithub%E5%8D%9A%E5%AE%A2/" title="【新手入门】基于 Hexo 的主题 Fluid 搭建 Github 博客">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">基于 Hexo 的主题 Fluid 搭建 Github 博客</span>
+                        <span class="hidden-mobile">【新手入门】基于 Hexo 的主题 Fluid 搭建 Github 博客</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -401,8 +424,8 @@ E6 错误代码：E6 错误代码表示电路板故障。这可能是由于电�
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/11/13/009-%E4%BB%8E%E9%9B%B6%E5%AD%A6%E4%B9%A0Web%E5%BC%80%E5%8F%91/" title="从零学习 Web 开发">
-                        <span class="hidden-mobile">从零学习 Web 开发</span>
+                      <a href="/2024/11/13/009-%E4%BB%8E%E9%9B%B6%E5%AD%A6%E4%B9%A0Web%E5%BC%80%E5%8F%91/" title="【新手入门】从零学习 Web 开发">
+                        <span class="hidden-mobile">【新手入门】从零学习 Web 开发</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -642,6 +665,10 @@ E6 错误代码：E6 错误代码表示电路板故障。这可能是由于电�
 
 
 
+  
+<script src="/js/background.js"></script>
+
+
 
 <!-- 主题的启动项，将它保持在最底部 -->
 <!-- the boot of the theme, keep it at the bottom -->
@@ -653,5 +680,5 @@ E6 错误代码：E6 错误代码表示电路板故障。这可能是由于电�
   <noscript>
     <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
   </noscript>
-</body>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><!-- hexo injector body_end end --></body>
 </html>
