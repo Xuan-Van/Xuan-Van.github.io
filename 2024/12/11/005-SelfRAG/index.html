@@ -9,7 +9,7 @@
   <meta charset="UTF-8">
 
   <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <link rel="icon" href="/img/%E5%9B%BE%E6%A0%87.png">
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -19,17 +19,17 @@
   <meta name="author" content="文晋">
   <meta name="keywords" content="">
   
-    <meta name="description" content=".snpfcvbcxwfp{}   模型结构：   参考项目：AkariAsai&#x2F;self-rag 1 安装环境配置： 12345cd selfragconda env create -f environment.ymlconda activate selfragconda install -c conda-forge faiss-gpupip install scipy #">
+    <meta name="description" content=".rvuhfyykrycf{}   模型结构：   参考项目：AkariAsai&#x2F;self-rag 1 安装环境配置： 12345cd selfragconda env create -f environment.ymlconda activate selfragconda install -c conda-forge faiss-gpupip install scipy #">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【论文复现】SelfRAG">
 <meta property="og:url" content="http://example.com/2024/12/11/005-SelfRAG/index.html">
 <meta property="og:site_name" content="文心晋意">
-<meta property="og:description" content=".snpfcvbcxwfp{}   模型结构：   参考项目：AkariAsai&#x2F;self-rag 1 安装环境配置： 12345cd selfragconda env create -f environment.ymlconda activate selfragconda install -c conda-forge faiss-gpupip install scipy #">
+<meta property="og:description" content=".rvuhfyykrycf{}   模型结构：   参考项目：AkariAsai&#x2F;self-rag 1 安装环境配置： 12345cd selfragconda env create -f environment.ymlconda activate selfragconda install -c conda-forge faiss-gpupip install scipy #">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2024/12/11/005-SelfRAG/1.png">
 <meta property="og:image" content="http://example.com/2024/12/11/005-SelfRAG/2.jpg">
 <meta property="article:published_time" content="2024-12-11T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-03-14T06:32:47.631Z">
+<meta property="article:modified_time" content="2025-03-14T13:49:04.098Z">
 <meta property="article:author" content="文晋">
 <meta property="article:tag" content="RAG">
 <meta property="article:tag" content="LLM">
@@ -80,7 +80,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":3},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -272,6 +272,76 @@
   <div class="row nomargin-x">
     <div class="side-col d-none d-lg-block col-lg-2">
       
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="论文复现"
+        id="heading-66e8bf332a517a083e96361293e1d726" role="tab" data-toggle="collapse" href="#collapse-66e8bf332a517a083e96361293e1d726"
+        aria-expanded="true"
+      >
+        论文复现
+        <span class="list-group-count">(3)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-66e8bf332a517a083e96361293e1d726"
+           role="tabpanel" aria-labelledby="heading-66e8bf332a517a083e96361293e1d726">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2025/02/26/006-InstructRAG/" title="【论文复现】InstructRAG"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【论文复现】InstructRAG</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/12/11/005-SelfRAG/" title="【论文复现】SelfRAG"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">【论文复现】SelfRAG</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/11/06/003-Trajectory-Transformer/" title="【论文复现】Trajectory Transformer 脚本学习"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【论文复现】Trajectory Transformer 脚本学习</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
 
     </div>
 
@@ -285,7 +355,7 @@
               <div class="markdown-body">
                 
                 <figure style="text-align: center;">
-    <style>.snpfcvbcxwfp{}</style><img src="/2024/12/11/005-SelfRAG/1.png" srcset="/img/loading.gif" lazyload class="snpfcvbcxwfp">
+    <style>.rvuhfyykrycf{}</style><img src="/2024/12/11/005-SelfRAG/1.png" srcset="/img/loading.gif" lazyload class="rvuhfyykrycf">
 </figure>
 
 <p>模型结构：</p>
@@ -598,7 +668,7 @@ Model prediction: [Relevant]Overfitting occurs when a statistical model has too 
 
   <script>
   Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
-    mermaid.initialize({});
+    mermaid.initialize({"theme":"default"});
 
     Fluid.utils.listenDOMLoaded(function() {
       Fluid.events.registerRefreshCallback(function() {
