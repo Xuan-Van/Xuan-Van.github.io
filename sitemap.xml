@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xuan-van.github.io/2024/11/20/004-Git%E5%AD%A6%E4%B9%A0/</loc>
+    
+    <lastmod>2025-03-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://xuan-van.github.io/2025/03/11/007-%E5%9F%BA%E4%BA%8EHexo%E7%9A%84%E4%B8%BB%E9%A2%98Fluid%E6%90%AD%E5%BB%BAGithub%E5%8D%9A%E5%AE%A2/</loc>
     
     <lastmod>2025-03-15</lastmod>
@@ -299,15 +308,6 @@
   </url>
   
   <url>
-    <loc>http://xuan-van.github.io/2024/11/20/004-Git%E5%AD%A6%E4%B9%A0/</loc>
-    
-    <lastmod>2025-03-14</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://xuan-van.github.io/2024/11/06/003-Trajectory-Transformer/</loc>
     
     <lastmod>2025-03-14</lastmod>
@@ -377,20 +377,6 @@
   </url>
   
   <url>
-    <loc>http://xuan-van.github.io/tags/Git/</loc>
-    <lastmod>2025-03-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://xuan-van.github.io/tags/GitHub/</loc>
-    <lastmod>2025-03-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://xuan-van.github.io/tags/Linux/</loc>
     <lastmod>2025-03-15</lastmod>
     <changefreq>weekly</changefreq>
@@ -399,6 +385,20 @@
   
   <url>
     <loc>http://xuan-van.github.io/tags/MySQL/</loc>
+    <lastmod>2025-03-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://xuan-van.github.io/tags/Git/</loc>
+    <lastmod>2025-03-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://xuan-van.github.io/tags/GitHub/</loc>
     <lastmod>2025-03-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -427,6 +427,20 @@
   
   <url>
     <loc>http://xuan-van.github.io/tags/Java/</loc>
+    <lastmod>2025-03-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://xuan-van.github.io/tags/Hadoop/</loc>
+    <lastmod>2025-03-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://xuan-van.github.io/tags/Spark/</loc>
     <lastmod>2025-03-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -462,20 +476,6 @@
   
   <url>
     <loc>http://xuan-van.github.io/tags/R/</loc>
-    <lastmod>2025-03-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://xuan-van.github.io/tags/Hadoop/</loc>
-    <lastmod>2025-03-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://xuan-van.github.io/tags/Spark/</loc>
     <lastmod>2025-03-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
