@@ -19,6 +19,7 @@ let themetoggleBtn = document.querySelector("#color-toggle-btn");
 themetoggleBtn && themetoggleBtn.addEventListener("click", () => {
     setBackgroundImage(getThemeMode())
 }), initBackground(), resetBannerStyles();
+
 let resizeTimeout;
 window.addEventListener("resize", () => {
     clearTimeout(resizeTimeout), resizeTimeout = setTimeout(() => {
