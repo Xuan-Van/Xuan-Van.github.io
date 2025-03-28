@@ -19,27 +19,27 @@
   <meta name="author" content="文晋">
   <meta name="keywords" content="">
   
-    <meta name="description" content=".vxlimdctsebb{}   模型结构：   参考项目：JannerM&#x2F;trajectory-transformer azure在 Azure 上运行和管理实验的脚本集合。 file10_nvidia.json用于在 Linux 系统上配置 NVIDIA GPU 的驱动程序和相关设置，指定 NVIDIA 驱动程序的加载顺序和参数。 Xdummy用于在没有物理显示器的情况下">
+    <meta name="description" content=".qukfcjzblxbj{}   模型结构：   参考项目：JannerM&#x2F;trajectory-transformer，详情参见：Xuan-Van&#x2F;trajectory-transformer。 azure在 Azure 上运行和管理实验的脚本集合。 file10_nvidia.json用于在 Linux 系统上配置 NVIDIA GPU 的驱动程序和相关设置，指">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【论文复现】Trajectory Transformer 脚本学习">
-<meta property="og:url" content="http://xuan-van.github.io/%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0/%E3%80%90%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E3%80%91trajectory-transformer-%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:title" content="【代码拆解】Trajectory Transformer">
+<meta property="og:url" content="http://xuan-van.github.io/%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0/%E3%80%90%E4%BB%A3%E7%A0%81%E6%8B%86%E8%A7%A3%E3%80%91trajectory-transformer/index.html">
 <meta property="og:site_name" content="文心晋意">
-<meta property="og:description" content=".vxlimdctsebb{}   模型结构：   参考项目：JannerM&#x2F;trajectory-transformer azure在 Azure 上运行和管理实验的脚本集合。 file10_nvidia.json用于在 Linux 系统上配置 NVIDIA GPU 的驱动程序和相关设置，指定 NVIDIA 驱动程序的加载顺序和参数。 Xdummy用于在没有物理显示器的情况下">
+<meta property="og:description" content=".qukfcjzblxbj{}   模型结构：   参考项目：JannerM&#x2F;trajectory-transformer，详情参见：Xuan-Van&#x2F;trajectory-transformer。 azure在 Azure 上运行和管理实验的脚本集合。 file10_nvidia.json用于在 Linux 系统上配置 NVIDIA GPU 的驱动程序和相关设置，指">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://xuan-van.github.io/%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0/%E3%80%90%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E3%80%91trajectory-transformer-%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0/1.png">
-<meta property="og:image" content="http://xuan-van.github.io/%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0/%E3%80%90%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E3%80%91trajectory-transformer-%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0/2.jpg">
-<meta property="og:image" content="http://xuan-van.github.io/%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0/%E3%80%90%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E3%80%91trajectory-transformer-%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0/3.png">
+<meta property="og:image" content="http://xuan-van.github.io/%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0/%E3%80%90%E4%BB%A3%E7%A0%81%E6%8B%86%E8%A7%A3%E3%80%91trajectory-transformer/1.png">
+<meta property="og:image" content="http://xuan-van.github.io/%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0/%E3%80%90%E4%BB%A3%E7%A0%81%E6%8B%86%E8%A7%A3%E3%80%91trajectory-transformer/2.jpg">
+<meta property="og:image" content="http://xuan-van.github.io/%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0/%E3%80%90%E4%BB%A3%E7%A0%81%E6%8B%86%E8%A7%A3%E3%80%91trajectory-transformer/3.png">
 <meta property="article:published_time" content="2024-11-06T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-03-14T13:48:40.785Z">
+<meta property="article:modified_time" content="2025-03-28T06:41:10.152Z">
 <meta property="article:author" content="文晋">
 <meta property="article:tag" content="RL">
 <meta property="article:tag" content="Transformer">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://xuan-van.github.io/%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0/%E3%80%90%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E3%80%91trajectory-transformer-%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0/1.png">
+<meta name="twitter:image" content="http://xuan-van.github.io/%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0/%E3%80%90%E4%BB%A3%E7%A0%81%E6%8B%86%E8%A7%A3%E3%80%91trajectory-transformer/1.png">
   
   
   
-  <title>【论文复现】Trajectory Transformer 脚本学习 - 文心晋意</title>
+  <title>【代码拆解】Trajectory Transformer - 文心晋意</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -209,7 +209,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">【论文复现】Trajectory Transformer 脚本学习</span>
+            <span id="subtitle">【代码拆解】Trajectory Transformer</span>
           
         </div>
 
@@ -307,6 +307,15 @@
     
       
       
+        <a href="/%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0/%E3%80%90%E4%BB%A3%E7%A0%81%E6%8B%86%E8%A7%A3%E3%80%91trajectory-transformer/" title="【代码拆解】Trajectory Transformer"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">【代码拆解】Trajectory Transformer</span>
+        </a>
+      
+    
+      
+      
         <a href="/%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0/%E3%80%90%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E3%80%91hipporag-hipporag-2/" title="【论文复现】HippoRAG &amp; HippoRAG 2"
            class="list-group-item list-group-item-action
            ">
@@ -332,15 +341,6 @@
         </a>
       
     
-      
-      
-        <a href="/%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0/%E3%80%90%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E3%80%91trajectory-transformer-%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0/" title="【论文复现】Trajectory Transformer 脚本学习"
-           class="list-group-item list-group-item-action
-           active">
-          <span class="category-post">【论文复现】Trajectory Transformer 脚本学习</span>
-        </a>
-      
-    
   </div>
 
         
@@ -359,19 +359,19 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">【论文复现】Trajectory Transformer 脚本学习</h1>
+            <h1 id="seo-header">【代码拆解】Trajectory Transformer</h1>
             
             
               <div class="markdown-body">
                 
                 <figure style="text-align: center;">
-    <style>.vxlimdctsebb{}</style><img src="/%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0/%E3%80%90%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E3%80%91trajectory-transformer-%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0/1.png" srcset="/img/loading.gif" lazyload class="vxlimdctsebb">
+    <style>.qukfcjzblxbj{}</style><img src="/%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0/%E3%80%90%E4%BB%A3%E7%A0%81%E6%8B%86%E8%A7%A3%E3%80%91trajectory-transformer/1.png" srcset="/img/loading.gif" lazyload class="qukfcjzblxbj">
 </figure>
 
 <p>模型结构：</p>
-<img src="/%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0/%E3%80%90%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E3%80%91trajectory-transformer-%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0/2.jpg" srcset="/img/loading.gif" lazyload class="">
+<img src="/%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0/%E3%80%90%E4%BB%A3%E7%A0%81%E6%8B%86%E8%A7%A3%E3%80%91trajectory-transformer/2.jpg" srcset="/img/loading.gif" lazyload class="">
 
-<p>参考项目：<a target="_blank" rel="noopener" href="https://github.com/JannerM/trajectory-transformer">JannerM&#x2F;trajectory-transformer</a></p>
+<p>参考项目：<a target="_blank" rel="noopener" href="https://github.com/JannerM/trajectory-transformer">JannerM&#x2F;trajectory-transformer</a>，详情参见：<a target="_blank" rel="noopener" href="https://github.com/Xuan-Van/trajectory-transformer">Xuan-Van&#x2F;trajectory-transformer</a>。</p>
 <h1 id="azure"><a href="#azure" class="headerlink" title="azure"></a>azure</h1><p>在 Azure 上运行和管理实验的脚本集合。</p>
 <h2 id="file"><a href="#file" class="headerlink" title="file"></a>file</h2><h3 id="10-nvidia-json"><a href="#10-nvidia-json" class="headerlink" title="10_nvidia.json"></a>10_nvidia.json</h3><p>用于在 Linux 系统上配置 NVIDIA GPU 的驱动程序和相关设置，指定 NVIDIA 驱动程序的加载顺序和参数。</p>
 <h3 id="Xdummy"><a href="#Xdummy" class="headerlink" title="Xdummy"></a>Xdummy</h3><p>用于在没有物理显示器的情况下运行图形应用程序，通过模拟一个虚拟的显示器来支持图形应用程序的运行。</p>
@@ -435,7 +435,7 @@
 </ol>
 <h1 id="plotting"><a href="#plotting" class="headerlink" title="plotting"></a>plotting</h1><p>一个用于分析和可视化离线强化学习实验结果的工具集。</p>
 <h2 id="bar-png"><a href="#bar-png" class="headerlink" title="bar.png"></a>bar.png</h2><p><strong>作用</strong>：展示离线强化学习实验的平均归一化回报。<br><strong>功能</strong>：通过柱状图展示不同算法在多个环境中的平均性能。</p>
-<img src="/%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0/%E3%80%90%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E3%80%91trajectory-transformer-%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0/3.png" srcset="/img/loading.gif" lazyload class="">
+<img src="/%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0/%E3%80%90%E4%BB%A3%E7%A0%81%E6%8B%86%E8%A7%A3%E3%80%91trajectory-transformer/3.png" srcset="/img/loading.gif" lazyload class="">
 
 <h2 id="plot-py"><a href="#plot-py" class="headerlink" title="plot.py"></a>plot.py</h2><p><strong>作用</strong>：生成并保存柱状图，展示不同算法的平均归一化回报。<br><strong>功能</strong>：从 <code>scores.py</code> 中读取数据，使用 Matplotlib 绘制柱状图，并保存为 PNG 文件。</p>
 <table>
@@ -2112,8 +2112,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>【论文复现】Trajectory Transformer 脚本学习</div>
-      <div>http://xuan-van.github.io/论文复现/【论文复现】trajectory-transformer-脚本学习/</div>
+      <div>【代码拆解】Trajectory Transformer</div>
+      <div>http://xuan-van.github.io/论文复现/【代码拆解】trajectory-transformer/</div>
     </div>
     <div class="license-meta">
       
