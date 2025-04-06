@@ -42,14 +42,14 @@ http://xuan-van.github.io/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E6%95%B
 http://xuan-van.github.io/
 http://xuan-van.github.io/tags/RAG/
 http://xuan-van.github.io/tags/LLM/
-http://xuan-van.github.io/tags/Git/
-http://xuan-van.github.io/tags/GitHub/
 http://xuan-van.github.io/tags/RL/
 http://xuan-van.github.io/tags/Transformer/
 http://xuan-van.github.io/tags/Hexo/
 http://xuan-van.github.io/tags/Fluid/
 http://xuan-van.github.io/tags/Linux/
 http://xuan-van.github.io/tags/MySQL/
+http://xuan-van.github.io/tags/Git/
+http://xuan-van.github.io/tags/GitHub/
 http://xuan-van.github.io/tags/HTML/
 http://xuan-van.github.io/tags/CSS/
 http://xuan-van.github.io/tags/JavaScript/
