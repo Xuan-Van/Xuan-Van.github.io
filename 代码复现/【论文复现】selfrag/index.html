@@ -19,17 +19,17 @@
   <meta name="author" content="文晋">
   <meta name="keywords" content="">
   
-    <meta name="description" content=".kkegsybcnptk{}   模型结构：   参考项目：AkariAsai&#x2F;self-rag 1 安装环境配置： 12345cd selfragconda env create -f environment.ymlconda activate selfragconda install -c conda-forge faiss-gpupip install scipy #">
+    <meta name="description" content=".qcrwqqnuelty{}   模型结构：   参考项目：AkariAsai&#x2F;self-rag 1 安装环境配置： 12345cd selfragconda env create -f environment.ymlconda activate selfragconda install -c conda-forge faiss-gpupip install scipy #">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【论文复现】SelfRAG">
 <meta property="og:url" content="http://xuan-van.github.io/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/%E3%80%90%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E3%80%91selfrag/index.html">
 <meta property="og:site_name" content="文心晋意">
-<meta property="og:description" content=".kkegsybcnptk{}   模型结构：   参考项目：AkariAsai&#x2F;self-rag 1 安装环境配置： 12345cd selfragconda env create -f environment.ymlconda activate selfragconda install -c conda-forge faiss-gpupip install scipy #">
+<meta property="og:description" content=".qcrwqqnuelty{}   模型结构：   参考项目：AkariAsai&#x2F;self-rag 1 安装环境配置： 12345cd selfragconda env create -f environment.ymlconda activate selfragconda install -c conda-forge faiss-gpupip install scipy #">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://xuan-van.github.io/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/%E3%80%90%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E3%80%91selfrag/1.png">
 <meta property="og:image" content="http://xuan-van.github.io/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/%E3%80%90%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E3%80%91selfrag/2.jpg">
 <meta property="article:published_time" content="2024-12-11T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-03-28T06:51:26.359Z">
+<meta property="article:modified_time" content="2025-04-08T11:19:04.737Z">
 <meta property="article:author" content="文晋">
 <meta property="article:tag" content="RAG">
 <meta property="article:tag" content="LLM">
@@ -348,10 +348,10 @@
     
       
       
-        <a href="/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/%E3%80%90%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E3%80%91hipporag-hipporag-2/" title="【论文复现】HippoRAG &amp; HippoRAG 2"
+        <a href="/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/%E3%80%90%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E3%80%91hipporag-hipporag2/" title="【论文复现】HippoRAG &amp; HippoRAG2"
            class="list-group-item list-group-item-action
            ">
-          <span class="category-post">【论文复现】HippoRAG &amp; HippoRAG 2</span>
+          <span class="category-post">【论文复现】HippoRAG &amp; HippoRAG2</span>
         </a>
       
     
@@ -397,7 +397,7 @@
               <div class="markdown-body">
                 
                 <figure style="text-align: center;">
-    <style>.kkegsybcnptk{}</style><img src="/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/%E3%80%90%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E3%80%91selfrag/1.png" srcset="/img/loading.gif" lazyload class="kkegsybcnptk">
+    <style>.qcrwqqnuelty{}</style><img src="/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/%E3%80%90%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E3%80%91selfrag/1.png" srcset="/img/loading.gif" lazyload class="qcrwqqnuelty">
 </figure>
 
 <p>模型结构：</p>
@@ -476,7 +476,7 @@ Model prediction: [Relevant]Overfitting occurs when a statistical model has too 
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;fp16&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;true&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
 
 <p>由于使用了 LoRA 技术，因此需要 <code>python merge.py</code> 来合并模型权重：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> shutil<br><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> AutoModelForCausalLM, AutoTokenizer<br><span class="hljs-keyword">from</span> peft <span class="hljs-keyword">import</span> PeftModel<br><br>base_model_path = <span class="hljs-string">&quot;../model/llama2-7b-hf&quot;</span>  <span class="hljs-comment"># 基础模型路径</span><br>lora_model_path = <span class="hljs-string">&quot;model/train_selfrag_7b&quot;</span>  <span class="hljs-comment"># LoRA 微调后的模型路径</span><br>output_dir = <span class="hljs-string">&quot;model/reproduce_selfrag_7b&quot;</span>  <span class="hljs-comment"># 合并后的模型输出路径</span><br><br>base_model = AutoModelForCausalLM.from_pretrained(base_model_path) <span class="hljs-comment"># 加载基础模型</span><br>lora_tokenizer = AutoTokenizer.from_pretrained(lora_model_path) <span class="hljs-comment"># 加载 LoRA 分词器</span><br>base_model.resize_token_embeddings(<span class="hljs-built_in">len</span>(lora_tokenizer)) <span class="hljs-comment"># 扩展模型的词汇表</span><br>lora_model = PeftModel.from_pretrained(base_model, lora_model_path) <span class="hljs-comment"># 加载 LoRA 适配器</span><br>model = lora_model.merge_and_unload() <span class="hljs-comment"># 合并模型</span><br><br>model.save_pretrained(output_dir, safe_serialization=<span class="hljs-literal">False</span>) <span class="hljs-comment"># 保存合并后的模型</span><br>lora_tokenizer.save_pretrained(output_dir) <span class="hljs-comment"># 保存扩展后的分词器</span><br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Model merging and saving completed successfully!&quot;</span>)<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> AutoModelForCausalLM, AutoTokenizer<br><span class="hljs-keyword">from</span> peft <span class="hljs-keyword">import</span> PeftModel<br><br>base_model_path = <span class="hljs-string">&quot;../model/llama2-7b-hf&quot;</span>  <span class="hljs-comment"># 基础模型路径</span><br>lora_model_path = <span class="hljs-string">&quot;model/train_selfrag_7b&quot;</span>  <span class="hljs-comment"># LoRA 微调后的模型路径</span><br>output_dir = <span class="hljs-string">&quot;model/reproduce_selfrag_7b&quot;</span>  <span class="hljs-comment"># 合并后的模型输出路径</span><br><br>base_model = AutoModelForCausalLM.from_pretrained(base_model_path) <span class="hljs-comment"># 加载基础模型</span><br>lora_tokenizer = AutoTokenizer.from_pretrained(lora_model_path) <span class="hljs-comment"># 加载 LoRA 分词器</span><br>base_model.resize_token_embeddings(<span class="hljs-built_in">len</span>(lora_tokenizer)) <span class="hljs-comment"># 扩展模型的词汇表</span><br>lora_model = PeftModel.from_pretrained(base_model, lora_model_path) <span class="hljs-comment"># 加载 LoRA 适配器</span><br>model = lora_model.merge_and_unload() <span class="hljs-comment"># 合并模型</span><br><br>model.save_pretrained(output_dir, safe_serialization=<span class="hljs-literal">False</span>) <span class="hljs-comment"># 保存合并后的模型</span><br>lora_tokenizer.save_pretrained(output_dir) <span class="hljs-comment"># 保存扩展后的分词器</span><br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Model merging and saving completed successfully!&quot;</span>)<br></code></pre></td></tr></table></figure>
 
 <h1 id="5-推理"><a href="#5-推理" class="headerlink" title="5 推理"></a>5 推理</h1><p>对于任务评估，下载数据集 <a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1TLKhWjez63H4uBtgCxyoyJsZi-IMgnDb/view?usp=share_link">eval_data.zip</a>，每个文件都已经附带了检索到的文档，因此，如果不想在推理中运行检索器，可以简单地在所有 <code>contexts</code> 中加载检索到的文件。使用附录 7.5 中的命令来评估相应的数据集。</p>
 <h2 id="5-1-短格式"><a href="#5-1-短格式" class="headerlink" title="5.1 短格式"></a>5.1 短格式</h2><p>通常只为简短的生成任务检索一次，因此提供了一个易于运行的评估脚本，该脚本利用了 Contriever 离线检索的预先给定的文档。<code>--world_size</code> 可使用多个 GPU 进行推理。<code>--mode</code> 有三种参数（两个 QA 数据集会用到）：</p>
