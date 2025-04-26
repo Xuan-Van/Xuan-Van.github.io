@@ -19,12 +19,12 @@
   <meta name="author" content="文晋">
   <meta name="keywords" content="">
   
-    <meta name="description" content=".kwdegncvnjdn{}   参考项目：llama3-from-scratch、图解llama架构 解读源码实现 完整结构：Llama 内部结构拆解 1 准备工作1.1 创建虚拟环境12345conda create -n llama3 python&#x3D;3.10conda activate llama3pip install sentencepiece tiktoken torch">
+    <meta name="description" content=".tboncnknkoym{}   参考项目：naklecha&#x2F;llama3-from-scratch、图解llama架构 解读源码实现 完整结构：Llama 内部结构拆解 1 准备工作1.1 创建虚拟环境12345conda create -n llama3 python&#x3D;3.10conda activate llama3pip install sentencepiece t">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【模型复现】从零实现 Llama3">
 <meta property="og:url" content="http://xuan-van.github.io/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/%E3%80%90%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0%E3%80%91%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0-llama3/index.html">
 <meta property="og:site_name" content="文心晋意">
-<meta property="og:description" content=".kwdegncvnjdn{}   参考项目：llama3-from-scratch、图解llama架构 解读源码实现 完整结构：Llama 内部结构拆解 1 准备工作1.1 创建虚拟环境12345conda create -n llama3 python&#x3D;3.10conda activate llama3pip install sentencepiece tiktoken torch">
+<meta property="og:description" content=".tboncnknkoym{}   参考项目：naklecha&#x2F;llama3-from-scratch、图解llama架构 解读源码实现 完整结构：Llama 内部结构拆解 1 准备工作1.1 创建虚拟环境12345conda create -n llama3 python&#x3D;3.10conda activate llama3pip install sentencepiece t">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://xuan-van.github.io/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/%E3%80%90%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0%E3%80%91%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0-llama3/1.png">
 <meta property="og:image" content="http://xuan-van.github.io/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/%E3%80%90%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0%E3%80%91%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0-llama3/2.png">
@@ -40,7 +40,7 @@
 <meta property="og:image" content="http://xuan-van.github.io/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/%E3%80%90%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0%E3%80%91%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0-llama3/12.png">
 <meta property="og:image" content="http://xuan-van.github.io/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/%E3%80%90%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0%E3%80%91%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0-llama3/13.png">
 <meta property="article:published_time" content="2025-04-01T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-04-06T07:23:59.992Z">
+<meta property="article:modified_time" content="2025-04-26T10:05:29.629Z">
 <meta property="article:author" content="文晋">
 <meta property="article:tag" content="LLM">
 <meta name="twitter:card" content="summary_large_image">
@@ -326,7 +326,7 @@
         aria-expanded="true"
       >
         代码复现
-        <span class="list-group-count">(6)</span>
+        <span class="list-group-count">(7)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
@@ -392,6 +392,15 @@
         </a>
       
     
+      
+      
+        <a href="/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/%E3%80%90%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E3%80%91xrag/" title="【论文复现】xRAG"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【论文复现】xRAG</span>
+        </a>
+      
+    
   </div>
 
         
@@ -416,16 +425,16 @@
               <div class="markdown-body">
                 
                 <figure style="text-align: center;">
-    <style>.kwdegncvnjdn{}</style><img src="/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/%E3%80%90%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0%E3%80%91%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0-llama3/1.png" srcset="/img/loading.gif" lazyload class="kwdegncvnjdn">
+    <style>.tboncnknkoym{}</style><img src="/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/%E3%80%90%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0%E3%80%91%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0-llama3/1.png" srcset="/img/loading.gif" lazyload class="tboncnknkoym">
 </figure>
 
-<p>参考项目：<a target="_blank" rel="noopener" href="https://github.com/naklecha/llama3-from-scratch">llama3-from-scratch</a>、<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1nK4y1F7x7/?share_source=copy_web&vd_source=050f6c168e089d7aca0de02effbc8434">图解llama架构 解读源码实现</a></p>
-<p>完整结构：<a href="http://xuan-van.github.io/images/llama.svg">Llama 内部结构拆解</a></p>
+<p>参考项目：<a target="_blank" rel="noopener" href="https://github.com/naklecha/llama3-from-scratch">naklecha&#x2F;llama3-from-scratch</a>、<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1nK4y1F7x7/?share_source=copy_web&vd_source=050f6c168e089d7aca0de02effbc8434">图解llama架构 解读源码实现</a></p>
+<p>完整结构：<a href="https://xuan-van.github.io/images/llama.svg">Llama 内部结构拆解</a></p>
 <h1 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1 准备工作"></a>1 准备工作</h1><h2 id="1-1-创建虚拟环境"><a href="#1-1-创建虚拟环境" class="headerlink" title="1.1 创建虚拟环境"></a>1.1 创建虚拟环境</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">conda create -n llama3 python=<span class="hljs-number">3.10</span><br>conda activate llama3<br>pip install sentencepiece tiktoken torch blobfile matplotlib ipykernel<br>python -m ipykernel install --user --name llama3<br>jupyter kernelspec <span class="hljs-built_in">list</span><br></code></pre></td></tr></table></figure>
 
 <h2 id="1-2-下载模型文件"><a href="#1-2-下载模型文件" class="headerlink" title="1.2 下载模型文件"></a>1.2 下载模型文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">huggingface-cli download meta-llama/Meta-Llama-3-8B --include <span class="hljs-string">&quot;original/*&quot;</span> --token Your_token --local-dir model/Llama-3-8B<br></code></pre></td></tr></table></figure>
 
-<h2 id="1-3-创建分词器"><a href="#1-3-创建分词器" class="headerlink" title="1.3 创建分词器"></a>1.3 创建分词器</h2><p>使用 BPE 分词器，来自 <a target="_blank" rel="noopener" href="https://github.com/karpathy/minbpe">minbpe</a>：</p>
+<h2 id="1-3-创建分词器"><a href="#1-3-创建分词器" class="headerlink" title="1.3 创建分词器"></a>1.3 创建分词器</h2><p>使用 BPE 分词器，来自 <a target="_blank" rel="noopener" href="https://github.com/karpathy/minbpe">karpathy&#x2F;minbpe</a>：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pathlib <span class="hljs-keyword">import</span> Path<br><span class="hljs-keyword">import</span> tiktoken<br><span class="hljs-keyword">from</span> tiktoken.load <span class="hljs-keyword">import</span> load_tiktoken_bpe<br><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">import</span> json<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><br><span class="hljs-comment"># 加载分词器模型路径</span><br>tokenizer_path = <span class="hljs-string">&quot;../model/Llama-3-8B/original/tokenizer.model&quot;</span><br>special_tokens = [<br>            <span class="hljs-string">&quot;&lt;|begin_of_text|&gt;&quot;</span>,<br>            <span class="hljs-string">&quot;&lt;|end_of_text|&gt;&quot;</span>,<br>            <span class="hljs-string">&quot;&lt;|reserved_special_token_0|&gt;&quot;</span>,<br>            <span class="hljs-string">&quot;&lt;|reserved_special_token_1|&gt;&quot;</span>,<br>            <span class="hljs-string">&quot;&lt;|reserved_special_token_2|&gt;&quot;</span>,<br>            <span class="hljs-string">&quot;&lt;|reserved_special_token_3|&gt;&quot;</span>,<br>            <span class="hljs-string">&quot;&lt;|start_header_id|&gt;&quot;</span>,<br>            <span class="hljs-string">&quot;&lt;|end_header_id|&gt;&quot;</span>,<br>            <span class="hljs-string">&quot;&lt;|reserved_special_token_4|&gt;&quot;</span>,<br>            <span class="hljs-string">&quot;&lt;|eot_id|&gt;&quot;</span>, <span class="hljs-comment"># 对话结束标记</span><br>        ] + [<span class="hljs-string">f&quot;&lt;|reserved_special_token_<span class="hljs-subst">&#123;i&#125;</span>|&gt;&quot;</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">5</span>, <span class="hljs-number">256</span> - <span class="hljs-number">5</span>)]<br>        <br><span class="hljs-comment"># 加载BPE（Byte Pair Encoding）分词器的合并表</span><br>mergeable_ranks = load_tiktoken_bpe(tokenizer_path)<br><span class="hljs-comment"># 创建tiktoken编码器实例</span><br>tokenizer = tiktoken.Encoding(<br>    name=Path(tokenizer_path).name, <span class="hljs-comment"># 使用文件名作为编码器名称</span><br>    pat_str=<span class="hljs-string">r&quot;(?i:&#x27;s|&#x27;t|&#x27;re|&#x27;ve|&#x27;m|&#x27;ll|&#x27;d)|[^\r\n\p&#123;L&#125;\p&#123;N&#125;]?\p&#123;L&#125;+|\p&#123;N&#125;&#123;1,3&#125;| ?[^\s\p&#123;L&#125;\p&#123;N&#125;]+[\r\n]*|\s*[\r\n]+|\s+(?!\S)|\s+&quot;</span>, <span class="hljs-comment"># 定义分词的正则表达式模式</span><br>    mergeable_ranks=mergeable_ranks, <span class="hljs-comment"># 设置BPE合并表</span><br>    special_tokens=&#123;token: <span class="hljs-built_in">len</span>(mergeable_ranks) + i <span class="hljs-keyword">for</span> i, token <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(special_tokens)&#125;, <span class="hljs-comment"># 设置特殊token及其对应的ID</span><br>)<br><br><span class="hljs-comment"># 测试分词器编码和解码功能</span><br>tokenizer.decode(tokenizer.encode(<span class="hljs-string">&quot;hello world!&quot;</span>))<br></code></pre></td></tr></table></figure>
 <br/>
 
