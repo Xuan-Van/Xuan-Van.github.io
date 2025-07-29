@@ -1,3 +1,4 @@
+http://xuan-van.github.io/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/%E3%80%90%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E3%80%91retrieval-head/
 http://xuan-van.github.io/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/%E3%80%90%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E3%80%91selfelicit/
 http://xuan-van.github.io/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/%E3%80%90%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E3%80%91redeep/
 http://xuan-van.github.io/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/%E3%80%90%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E3%80%91xrag/
@@ -49,15 +50,15 @@ http://xuan-van.github.io/tags/RAG/
 http://xuan-van.github.io/tags/LLM/
 http://xuan-van.github.io/tags/RL/
 http://xuan-van.github.io/tags/Transformer/
-http://xuan-van.github.io/tags/Git/
-http://xuan-van.github.io/tags/GitHub/
+http://xuan-van.github.io/tags/Linux/
+http://xuan-van.github.io/tags/MySQL/
 http://xuan-van.github.io/tags/Hexo/
 http://xuan-van.github.io/tags/Fluid/
 http://xuan-van.github.io/tags/HTML/
 http://xuan-van.github.io/tags/CSS/
 http://xuan-van.github.io/tags/JavaScript/
-http://xuan-van.github.io/tags/Linux/
-http://xuan-van.github.io/tags/MySQL/
+http://xuan-van.github.io/tags/Git/
+http://xuan-van.github.io/tags/GitHub/
 http://xuan-van.github.io/tags/Java/
 http://xuan-van.github.io/tags/Hadoop/
 http://xuan-van.github.io/tags/Spark/
@@ -70,7 +71,7 @@ http://xuan-van.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/
 http://xuan-van.github.io/tags/C/
 http://xuan-van.github.io/categories/%E6%96%B0%E6%89%8B%E5%85%A5%E9%97%A8/
 http://xuan-van.github.io/categories/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/
+http://xuan-van.github.io/categories/%E9%9A%8F%E7%AC%94/
 http://xuan-van.github.io/categories/Java/
 http://xuan-van.github.io/categories/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/
 http://xuan-van.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/
-http://xuan-van.github.io/categories/%E9%9A%8F%E7%AC%94/

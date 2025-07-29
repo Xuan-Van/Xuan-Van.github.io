@@ -19,12 +19,12 @@
   <meta name="author" content="文晋">
   <meta name="keywords" content="">
   
-    <meta name="description" content=".wlrjbghnjdwy{}   参考项目：naklecha&#x2F;llama3-from-scratch、图解llama架构 解读源码实现 完整结构：Llama 内部结构拆解 1 准备工作1.1 创建虚拟环境12345conda create -n llama3 python&#x3D;3.10conda activate llama3pip install sentencepiece t">
+    <meta name="description" content=".orrrorggvldk{}   参考项目：naklecha&#x2F;llama3-from-scratch、图解llama架构 解读源码实现 完整结构：Llama 内部结构拆解 1 准备工作1.1 创建虚拟环境12345conda create -n llama3 python&#x3D;3.10conda activate llama3pip install sentencepiece t">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【模型复现】从零实现 Llama3">
 <meta property="og:url" content="http://xuan-van.github.io/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/%E3%80%90%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0%E3%80%91%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0-llama3/index.html">
 <meta property="og:site_name" content="文心晋意">
-<meta property="og:description" content=".wlrjbghnjdwy{}   参考项目：naklecha&#x2F;llama3-from-scratch、图解llama架构 解读源码实现 完整结构：Llama 内部结构拆解 1 准备工作1.1 创建虚拟环境12345conda create -n llama3 python&#x3D;3.10conda activate llama3pip install sentencepiece t">
+<meta property="og:description" content=".orrrorggvldk{}   参考项目：naklecha&#x2F;llama3-from-scratch、图解llama架构 解读源码实现 完整结构：Llama 内部结构拆解 1 准备工作1.1 创建虚拟环境12345conda create -n llama3 python&#x3D;3.10conda activate llama3pip install sentencepiece t">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://xuan-van.github.io/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/%E3%80%90%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0%E3%80%91%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0-llama3/1.png">
 <meta property="og:image" content="http://xuan-van.github.io/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/%E3%80%90%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0%E3%80%91%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0-llama3/2.png">
@@ -326,7 +326,7 @@
         aria-expanded="true"
       >
         代码复现
-        <span class="list-group-count">(9)</span>
+        <span class="list-group-count">(10)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
@@ -394,6 +394,15 @@
     
       
       
+        <a href="/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/%E3%80%90%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E3%80%91retrieval-head/" title="【论文复现】Retrieval Head"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【论文复现】Retrieval Head</span>
+        </a>
+      
+    
+      
+      
         <a href="/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/%E3%80%90%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E3%80%91selfelicit/" title="【论文复现】SelfElicit"
            class="list-group-item list-group-item-action
            ">
@@ -443,7 +452,7 @@
               <div class="markdown-body">
                 
                 <figure style="text-align: center;">
-    <style>.wlrjbghnjdwy{}</style><img src="/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/%E3%80%90%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0%E3%80%91%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0-llama3/1.png" srcset="/img/loading.gif" lazyload class="wlrjbghnjdwy">
+    <style>.orrrorggvldk{}</style><img src="/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/%E3%80%90%E6%A8%A1%E5%9E%8B%E5%A4%8D%E7%8E%B0%E3%80%91%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0-llama3/1.png" srcset="/img/loading.gif" lazyload class="orrrorggvldk">
 </figure>
 
 <p>参考项目：<a target="_blank" rel="noopener" href="https://github.com/naklecha/llama3-from-scratch">naklecha&#x2F;llama3-from-scratch</a>、<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1nK4y1F7x7/?share_source=copy_web&vd_source=050f6c168e089d7aca0de02effbc8434">图解llama架构 解读源码实现</a></p>
