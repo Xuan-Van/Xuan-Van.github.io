@@ -1,0 +1,108 @@
+<svg width="1109" height="293" viewBox="0 255 1117 301" xmlns="http://www.w3.org/2000/svg" data-v-950cb303="" id="markmap_svg" class="markmap markmap_svg"><style>.markmap {
+  --markmap-max-width: 9999px;
+  --markmap-a-color: #0097e6;
+  --markmap-a-hover-color: #00a8ff;
+  --markmap-code-bg: #f0f0f0;
+  --markmap-code-color: #555;
+  --markmap-highlight-bg: #ffeaa7;
+  --markmap-table-border: 1px solid currentColor;
+  --markmap-font: 300 16px/20px sans-serif;
+  --markmap-circle-open-bg: #fff;
+  --markmap-text-color: #333;
+  --markmap-highlight-node-bg: #ff02;
+
+  font: var(--markmap-font);
+  color: var(--markmap-text-color);
+}
+
+  .markmap-link {
+    fill: none;
+  }
+
+  .markmap-node &gt; circle {
+      cursor: pointer;
+    }
+
+  .markmap-foreign {
+    display: inline-block;
+  }
+
+  .markmap-foreign p {
+      margin: 0;
+    }
+
+  .markmap-foreign a {
+      color: var(--markmap-a-color);
+    }
+
+  .markmap-foreign a:hover {
+        color: var(--markmap-a-hover-color);
+      }
+
+  .markmap-foreign code {
+      padding: 0.25em;
+      font-size: calc(1em - 2px);
+      color: var(--markmap-code-color);
+      background-color: var(--markmap-code-bg);
+      border-radius: 2px;
+    }
+
+  .markmap-foreign pre {
+      margin: 0;
+    }
+
+  .markmap-foreign pre &gt; code {
+        display: block;
+      }
+
+  .markmap-foreign del {
+      text-decoration: line-through;
+    }
+
+  .markmap-foreign em {
+      font-style: italic;
+    }
+
+  .markmap-foreign strong {
+      font-weight: bold;
+    }
+
+  .markmap-foreign mark {
+      background: var(--markmap-highlight-bg);
+    }
+
+  .markmap-foreign table,
+    .markmap-foreign th,
+    .markmap-foreign td {
+      border-collapse: collapse;
+      border: var(--markmap-table-border);
+    }
+
+  .markmap-foreign img {
+      display: inline-block;
+    }
+
+  .markmap-foreign svg {
+      fill: currentColor;
+    }
+
+  .markmap-foreign &gt; div {
+      width: var(--markmap-max-width);
+      text-align: left;
+    }
+
+  .markmap-foreign &gt; div &gt; div {
+        display: inline-block;
+      }
+
+  .markmap-highlight rect {
+    fill: var(--markmap-highlight-node-bg);
+  }
+
+.markmap-dark .markmap {
+  --markmap-code-bg: #1a1b26;
+  --markmap-code-color: #ddd;
+  --markmap-circle-open-bg: #444;
+  --markmap-text-color: #eee;
+}
+</style><g transform="translate(0,409) scale(1)"><path class="markmap-link" data-depth="5" data-path="1.2.3.4.5" d="M716,-131.318C756,-131.318,756,-131.365,796,-131.365" stroke-width="1.09375" stroke="rgb(23, 190, 207)"/><path class="markmap-link" data-depth="5" data-path="1.2.3.6.7" d="M738,-84.178C778,-84.178,778,-98.271,818,-98.271" stroke-width="1.09375" stroke="rgb(214, 39, 40)"/><path class="markmap-link" data-depth="5" data-path="1.2.3.6.8" d="M738,-84.178C778,-84.178,778,-70.178,818,-70.178" stroke-width="1.09375" stroke="rgb(148, 103, 189)"/><path class="markmap-link" data-depth="4" data-path="1.2.3.4" d="M499,-107.654C539,-107.654,539,-131.318,579,-131.318" stroke-width="1.1875" stroke="rgb(188, 189, 34)"/><path class="markmap-link" data-depth="4" data-path="1.2.3.6" d="M499,-107.654C539,-107.654,539,-84.178,579,-84.178" stroke-width="1.1875" stroke="rgb(44, 160, 44)"/><path class="markmap-link" data-depth="4" data-path="1.2.9.10" d="M524,-8.615C564,-8.615,564,-50.99,604,-50.99" stroke-width="1.1875" stroke="rgb(227, 119, 194)"/><path class="markmap-link" data-depth="4" data-path="1.2.9.11" d="M524,-8.615C564,-8.615,564,-22.803,604,-22.803" stroke-width="1.1875" stroke="rgb(127, 127, 127)"/><path class="markmap-link" data-depth="4" data-path="1.2.9.12" d="M524,-8.615C564,-8.615,564,5.385,604,5.385" stroke-width="1.1875" stroke="rgb(44, 160, 44)"/><path class="markmap-link" data-depth="4" data-path="1.2.9.13" d="M524,-8.615C564,-8.615,564,33.572,604,33.572" stroke-width="1.1875" stroke="rgb(148, 103, 189)"/><path class="markmap-link" data-depth="3" data-path="1.2.3" d="M262,-57.947C302,-57.947,302,-107.654,342,-107.654" stroke-width="1.375" stroke="rgb(44, 160, 44)"/><path class="markmap-link" data-depth="3" data-path="1.2.9" d="M262,-57.947C302,-57.947,302,-8.615,342,-8.615" stroke-width="1.375" stroke="rgb(140, 86, 75)"/><path class="markmap-link" data-depth="3" data-path="1.14.15" d="M287,81.697C327,81.697,327,24.76,367,24.76" stroke-width="1.375" stroke="rgb(227, 119, 194)"/><path class="markmap-link" data-depth="3" data-path="1.14.16" d="M287,81.697C327,81.697,327,53.135,367,53.135" stroke-width="1.375" stroke="rgb(127, 127, 127)"/><path class="markmap-link" data-depth="3" data-path="1.14.17" d="M287,81.697C327,81.697,327,81.51,367,81.51" stroke-width="1.375" stroke="rgb(188, 189, 34)"/><path class="markmap-link" data-depth="3" data-path="1.14.18" d="M287,81.697C327,81.697,327,109.885,367,109.885" stroke-width="1.375" stroke="rgb(23, 190, 207)"/><path class="markmap-link" data-depth="3" data-path="1.14.19" d="M287,81.697C327,81.697,327,138.26,367,138.26" stroke-width="1.375" stroke="rgb(31, 119, 180)"/><path class="markmap-link" data-depth="2" data-path="1.2" d="M79,12.25C119,12.25,119,-57.947,159,-57.947" stroke-width="1.75" stroke="rgb(255, 127, 14)"/><path class="markmap-link" data-depth="2" data-path="1.14" d="M79,12.25C119,12.25,119,81.697,159,81.697" stroke-width="1.75" stroke="rgb(140, 86, 75)"/><g class="markmap-highlight"/><g data-depth="5" data-path="1.2.3.4.5" class="markmap-node" transform="translate(796, -153.912109375)"><line stroke="#17becf" stroke-width="1.09375" x1="-1" x2="114" y1="22.546875" y2="22.546875"/><foreignObject class="markmap-foreign" x="8" y="0" style="opacity: 1;" width="96" height="22"><div xmlns="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml">成功生成答案</div></div></foreignObject></g><g data-depth="4" data-path="1.2.3.4" class="markmap-node" transform="translate(579, -153.912109375)"><line stroke="#bcbd22" stroke-width="1.1875" x1="-1" x2="139" y1="22.59375" y2="22.59375"/><circle stroke-width="1.5" r="6" stroke="#bcbd22" fill="var(--markmap-circle-open-bg)" cx="137" cy="22.59375"/><foreignObject class="markmap-foreign" x="8" y="0" style="opacity: 1;" width="121" height="22"><div xmlns="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml">Generate answer</div></div></foreignObject></g><g data-depth="5" data-path="1.2.3.6.7" class="markmap-node" transform="translate(818, -120.818359375)"><line stroke="#d62728" stroke-width="1.09375" x1="-1" x2="114" y1="22.546875" y2="22.546875"/><foreignObject class="markmap-foreign" x="8" y="0" style="opacity: 1;" width="96" height="22"><div xmlns="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml">内外知识冲突</div></div></foreignObject></g><g data-depth="5" data-path="1.2.3.6.8" class="markmap-node" transform="translate(818, -92.724609375)"><line stroke="#9467bd" stroke-width="1.09375" x1="-1" x2="290" y1="22.546875" y2="22.546875"/><foreignObject class="markmap-foreign" x="8" y="0" style="opacity: 1;" width="272" height="22"><div xmlns="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml">上下文跨信息整合问题（注意力分散）</div></div></foreignObject></g><g data-depth="4" data-path="1.2.3.6" class="markmap-node" transform="translate(579, -106.771484375)"><line stroke="#2ca02c" stroke-width="1.1875" x1="-1" x2="161" y1="22.59375" y2="22.59375"/><circle stroke-width="1.5" r="6" stroke="#2ca02c" fill="var(--markmap-circle-open-bg)" cx="159" cy="22.59375"/><foreignObject class="markmap-foreign" x="8" y="0" style="opacity: 1;" width="143" height="22"><div xmlns="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml">No generate answer</div></div></foreignObject></g><g data-depth="3" data-path="1.2.3" class="markmap-node" transform="translate(342, -130.341796875)"><line stroke="#2ca02c" stroke-width="1.375" x1="-1" x2="159" y1="22.6875" y2="22.6875"/><circle stroke-width="1.5" r="6" stroke="#2ca02c" fill="var(--markmap-circle-open-bg)" cx="157" cy="22.6875"/><foreignObject class="markmap-foreign" x="8" y="0" style="opacity: 1;" width="141" height="22"><div xmlns="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml">Understand context</div></div></foreignObject></g><g data-depth="4" data-path="1.2.9.10" class="markmap-node" transform="translate(604, -73.583984375)"><line stroke="#e377c2" stroke-width="1.1875" x1="-1" x2="130" y1="22.59375" y2="22.59375"/><foreignObject class="markmap-foreign" x="8" y="0" style="opacity: 1;" width="112" height="22"><div xmlns="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml">上下文长度问题</div></div></foreignObject></g><g data-depth="4" data-path="1.2.9.11" class="markmap-node" transform="translate(604, -45.396484375)"><line stroke="#7f7f7f" stroke-width="1.1875" x1="-1" x2="130" y1="22.59375" y2="22.59375"/><foreignObject class="markmap-foreign" x="8" y="0" style="opacity: 1;" width="112" height="22"><div xmlns="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml">上下文冲突问题</div></div></foreignObject></g><g data-depth="4" data-path="1.2.9.12" class="markmap-node" transform="translate(604, -17.208984375)"><line stroke="#2ca02c" stroke-width="1.1875" x1="-1" x2="130" y1="22.59375" y2="22.59375"/><foreignObject class="markmap-foreign" x="8" y="0" style="opacity: 1;" width="112" height="22"><div xmlns="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml">上下文噪声问题</div></div></foreignObject></g><g data-depth="4" data-path="1.2.9.13" class="markmap-node" transform="translate(604, 10.978515625)"><line stroke="#9467bd" stroke-width="1.1875" x1="-1" x2="162" y1="22.59375" y2="22.59375"/><foreignObject class="markmap-foreign" x="8" y="0" style="opacity: 1;" width="144" height="22"><div xmlns="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml">上下文空间对齐问题</div></div></foreignObject></g><g data-depth="3" data-path="1.2.9" class="markmap-node" transform="translate(342, -31.302734375)"><line stroke="#8c564b" stroke-width="1.375" x1="-1" x2="184" y1="22.6875" y2="22.6875"/><circle stroke-width="1.5" r="6" stroke="#8c564b" fill="var(--markmap-circle-open-bg)" cx="182" cy="22.6875"/><foreignObject class="markmap-foreign" x="8" y="0" style="opacity: 1;" width="166" height="22"><div xmlns="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml">No Understand context</div></div></foreignObject></g><g data-depth="2" data-path="1.2" class="markmap-node" transform="translate(159, -80.822265625)"><line stroke="#ff7f0e" stroke-width="1.75" x1="-1" x2="105" y1="22.875" y2="22.875"/><circle stroke-width="1.5" r="6" stroke="#ff7f0e" fill="var(--markmap-circle-open-bg)" cx="103" cy="22.875"/><foreignObject class="markmap-foreign" x="8" y="0" style="opacity: 1;" width="87" height="22"><div xmlns="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml">Find answer</div></div></foreignObject></g><g data-depth="3" data-path="1.14.15" class="markmap-node" transform="translate(367, 2.072265625)"><line stroke="#e377c2" stroke-width="1.375" x1="-1" x2="114" y1="22.6875" y2="22.6875"/><foreignObject class="markmap-foreign" x="8" y="0" style="opacity: 1;" width="96" height="22"><div xmlns="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml">查询表述问题</div></div></foreignObject></g><g data-depth="3" data-path="1.14.16" class="markmap-node" transform="translate(367, 30.447265625)"><line stroke="#7f7f7f" stroke-width="1.375" x1="-1" x2="114" y1="22.6875" y2="22.6875"/><foreignObject class="markmap-foreign" x="8" y="0" style="opacity: 1;" width="96" height="22"><div xmlns="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml">检索策略问题</div></div></foreignObject></g><g data-depth="3" data-path="1.14.17" class="markmap-node" transform="translate(367, 58.822265625)"><line stroke="#bcbd22" stroke-width="1.375" x1="-1" x2="130" y1="22.6875" y2="22.6875"/><foreignObject class="markmap-foreign" x="8" y="0" style="opacity: 1;" width="112" height="22"><div xmlns="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml">知识库覆盖问题</div></div></foreignObject></g><g data-depth="3" data-path="1.14.18" class="markmap-node" transform="translate(367, 87.197265625)"><line stroke="#17becf" stroke-width="1.375" x1="-1" x2="146" y1="22.6875" y2="22.6875"/><foreignObject class="markmap-foreign" x="8" y="0" style="opacity: 1;" width="128" height="22"><div xmlns="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml">向量空间对齐问题</div></div></foreignObject></g><g data-depth="3" data-path="1.14.19" class="markmap-node" transform="translate(367, 115.572265625)"><line stroke="#1f77b4" stroke-width="1.375" x1="-1" x2="114" y1="22.6875" y2="22.6875"/><foreignObject class="markmap-foreign" x="8" y="0" style="opacity: 1;" width="96" height="22"><div xmlns="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml">分块策略问题</div></div></foreignObject></g><g data-depth="2" data-path="1.14" class="markmap-node" transform="translate(159, 58.822265625)"><line stroke="#8c564b" stroke-width="1.75" x1="-1" x2="130" y1="22.875" y2="22.875"/><circle stroke-width="1.5" r="6" stroke="#8c564b" fill="var(--markmap-circle-open-bg)" cx="128" cy="22.875"/><foreignObject class="markmap-foreign" x="8" y="0" style="opacity: 1;" width="112" height="22"><div xmlns="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml">No Find answer</div></div></foreignObject></g><g data-depth="1" data-path="1" class="markmap-node" transform="translate(0,-11)"><line stroke="#1f77b4" stroke-width="2.5" x1="-1" x2="81" y1="23.25" y2="23.25"/><circle stroke-width="1.5" r="6" stroke="#1f77b4" fill="var(--markmap-circle-open-bg)" cx="79" cy="23.25"/><foreignObject class="markmap-foreign" x="8" y="0" style="opacity: 1;" width="63" height="22"><div xmlns="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml">Retrieval</div></div></foreignObject></g></g></svg>

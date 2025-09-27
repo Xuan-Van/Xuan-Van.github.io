@@ -1,0 +1,949 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/background/%E5%9B%BE%E6%A0%87.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="文晋">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content=".ppvmootxuyph{}   方法图示：   参考项目：nightdessert&#x2F;Retrieval_Head 1 安装1.1 虚拟环境123456conda create -n retrieval python&#x3D;3.8 -yconda activate retrievalpip install torch transformers&#x3D;&#x3D;4.44.1 flash-attn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【论文复现】Retrieval Head">
+<meta property="og:url" content="http://xuan-van.github.io/2ef7e94f9872/index.html">
+<meta property="og:site_name" content="文心晋意">
+<meta property="og:description" content=".ppvmootxuyph{}   方法图示：   参考项目：nightdessert&#x2F;Retrieval_Head 1 安装1.1 虚拟环境123456conda create -n retrieval python&#x3D;3.8 -yconda activate retrievalpip install torch transformers&#x3D;&#x3D;4.44.1 flash-attn">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://xuan-van.github.io/2ef7e94f9872/1.png">
+<meta property="og:image" content="http://xuan-van.github.io/2ef7e94f9872/2.jpg">
+<meta property="article:published_time" content="2025-07-29T04:00:00.000Z">
+<meta property="article:modified_time" content="2025-09-26T02:26:29.943Z">
+<meta property="article:author" content="文晋">
+<meta property="article:tag" content="RAG">
+<meta property="article:tag" content="LLM">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://xuan-van.github.io/2ef7e94f9872/1.png">
+  
+  
+  
+  <title>【论文复现】Retrieval Head - 文心晋意</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/background/background.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xuan-van.github.io","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":3},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>文晋的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-image"></i>
+                <span>图片</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/images/llama.svg" target="_self">
+                    
+                    <span>Llama 结构</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/images/rag.svg" target="_self">
+                    
+                    <span>RAG 难点</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">【论文复现】Retrieval Head</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-07-29 12:00" pubdate>
+          2025年7月29日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          24 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="代码复现"
+        id="heading-211acd8e7f189296b7caddd5c95b71af" role="tab" data-toggle="collapse" href="#collapse-211acd8e7f189296b7caddd5c95b71af"
+        aria-expanded="true"
+      >
+        代码复现
+        <span class="list-group-count">(9)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-211acd8e7f189296b7caddd5c95b71af"
+           role="tabpanel" aria-labelledby="heading-211acd8e7f189296b7caddd5c95b71af">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/ad1bc992703e/" title="【代码拆解】Trajectory Transformer"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【代码拆解】Trajectory Transformer</span>
+        </a>
+      
+    
+      
+      
+        <a href="/d877247157cc/" title="【模型复现】从零实现 Llama3"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【模型复现】从零实现 Llama3</span>
+        </a>
+      
+    
+      
+      
+        <a href="/96e60ded6ebf/" title="【论文复现】HippoRAG &amp; HippoRAG2"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【论文复现】HippoRAG &amp; HippoRAG2</span>
+        </a>
+      
+    
+      
+      
+        <a href="/4a1d9814c83d/" title="【论文复现】InstructRAG"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【论文复现】InstructRAG</span>
+        </a>
+      
+    
+      
+      
+        <a href="/ca4c72297a46/" title="【论文复现】ReDeEP"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【论文复现】ReDeEP</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2ef7e94f9872/" title="【论文复现】Retrieval Head"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">【论文复现】Retrieval Head</span>
+        </a>
+      
+    
+      
+      
+        <a href="/e010e6dc6450/" title="【论文复现】SelfElicit"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【论文复现】SelfElicit</span>
+        </a>
+      
+    
+      
+      
+        <a href="/0969a0008002/" title="【论文复现】SelfRAG"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【论文复现】SelfRAG</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2a409a691f67/" title="【论文复现】xRAG"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【论文复现】xRAG</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">【论文复现】Retrieval Head</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <figure style="text-align: center;">
+    <style>.ppvmootxuyph{}</style><img src="/2ef7e94f9872/1.png" srcset="/img/loading.gif" lazyload class="ppvmootxuyph">
+</figure>
+
+<p>方法图示：</p>
+<img src="/2ef7e94f9872/2.jpg" srcset="/img/loading.gif" lazyload class="">
+
+<p>参考项目：<a target="_blank" rel="noopener" href="https://github.com/nightdessert/Retrieval_Head">nightdessert&#x2F;Retrieval_Head</a></p>
+<h1 id="1-安装"><a href="#1-安装" class="headerlink" title="1 安装"></a>1 安装</h1><h2 id="1-1-虚拟环境"><a href="#1-1-虚拟环境" class="headerlink" title="1.1 虚拟环境"></a>1.1 虚拟环境</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">conda create -n retrieval python=3.8 -y<br>conda activate retrieval<br>pip install torch transformers==4.44.1 flash-attn rouge_score accelerate ipykernel<br><br>python -m ipykernel install --user --name retrieval<br>jupyter kernelspec list<br></code></pre></td></tr></table></figure>
+
+<h2 id="1-2-项目结构"><a href="#1-2-项目结构" class="headerlink" title="1.2 项目结构"></a>1.2 项目结构</h2><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs nix">haystack_for_detect<span class="hljs-symbol">/</span>  <span class="hljs-comment"># 背景上下文目录</span><br>head_score<span class="hljs-symbol">/</span>  <span class="hljs-comment"># 保存检索头得分结果</span><br>results<span class="hljs-operator">/</span>graph<span class="hljs-symbol">/</span> <span class="hljs-comment"># 保存实验结果</span><br><br>retrieval_head_detection.ipynb <span class="hljs-comment"># 拆解 retrieval_head_detection.py</span><br>modeling_llama.py <span class="hljs-comment"># 改编自 https://github.com/huggingface/transformers/blob/main/src/transformers/models/llama/modeling_llama.py</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="1-3-LLM"><a href="#1-3-LLM" class="headerlink" title="1.3 LLM"></a>1.3 LLM</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">huggingface-cli download --token Your_token meta-llama/Llama-3.1-8B-Instruct --local-dir model/Llama-3.1-8B-Instruct<br></code></pre></td></tr></table></figure>
+
+<h1 id="2-整体流程"><a href="#2-整体流程" class="headerlink" title="2 整体流程"></a>2 整体流程</h1><h2 id="2-1-准备工作"><a href="#2-1-准备工作" class="headerlink" title="2.1 准备工作"></a>2.1 准备工作</h2><ol>
+<li>导入必要的库：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> glob<br><span class="hljs-keyword">import</span> json<br><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">from</span> modeling_llama <span class="hljs-keyword">import</span> LlamaForCausalLM<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">from</span> rouge_score <span class="hljs-keyword">import</span> rouge_scorer<br><span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> defaultdict<br><span class="hljs-keyword">from</span> datetime <span class="hljs-keyword">import</span> datetime, timezone<br><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> AutoTokenizer, AutoConfig<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>重新设置 RoPE：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">reset_rope</span>(<span class="hljs-params">model, model_max_train_len, scaling_factor</span>):<br>    <span class="hljs-keyword">for</span> l <span class="hljs-keyword">in</span> model.model.layers:<br>        l.self_attn.rotary_emb.scaling_factor = scaling_factor<br>        l.self_attn.rotary_emb._set_cos_sin_cache(seq_len=model_max_train_len, device=l.self_attn.rotary_emb.inv_freq.device, dtype=torch.float32)<br>    <span class="hljs-keyword">return</span><br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>分数统计器：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">scorer = rouge_scorer.RougeScorer([<span class="hljs-string">&#x27;rouge1&#x27;</span>, <span class="hljs-string">&#x27;rougeL&#x27;</span>], use_stemmer=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>定义大海捞针测试类：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">LLMNeedleHaystackTester</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params"></span><br><span class="hljs-params">        self,</span><br><span class="hljs-params">        needle=<span class="hljs-string">&quot;\nThe best thing to do in San Francisco is eat a sandwich and sit in Dolores Park on a sunny day.\n&quot;</span>, <span class="hljs-comment"># 针</span></span><br><span class="hljs-params">        haystack_dir=<span class="hljs-string">&quot;./haystack_for_detect&quot;</span>, <span class="hljs-comment"># 背景上下文目录</span></span><br><span class="hljs-params">        retrieval_question=<span class="hljs-string">&quot;What is the best thing to do in San Francisco?&quot;</span>, <span class="hljs-comment"># 问题</span></span><br><span class="hljs-params">        results_version = <span class="hljs-number">1</span>, <span class="hljs-comment"># 版本</span></span><br><span class="hljs-params">        context_lengths_min = <span class="hljs-number">1000</span>, <span class="hljs-comment"># 上下文最小长度</span></span><br><span class="hljs-params">        context_lengths_max = <span class="hljs-number">50000</span>, <span class="hljs-comment"># 上下文最大长度</span></span><br><span class="hljs-params">        context_lengths_num_intervals = <span class="hljs-number">20</span>, <span class="hljs-comment"># 上下文长度的间隔数</span></span><br><span class="hljs-params">        context_lengths = <span class="hljs-literal">None</span>, <span class="hljs-comment"># 上下文的长度</span></span><br><span class="hljs-params">        document_depth_percent_min = <span class="hljs-number">0</span>, <span class="hljs-comment"># 文档的最小深度百分比</span></span><br><span class="hljs-params">        document_depth_percent_max = <span class="hljs-number">100</span>, <span class="hljs-comment"># 文档的最大深度百分比</span></span><br><span class="hljs-params">        document_depth_percent_intervals = <span class="hljs-number">10</span>, <span class="hljs-comment"># 文档深度百分比的间隔数</span></span><br><span class="hljs-params">        document_depth_percents = <span class="hljs-literal">None</span>, <span class="hljs-comment"># 文档的深度百分比</span></span><br><span class="hljs-params">        document_depth_percent_interval_type = <span class="hljs-string">&quot;linear&quot;</span>, <span class="hljs-comment"># 文档的深度百分比的间隔类型：linear 或 sigmoid</span></span><br><span class="hljs-params">        model_provider = <span class="hljs-string">&quot;OpenAI&quot;</span>, <span class="hljs-comment"># 模型的提供程序：OpenAI 或 Anthropic</span></span><br><span class="hljs-params">        model_name=<span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-comment"># 模型名称</span></span><br><span class="hljs-params">        model_name_suffix=<span class="hljs-literal">None</span>, <span class="hljs-comment"># 模型名称后缀</span></span><br><span class="hljs-params">        num_concurrent_requests = <span class="hljs-number">1</span>, <span class="hljs-comment"># 并发请求数</span></span><br><span class="hljs-params">        save_results = <span class="hljs-literal">True</span>, <span class="hljs-comment"># 是否将上下文保存到文件中</span></span><br><span class="hljs-params">        save_contexts = <span class="hljs-literal">True</span>, <span class="hljs-comment"># 是否将上下文保存到文件中</span></span><br><span class="hljs-params">        final_context_length_buffer = <span class="hljs-number">200</span>, <span class="hljs-comment"># 从输入上下文中保存的缓冲量</span></span><br><span class="hljs-params">        seconds_to_sleep_between_completions = <span class="hljs-literal">None</span>, <span class="hljs-comment"># 两次完成之间休眠的秒数</span></span><br><span class="hljs-params">        print_ongoing_status = <span class="hljs-literal">True</span> <span class="hljs-comment"># 是否打印正在进行的状态</span></span><br><span class="hljs-params">    </span>):<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> needle <span class="hljs-keyword">or</span> <span class="hljs-keyword">not</span> haystack_dir <span class="hljs-keyword">or</span> <span class="hljs-keyword">not</span> retrieval_question:<br>            <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">&quot;Needle, haystack, and retrieval_question must be provided.&quot;</span>)<br>            <br>        needles_and_stacks = [json.loads(l) <span class="hljs-keyword">for</span> l <span class="hljs-keyword">in</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;haystack_dir&#125;</span>/needles.jsonl&quot;</span>)] <span class="hljs-comment"># 三条数据</span><br>        <span class="hljs-variable language_">self</span>.needle_list = [l[<span class="hljs-string">&quot;needle&quot;</span>] <span class="hljs-keyword">for</span> l <span class="hljs-keyword">in</span> needles_and_stacks] <span class="hljs-comment"># 大海捞针列表</span><br>        <span class="hljs-variable language_">self</span>.haystack_dir_list = [<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;haystack_dir&#125;</span>/part<span class="hljs-subst">&#123;i&#125;</span>&quot;</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">4</span>)] <span class="hljs-comment"># 子目录列表</span><br>        <span class="hljs-variable language_">self</span>.retrieval_question_list = [l[<span class="hljs-string">&quot;question&quot;</span>] <span class="hljs-keyword">for</span> l <span class="hljs-keyword">in</span> needles_and_stacks] <span class="hljs-comment"># 问题列表</span><br>        <span class="hljs-variable language_">self</span>.real_ansers_list = [l[<span class="hljs-string">&quot;real_needle&quot;</span>] <span class="hljs-keyword">for</span> l <span class="hljs-keyword">in</span> needles_and_stacks] <span class="hljs-comment"># 真实答案列表</span><br>        <span class="hljs-variable language_">self</span>.results_version = results_version<br>        <span class="hljs-variable language_">self</span>.num_concurrent_requests = num_concurrent_requests<br>        <span class="hljs-variable language_">self</span>.save_results = save_results<br>        <span class="hljs-variable language_">self</span>.final_context_length_buffer = final_context_length_buffer<br>        <span class="hljs-variable language_">self</span>.save_contexts = save_contexts<br>        <span class="hljs-variable language_">self</span>.seconds_to_sleep_between_completions = seconds_to_sleep_between_completions<br>        <span class="hljs-variable language_">self</span>.print_ongoing_status = print_ongoing_status<br>        <span class="hljs-variable language_">self</span>.model_provider = model_provider<br>        <span class="hljs-variable language_">self</span>.testing_results = []<br>        <span class="hljs-variable language_">self</span>.head_counter = defaultdict(<span class="hljs-built_in">list</span>)<br>        <br>        <span class="hljs-keyword">if</span>(<span class="hljs-string">&quot;/&quot;</span> <span class="hljs-keyword">in</span> model_name):<br>            <span class="hljs-variable language_">self</span>.model_version = model_name.split(<span class="hljs-string">&quot;/&quot;</span>)[-<span class="hljs-number">1</span>]<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-variable language_">self</span>.model_version = model_name<br>        <span class="hljs-keyword">if</span>(model_name_suffix <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>): <span class="hljs-variable language_">self</span>.model_version += <span class="hljs-string">&quot;_&quot;</span> + model_name_suffix<br><br>        <span class="hljs-keyword">if</span> context_lengths <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>            <span class="hljs-keyword">if</span> context_lengths_min <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">or</span> context_lengths_max <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">or</span> context_lengths_num_intervals <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>                <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">&quot;Either context_lengths_min, context_lengths_max, context_lengths_intervals need to be filled out OR the context_lengths_list needs to be supplied.&quot;</span>)<br>            <span class="hljs-keyword">else</span>: <span class="hljs-comment"># 生成一个等间隔数字的列表，round负责四舍坞入，endpoint包含结束值，astype取整</span><br>                <span class="hljs-variable language_">self</span>.context_lengths = np.<span class="hljs-built_in">round</span>(np.linspace(context_lengths_min, context_lengths_max, num=context_lengths_num_intervals, endpoint=<span class="hljs-literal">True</span>)).astype(<span class="hljs-built_in">int</span>)<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-variable language_">self</span>.context_lengths = context_lengths<br><br>        <span class="hljs-keyword">if</span> document_depth_percents <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>            <span class="hljs-keyword">if</span> document_depth_percent_min <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">or</span> document_depth_percent_max <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">or</span> document_depth_percent_intervals <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>                <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">&quot;Either document_depth_percent_min, document_depth_percent_max, document_depth_percent_intervals need to be filled out OR the document_depth_percents needs to be supplied.&quot;</span>)<br>            <span class="hljs-keyword">else</span>:<br>                <span class="hljs-keyword">if</span> document_depth_percent_interval_type == <span class="hljs-string">&#x27;linear&#x27;</span>: <span class="hljs-comment"># 在最小值和最大值之间生成等间隔的百分比值</span><br>                    <span class="hljs-variable language_">self</span>.document_depth_percents = np.<span class="hljs-built_in">round</span>(np.linspace(document_depth_percent_min, document_depth_percent_max, num=document_depth_percent_intervals, endpoint=<span class="hljs-literal">True</span>)).astype(<span class="hljs-built_in">int</span>)<br>                <span class="hljs-keyword">elif</span> document_depth_percent_interval_type == <span class="hljs-string">&#x27;sigmoid&#x27;</span>: <span class="hljs-comment"># 生成S型曲线分布的百分比值，使中间区域更密集</span><br>                    <span class="hljs-variable language_">self</span>.document_depth_percents = [<span class="hljs-variable language_">self</span>.logistic(x) <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> np.linspace(document_depth_percent_min, document_depth_percent_max, document_depth_percent_intervals)]<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-variable language_">self</span>.document_depth_percents = document_depth_percents<br>        <span class="hljs-keyword">if</span> document_depth_percent_interval_type <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> [<span class="hljs-literal">None</span>, <span class="hljs-string">&quot;linear&quot;</span>, <span class="hljs-string">&quot;sigmoid&quot;</span>]:<br>            <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">&quot;document_depth_percent_interval_type must be either None, &#x27;linear&#x27; or &#x27;sigmoid&#x27;. If you&#x27;d like your own distribution give a list of ints in via document_depth_percent_intervals&quot;</span>)<br>        <br>        <span class="hljs-variable language_">self</span>.model_name = model_name<br>        <span class="hljs-variable language_">self</span>.enc = AutoTokenizer.from_pretrained(model_name, use_fast=<span class="hljs-literal">False</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;loading from %s&quot;</span> % model_name)<br>        config = AutoConfig.from_pretrained(model_name)<br>        <span class="hljs-variable language_">self</span>.layer_num, <span class="hljs-variable language_">self</span>.head_num = config.num_hidden_layers, config.num_attention_heads<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;layer number: <span class="hljs-subst">&#123;self.layer_num&#125;</span>, head number <span class="hljs-subst">&#123;self.head_num&#125;</span>&quot;</span>)<br>        <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;Qwen&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-variable language_">self</span>.model_version:<br>            <span class="hljs-variable language_">self</span>.model_to_test = Qwen2ForCausalLM.from_pretrained(<br>                model_name, torch_dtype=<span class="hljs-string">&quot;auto&quot;</span>, device_map=<span class="hljs-string">&#x27;auto&#x27;</span>, use_flash_attention_2=<span class="hljs-string">&quot;flash_attention_2&quot;</span><br>            ).<span class="hljs-built_in">eval</span>()<br>        <span class="hljs-keyword">elif</span> <span class="hljs-string">&quot;Mixtral&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-variable language_">self</span>.model_version:<br>            <span class="hljs-variable language_">self</span>.model_to_test = MixtralForCausalLM.from_pretrained(<br>                model_name, torch_dtype=<span class="hljs-string">&quot;auto&quot;</span>, device_map=<span class="hljs-string">&#x27;auto&#x27;</span>, use_flash_attention_2=<span class="hljs-string">&quot;flash_attention_2&quot;</span>, trust_remote_code=<span class="hljs-literal">True</span>,<br>            ).<span class="hljs-built_in">eval</span>()<br>        <span class="hljs-keyword">elif</span> <span class="hljs-string">&quot;Mistral&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-variable language_">self</span>.model_version:<br>            <span class="hljs-variable language_">self</span>.model_to_test = MistralForCausalLM.from_pretrained(<br>                model_name, torch_dtype=<span class="hljs-string">&quot;auto&quot;</span>, device_map=<span class="hljs-string">&#x27;auto&#x27;</span>, use_flash_attention_2=<span class="hljs-string">&quot;flash_attention_2&quot;</span>, trust_remote_code=<span class="hljs-literal">True</span>,<br>            ).<span class="hljs-built_in">eval</span>()<br>        <span class="hljs-keyword">elif</span> <span class="hljs-string">&quot;Phi3&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-variable language_">self</span>.model_version:<br>            <span class="hljs-variable language_">self</span>.model_to_test = Phi3ForCausalLM.from_pretrained(<br>                model_name, torch_dtype=<span class="hljs-string">&quot;auto&quot;</span>, device_map=<span class="hljs-string">&#x27;auto&#x27;</span>, use_flash_attention_2=<span class="hljs-string">&quot;flash_attention_2&quot;</span>, trust_remote_code=<span class="hljs-literal">True</span>,<br>            ).<span class="hljs-built_in">eval</span>()<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-variable language_">self</span>.model_to_test = LlamaForCausalLM.from_pretrained(<br>                model_name, torch_dtype=torch.bfloat16, device_map=<span class="hljs-string">&#x27;auto&#x27;</span>, use_flash_attention_2=<span class="hljs-string">&quot;flash_attention_2&quot;</span>,<br>            ).<span class="hljs-built_in">eval</span>()<br>            <br>        <span class="hljs-comment"># 位置编码进行特殊配置，调整模型处理长上下文的能力</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;llama-2-7b-80k&#x27;</span> <span class="hljs-keyword">in</span> <span class="hljs-variable language_">self</span>.model_version:<br>            scaling_factor = <span class="hljs-number">10</span><br>            reset_rope(<span class="hljs-variable language_">self</span>.model_to_test, model_max_train_len=<span class="hljs-number">81920</span>, scaling_factor=scaling_factor)<br>            <br>        <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;CUDA_VISIBLE_DEVICES&quot;</span> <span class="hljs-keyword">in</span> os.environ:<br>            <span class="hljs-variable language_">self</span>.multi_gpus = <span class="hljs-built_in">len</span>(os.environ[<span class="hljs-string">&quot;CUDA_VISIBLE_DEVICES&quot;</span>])&gt;<span class="hljs-number">1</span><br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-variable language_">self</span>.multi_gpus = <span class="hljs-literal">True</span><br>            <br>        <span class="hljs-variable language_">self</span>.model_to_test_description = model_name<br>        <span class="hljs-variable language_">self</span>.evaluation_model = <span class="hljs-literal">None</span><br>        <span class="hljs-variable language_">self</span>.debug=<span class="hljs-string">&#x27;debug&#x27;</span><br>        <br>        <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">logistic</span>(<span class="hljs-params">self, x, L=<span class="hljs-number">100</span>, x0=<span class="hljs-number">50</span>, k=<span class="hljs-number">.1</span></span>):<br>        <span class="hljs-keyword">if</span> x == <span class="hljs-number">0</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br>        <span class="hljs-keyword">if</span> x == <span class="hljs-number">100</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">100</span><br>        <span class="hljs-keyword">return</span> np.<span class="hljs-built_in">round</span>(L / (<span class="hljs-number">1</span> + np.exp(-k * (x - x0))), <span class="hljs-number">3</span>)<br>        <br>    <br>    <span class="hljs-comment"># 开始测试</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">start_test</span>(<span class="hljs-params">self, args</span>):<br>        <span class="hljs-keyword">for</span> ni <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(<span class="hljs-variable language_">self</span>.needle_list)):<br>            <span class="hljs-variable language_">self</span>.needle = <span class="hljs-variable language_">self</span>.needle_list[ni]<br>            <span class="hljs-variable language_">self</span>.haystack_dir = <span class="hljs-variable language_">self</span>.haystack_dir_list[ni]<br>            <span class="hljs-variable language_">self</span>.real_needle  = <span class="hljs-variable language_">self</span>.real_ansers_list[ni]<br>            <span class="hljs-variable language_">self</span>.retrieval_question = <span class="hljs-variable language_">self</span>.retrieval_question_list[ni]<br>            <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.print_ongoing_status:<br>                <span class="hljs-variable language_">self</span>.print_start_test_summary()<br>            <span class="hljs-variable language_">self</span>.run_test(args)<br>            <br>        <span class="hljs-comment"># 如果已经存在，则累加历史得分</span><br>        <span class="hljs-keyword">if</span> os.path.exists(<span class="hljs-string">f&quot;head_score/<span class="hljs-subst">&#123;self.model_version&#125;</span>.json&quot;</span>):<br>            <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">f&quot;./head_score/<span class="hljs-subst">&#123;self.model_version&#125;</span>.json&quot;</span>, <span class="hljs-string">&quot;r&quot;</span>) <span class="hljs-keyword">as</span> file:<br>                head_counter = json.loads(file.readline())<br>            <span class="hljs-keyword">for</span> k,v <span class="hljs-keyword">in</span> head_counter.items():<br>                <span class="hljs-variable language_">self</span>.head_counter[k] += v<br>                <br>        <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">f&quot;head_score/<span class="hljs-subst">&#123;self.model_version&#125;</span>.json&quot;</span>, <span class="hljs-string">&#x27;w&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>            json.dump(<span class="hljs-variable language_">self</span>.head_counter, f)<br>    <br>    <br>    <span class="hljs-comment"># 打印进程结果</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">print_start_test_summary</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">print</span> (<span class="hljs-string">&quot;\n&quot;</span>)<br>        <span class="hljs-built_in">print</span> (<span class="hljs-string">&quot;Starting Needle In A Haystack Testing...&quot;</span>)<br>        <span class="hljs-built_in">print</span> (<span class="hljs-string">f&quot;- Model: <span class="hljs-subst">&#123;self.model_name&#125;</span>&quot;</span>)<br>        <span class="hljs-built_in">print</span> (<span class="hljs-string">f&quot;- Context Lengths: <span class="hljs-subst">&#123;<span class="hljs-built_in">len</span>(self.context_lengths)&#125;</span>, Min: <span class="hljs-subst">&#123;<span class="hljs-built_in">min</span>(self.context_lengths)&#125;</span>, Max: <span class="hljs-subst">&#123;<span class="hljs-built_in">max</span>(self.context_lengths)&#125;</span>&quot;</span>)<br>        <span class="hljs-built_in">print</span> (<span class="hljs-string">f&quot;- Document Depths: <span class="hljs-subst">&#123;<span class="hljs-built_in">len</span>(self.document_depth_percents)&#125;</span>, Min: <span class="hljs-subst">&#123;<span class="hljs-built_in">min</span>(self.document_depth_percents)&#125;</span>%, Max: <span class="hljs-subst">&#123;<span class="hljs-built_in">max</span>(self.document_depth_percents)&#125;</span>%&quot;</span>)<br>        <span class="hljs-built_in">print</span> (<span class="hljs-string">f&quot;- Needle: <span class="hljs-subst">&#123;self.needle.strip()&#125;</span>&quot;</span>)<br>        <span class="hljs-built_in">print</span> (<span class="hljs-string">&quot;\n\n&quot;</span>)<br>    <br>    <br>    <span class="hljs-comment"># 执行测试</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">run_test</span>(<span class="hljs-params">self, args</span>):<br>        tasks = []<br>        <br>        <span class="hljs-comment"># 遍历所有预设的上下文长度和文档深度百分比的组合</span><br>        <span class="hljs-keyword">for</span> context_length <span class="hljs-keyword">in</span> <span class="hljs-variable language_">self</span>.context_lengths:<br>            <span class="hljs-keyword">if</span> context_length &lt; args.s_len <span class="hljs-keyword">or</span> context_length &gt; args.e_len:<br>                <span class="hljs-keyword">continue</span><br>            <span class="hljs-keyword">for</span> depth_percent <span class="hljs-keyword">in</span> <span class="hljs-variable language_">self</span>.document_depth_percents:<br>                task = <span class="hljs-variable language_">self</span>.bound_evaluate_and_log(context_length, depth_percent)<br>                <br>    <br>    <span class="hljs-comment"># 转发 evaluate_and_log 方法</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">bound_evaluate_and_log</span>(<span class="hljs-params">self, *args</span>):<br>        <span class="hljs-variable language_">self</span>.evaluate_and_log(*args)<br>        <br>    <br>    <span class="hljs-comment"># 评估并记录</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">evaluate_and_log</span>(<span class="hljs-params">self, context_length, depth_percent</span>):<br>        context = <span class="hljs-variable language_">self</span>.generate_context(context_length, depth_percent) <span class="hljs-comment"># 生成测试上下文</span><br>        question = <span class="hljs-string">f&quot;Based on the content of the book, Question: <span class="hljs-subst">&#123;self.retrieval_question&#125;</span>\nAnswer:&quot;</span> <span class="hljs-comment"># 构造问题</span><br>        <br>        <span class="hljs-comment"># 构造模型输入</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.model_version <span class="hljs-keyword">in</span> [<span class="hljs-string">&quot;Mistral-7B-Instruct-v0.2&quot;</span>, <span class="hljs-string">&quot;Qwen1.5-14B-Chat&quot;</span>]: <span class="hljs-comment"># 聊天模板</span><br>            prompt = [<br>            &#123;<span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;user&quot;</span>, <span class="hljs-string">&quot;content&quot;</span>: <span class="hljs-string">f&quot;&lt;book&gt;<span class="hljs-subst">&#123;context&#125;</span>&lt;/book&gt;\nBased on the content of the book, Question: <span class="hljs-subst">&#123;self.retrieval_question&#125;</span>\nAnswer:&quot;</span>&#125;,<br>            ]<br>            input_ids = <span class="hljs-variable language_">self</span>.enc.apply_chat_template(conversation=prompt, tokenize=<span class="hljs-literal">True</span>,  add_generation_prompt=<span class="hljs-literal">True</span>, return_tensors=<span class="hljs-string">&#x27;pt&#x27;</span>)<br>        <span class="hljs-keyword">else</span>: <span class="hljs-comment"># 拼接</span><br>            input_context = context + question<br>            input_ids = <span class="hljs-variable language_">self</span>.enc(input_context , return_tensors=<span class="hljs-string">&quot;pt&quot;</span>)[<span class="hljs-string">&#x27;input_ids&#x27;</span>]<br>        <br>        test_start_time = time.time()<br>        <span class="hljs-variable language_">self</span>.prompt_ids = input_ids[<span class="hljs-number">0</span>, :]<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-variable language_">self</span>.multi_gpus:<br>            input_ids = input_ids.to(<span class="hljs-variable language_">self</span>.model_to_test.device)<br>        <span class="hljs-variable language_">self</span>.needle_start, <span class="hljs-variable language_">self</span>.needle_end = <span class="hljs-variable language_">self</span>.find_needle_idx(<span class="hljs-variable language_">self</span>.real_needle) <span class="hljs-comment"># 寻找针的token位置</span><br>        <br>        <span class="hljs-comment"># 模型推理</span><br>        <span class="hljs-keyword">with</span> torch.no_grad():<br>            q_outputs = <span class="hljs-variable language_">self</span>.model_to_test(input_ids=input_ids[:,:-<span class="hljs-number">1</span>], use_cache=<span class="hljs-literal">True</span>, return_dict=<span class="hljs-literal">True</span>)<br>            output, retrieval_score = <span class="hljs-variable language_">self</span>.decode(q_outputs, input_ids[:,-<span class="hljs-number">1</span>], <span class="hljs-number">50</span>)<br>            response = <span class="hljs-variable language_">self</span>.enc.decode(output, skip_special_tokens=<span class="hljs-literal">True</span>).strip()<br><br>        test_end_time = time.time()<br>        test_elapsed_time = test_end_time - test_start_time<br>        <br>        <span class="hljs-comment"># 评估回答</span><br>        score = scorer.score(<span class="hljs-variable language_">self</span>.real_needle, response)[<span class="hljs-string">&#x27;rouge1&#x27;</span>].recall*<span class="hljs-number">100</span><br>        <span class="hljs-keyword">if</span> score &gt; <span class="hljs-number">50</span>: <span class="hljs-comment"># 回答正确，则更新注意力头的检索得分</span><br>            <span class="hljs-variable language_">self</span>.retrieval_head_accumulate(retrieval_score)<br>            head_score = [(i[<span class="hljs-number">0</span>], np.mean(i[<span class="hljs-number">1</span>])) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-variable language_">self</span>.head_counter.items()]<br>            head_score = <span class="hljs-built_in">sorted</span>(head_score, key=<span class="hljs-keyword">lambda</span> x:x[<span class="hljs-number">1</span>], reverse=<span class="hljs-literal">True</span>)<br>            <span class="hljs-built_in">print</span>([[i[<span class="hljs-number">0</span>]] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> head_score][:<span class="hljs-number">20</span>])<br><br>        <span class="hljs-comment"># 保存结果</span><br>        results = &#123;<br>            <span class="hljs-string">&#x27;model&#x27;</span>: <span class="hljs-variable language_">self</span>.model_to_test_description,<br>            <span class="hljs-string">&#x27;context_length&#x27;</span>: <span class="hljs-built_in">int</span>(context_length),<br>            <span class="hljs-string">&#x27;depth_percent&#x27;</span>: <span class="hljs-built_in">float</span>(depth_percent),<br>            <span class="hljs-string">&#x27;version&#x27;</span>: <span class="hljs-variable language_">self</span>.results_version,<br>            <span class="hljs-string">&#x27;needle&#x27;</span>: <span class="hljs-variable language_">self</span>.needle,<br>            <span class="hljs-string">&#x27;model_response&#x27;</span>: response,<br>            <span class="hljs-string">&#x27;score&#x27;</span>: score,<br>            <span class="hljs-string">&#x27;test_duration_seconds&#x27;</span>: test_elapsed_time,<br>            <span class="hljs-string">&#x27;test_timestamp_utc&#x27;</span>: datetime.now(timezone.utc).strftime(<span class="hljs-string">&#x27;%Y-%m-%d %H:%M:%S%z&#x27;</span>)<br>        &#125;<br>        <span class="hljs-variable language_">self</span>.testing_results.append(results)<br><br>        <span class="hljs-comment"># 打印进度</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.print_ongoing_status:<br>            <span class="hljs-built_in">print</span> (<span class="hljs-string">f&quot;-- Test Summary -- &quot;</span>)<br>            <span class="hljs-built_in">print</span> (<span class="hljs-string">f&quot;Duration: <span class="hljs-subst">&#123;test_elapsed_time:<span class="hljs-number">.1</span>f&#125;</span> seconds&quot;</span>)<br>            <span class="hljs-built_in">print</span> (<span class="hljs-string">f&quot;Context: <span class="hljs-subst">&#123;context_length&#125;</span> tokens&quot;</span>)<br>            <span class="hljs-built_in">print</span> (<span class="hljs-string">f&quot;Depth: <span class="hljs-subst">&#123;depth_percent&#125;</span>%&quot;</span>)<br>            <span class="hljs-built_in">print</span> (<span class="hljs-string">f&quot;Score: <span class="hljs-subst">&#123;score&#125;</span>&quot;</span>)<br>            <span class="hljs-built_in">print</span> (<span class="hljs-string">f&quot;Response: <span class="hljs-subst">&#123;response&#125;</span>\n&quot;</span>)<br><br>        <span class="hljs-comment"># 保存上下文和结果</span><br>        context_file_location = <span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;self.model_version.replace(<span class="hljs-string">&quot;.&quot;</span>, <span class="hljs-string">&quot;_&quot;</span>)&#125;</span>_len_<span class="hljs-subst">&#123;context_length&#125;</span>_depth_<span class="hljs-subst">&#123;<span class="hljs-built_in">int</span>(depth_percent*<span class="hljs-number">100</span>)&#125;</span>&#x27;</span><br><br>        <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.save_contexts:<br>            results[<span class="hljs-string">&#x27;file_name&#x27;</span>] : context_file_location<br><br>            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.exists(<span class="hljs-string">&#x27;contexts&#x27;</span>):<br>                os.makedirs(<span class="hljs-string">&#x27;contexts&#x27;</span>)<br><br>            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.exists(<span class="hljs-string">f&#x27;contexts/<span class="hljs-subst">&#123;self.model_version&#125;</span>&#x27;</span>):<br>                os.makedirs(<span class="hljs-string">f&#x27;contexts/<span class="hljs-subst">&#123;self.model_version&#125;</span>&#x27;</span>)<br><br>            <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">f&#x27;contexts/<span class="hljs-subst">&#123;self.model_version&#125;</span>/<span class="hljs-subst">&#123;context_file_location&#125;</span>_context.txt&#x27;</span>, <span class="hljs-string">&#x27;w&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>                f.write(context)<br>        <br>        <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.save_results:<br>            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.exists(<span class="hljs-string">f&#x27;results/graph/<span class="hljs-subst">&#123;self.model_version&#125;</span>&#x27;</span>):<br>                os.makedirs(<span class="hljs-string">f&#x27;results/graph/<span class="hljs-subst">&#123;self.model_version&#125;</span>&#x27;</span>)<br>            <br>            p = <span class="hljs-string">f&#x27;results/graph/<span class="hljs-subst">&#123;self.model_version&#125;</span>/<span class="hljs-subst">&#123;context_file_location&#125;</span>_results.json&#x27;</span><br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Writing at %s&quot;</span> % p)<br>            <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(p, <span class="hljs-string">&#x27;w&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>                json.dump(results, f)<br>                <br>    <br>    <span class="hljs-comment"># 生成上下文</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">generate_context</span>(<span class="hljs-params">self, context_length, depth_percent</span>):<br>        context = <span class="hljs-variable language_">self</span>.read_context_files() <span class="hljs-comment"># 读取原始上下文文件</span><br>        context = <span class="hljs-variable language_">self</span>.encode_and_trim(context, context_length) <span class="hljs-comment"># 编码和裁剪上下文</span><br>        context = <span class="hljs-variable language_">self</span>.insert_needle(context, depth_percent, context_length) <span class="hljs-comment"># 插入needle</span><br>        <span class="hljs-keyword">return</span> context<br>    <br>    <br>    <span class="hljs-comment"># 寻找针的token位置</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">find_needle_idx</span>(<span class="hljs-params">self, needle</span>):<br>        needle_ids = <span class="hljs-variable language_">self</span>.enc(needle, add_special_tokens=<span class="hljs-literal">False</span>)[<span class="hljs-string">&quot;input_ids&quot;</span>]<br>        <span class="hljs-built_in">print</span>(<span class="hljs-variable language_">self</span>.enc.decode(needle_ids, skip_special_tokens=<span class="hljs-literal">False</span>))<br>        span_len = <span class="hljs-built_in">len</span>(needle_ids)<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(<span class="hljs-variable language_">self</span>.prompt_ids)): <span class="hljs-comment"># 滑动窗口搜索       </span><br>            token_span = <span class="hljs-variable language_">self</span>.prompt_ids[i : i + span_len] <span class="hljs-comment"># 提取当前窗口的token ID子序列token_span</span><br>            span_ids = <span class="hljs-built_in">set</span>(token_span.tolist()) <span class="hljs-comment"># 将token_span和needle_ids转换为集合，计算它们的重叠率overlap</span><br>            overlap = <span class="hljs-built_in">float</span>(<span class="hljs-built_in">len</span>(span_ids.intersection(<span class="hljs-built_in">set</span>(needle_ids)))) / <span class="hljs-built_in">len</span>(<span class="hljs-built_in">set</span>(needle_ids))<br>            <span class="hljs-keyword">if</span>(overlap &gt; <span class="hljs-number">0.9</span>): <span class="hljs-comment"># 如果重叠率超过 90%，则认为找到了 needle，返回当前窗口的起始和结束位置</span><br>                <span class="hljs-keyword">return</span> i, i + span_len<br>        <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>, -<span class="hljs-number">1</span><br>    <br>    <br>    <span class="hljs-comment"># 自回归解码模型输出并计算注意力头的检索得分</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">decode</span>(<span class="hljs-params">self, q_outputs, inp, decode_len, block_list=<span class="hljs-literal">None</span></span>):<br>        output, retrieval_score = [], [[[<span class="hljs-number">0</span>, <span class="hljs-string">&#x27;&#x27;</span>] <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.head_num)] <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.layer_num)]<br>        past_kv = q_outputs.past_key_values<br>        <span class="hljs-keyword">for</span> step_i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(decode_len):<br>            inp = inp.view(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>)<br>            outputs = <span class="hljs-variable language_">self</span>.model_to_test(input_ids=inp, past_key_values=past_kv, use_cache=<span class="hljs-literal">True</span>, output_attentions=<span class="hljs-literal">True</span>, attn_mode=<span class="hljs-string">&quot;torch&quot;</span> )<br>            past_kv = outputs.past_key_values <span class="hljs-comment"># 更新KV缓存</span><br>            inp = outputs.logits[<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>].argmax() <span class="hljs-comment"># 贪婪解码</span><br>            step_token = <span class="hljs-variable language_">self</span>.enc.convert_ids_to_tokens(inp.item()) <span class="hljs-comment"># 将token ID转换为文本标记</span><br>            output.append(inp.item())<br>            <span class="hljs-variable language_">self</span>.retrieval_calculate(outputs.attentions, retrieval_score, inp, step_token) <span class="hljs-comment"># 计算注意力头的检索得分</span><br>            <span class="hljs-keyword">if</span> step_token==<span class="hljs-string">&#x27;&lt;0x0A&gt;&#x27;</span> <span class="hljs-keyword">or</span> inp.item()==<span class="hljs-number">144</span>: <span class="hljs-keyword">break</span><br>        <span class="hljs-keyword">return</span> output, retrieval_score<br>    <br>    <br>    <span class="hljs-comment"># 累记每个注意力头的得分</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">retrieval_head_accumulate</span>(<span class="hljs-params">self, retrieval_score</span>):<br>        <span class="hljs-keyword">for</span> layer_idx <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.layer_num):<br>            <span class="hljs-keyword">for</span> head_idx <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.head_num):<br>                <span class="hljs-variable language_">self</span>.head_counter[<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;layer_idx&#125;</span>-<span class="hljs-subst">&#123;head_idx&#125;</span>&quot;</span>].append(retrieval_score[layer_idx][head_idx][<span class="hljs-number">0</span>])<br>    <br>    <br>    <span class="hljs-comment"># 读取原始上下文文件</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">read_context_files</span>(<span class="hljs-params">self</span>):<br>        context = <span class="hljs-string">&quot;&quot;</span><br>        max_context_length = <span class="hljs-built_in">max</span>(<span class="hljs-variable language_">self</span>.context_lengths)<br><br>        <span class="hljs-keyword">while</span> <span class="hljs-built_in">len</span>(context.split()) &lt; max_context_length:<br>            <span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> glob.glob(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;self.haystack_dir&#125;</span>/*.txt&quot;</span>):<br>                <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(file, <span class="hljs-string">&#x27;r&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>                    context += f.read()<br>        <span class="hljs-keyword">return</span> context<br>    <br>    <br>    <span class="hljs-comment"># 编码和裁剪上下文</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">encode_and_trim</span>(<span class="hljs-params">self, context, context_length</span>):<br>        tokens = <span class="hljs-variable language_">self</span>.encode_text_to_tokens(context)<br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(tokens) &gt; context_length:<br>            context = <span class="hljs-variable language_">self</span>.decode_tokens(tokens, context_length)<br>        <span class="hljs-keyword">return</span> context<br>    <br>    <br>    <span class="hljs-comment"># 插入needle</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">insert_needle</span>(<span class="hljs-params">self, context, depth_percent, context_length</span>):<br>        tokens_needle = <span class="hljs-variable language_">self</span>.encode_text_to_tokens(<span class="hljs-variable language_">self</span>.needle)<br>        tokens_context = <span class="hljs-variable language_">self</span>.encode_text_to_tokens(context)<br><br>        <span class="hljs-comment"># 留出缓冲区空间给系统消息、用户问题和回答</span><br>        context_length -= <span class="hljs-variable language_">self</span>.final_context_length_buffer<br><br>        <span class="hljs-comment"># 如果上下文+needle超过限制，截断上下文</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(tokens_context) + <span class="hljs-built_in">len</span>(tokens_needle) &gt; context_length:<br>            tokens_context = tokens_context[:context_length - <span class="hljs-built_in">len</span>(tokens_needle)]<br><br>        <span class="hljs-keyword">if</span> depth_percent == <span class="hljs-number">100</span>: <span class="hljs-comment"># 直接追加到末尾</span><br>            tokens_new_context = tokens_context + tokens_needle<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-comment"># 计算初始插入点</span><br>            insertion_point = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">len</span>(tokens_context) * (depth_percent / <span class="hljs-number">100</span>))<br>            tokens_new_context = tokens_context[:insertion_point]<br><br>            <span class="hljs-comment"># 确定句号token</span><br>            <span class="hljs-keyword">if</span>(<span class="hljs-variable language_">self</span>.model_provider <span class="hljs-keyword">in</span> [<span class="hljs-string">&quot;LLaMA&quot;</span>, <span class="hljs-string">&quot;LongLLaMA&quot;</span>]): period_tokens = [<span class="hljs-number">29889</span>, <span class="hljs-number">869</span>]<br>            <span class="hljs-keyword">elif</span>(<span class="hljs-variable language_">self</span>.model_provider == <span class="hljs-string">&quot;Mistral&quot;</span>): period_tokens = [<span class="hljs-number">842</span>, <span class="hljs-number">28723</span>]<br>            <span class="hljs-keyword">elif</span>(<span class="hljs-variable language_">self</span>.model_provider == <span class="hljs-string">&quot;GLM&quot;</span>): period_tokens = [<span class="hljs-number">918</span>, <span class="hljs-number">30930</span>]<br>            <span class="hljs-keyword">else</span>: period_tokens = <span class="hljs-variable language_">self</span>.encode_text_to_tokens(<span class="hljs-string">&#x27;.&#x27;</span>)<br>            <span class="hljs-keyword">while</span> tokens_new_context <span class="hljs-keyword">and</span> tokens_new_context[-<span class="hljs-number">1</span>] <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> period_tokens:<br>                insertion_point -= <span class="hljs-number">1</span><br>                tokens_new_context = tokens_context[:insertion_point]<br><br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;insertion at %d&quot;</span> % insertion_point)<br>            tokens_new_context += tokens_needle + tokens_context[insertion_point:]<br><br>        <span class="hljs-comment"># 将token序列解码回文本</span><br>        new_context = <span class="hljs-variable language_">self</span>.decode_tokens(tokens_new_context)<br>        <span class="hljs-keyword">return</span> new_context<br>    <br>    <br>    <span class="hljs-comment"># 计算和更新模型各注意力头在needle时的表现得分</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">retrieval_calculate</span>(<span class="hljs-params">self, attention_maxtrix,retrieval_score, inp, step_token, topk=<span class="hljs-number">1</span></span>):<br>        <span class="hljs-keyword">for</span> layer_idx <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.layer_num):<br>            <span class="hljs-keyword">for</span> head_idx <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.head_num):<br>                values, idx = attention_maxtrix[layer_idx][<span class="hljs-number">0</span>][head_idx][-<span class="hljs-number">1</span>].topk(topk)<br>                <span class="hljs-keyword">for</span> v, i <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(values, idx):<br>                    <span class="hljs-comment"># 如果某个注意力头成功关注到needle的位置，则为其累积得分，并记录相关的token信息</span><br>                    <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.needle_start &lt;= i &lt; <span class="hljs-variable language_">self</span>.needle_end <span class="hljs-keyword">and</span> inp.item()==<span class="hljs-variable language_">self</span>.prompt_ids[i].item():<br>                        retrieval_score[layer_idx][head_idx][<span class="hljs-number">0</span>] += <span class="hljs-number">1</span>/(<span class="hljs-variable language_">self</span>.needle_end - <span class="hljs-variable language_">self</span>.needle_start)<br>                        retrieval_score[layer_idx][head_idx][<span class="hljs-number">1</span>] += step_token<br>                        <span class="hljs-keyword">break</span><br>    <br>    <br>    <span class="hljs-comment"># 文本转token序列</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">encode_text_to_tokens</span>(<span class="hljs-params">self, text</span>):<br>        <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.model_provider <span class="hljs-keyword">in</span> [<span class="hljs-string">&quot;OpenAI&quot;</span>, <span class="hljs-string">&quot;LLaMA&quot;</span>, <span class="hljs-string">&quot;Mistral&quot;</span>, <span class="hljs-string">&quot;GLM&quot;</span>]:<br>            <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.enc.encode(text)<br>        <span class="hljs-keyword">elif</span> <span class="hljs-variable language_">self</span>.model_provider == <span class="hljs-string">&quot;Anthropic&quot;</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.enc.encode(text).ids<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">&quot;model_provider must be either &#x27;OpenAI&#x27; or &#x27;Anthropic&#x27;&quot;</span>)<br>            <br>            <br>    <span class="hljs-comment"># token序列转文本        </span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">decode_tokens</span>(<span class="hljs-params">self, tokens, context_length=<span class="hljs-literal">None</span></span>):<br>        <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.model_provider <span class="hljs-keyword">in</span> [<span class="hljs-string">&quot;OpenAI&quot;</span>, <span class="hljs-string">&quot;LLaMA&quot;</span>, <span class="hljs-string">&quot;Mistral&quot;</span>, <span class="hljs-string">&quot;GLM&quot;</span>]:<br>            <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.enc.decode(tokens[:context_length])<br>        <span class="hljs-keyword">elif</span> <span class="hljs-variable language_">self</span>.model_provider == <span class="hljs-string">&quot;Anthropic&quot;</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.enc.decode(tokens[:context_length])<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">&quot;model_provider must be either &#x27;OpenAI&#x27; or &#x27;Anthropic&#x27;&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-2-执行实验"><a href="#2-2-执行实验" class="headerlink" title="2.2 执行实验"></a>2.2 执行实验</h2><ol>
+<li>模拟命令行参数：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Args</span>:<br>    <span class="hljs-keyword">pass</span><br><br>args = Args()<br><br>args.model_name = <span class="hljs-string">&#x27;../model/Llama-3-8B-Instruct&#x27;</span><br>args.model_path = <span class="hljs-string">&#x27;../model/Llama-3-8B-Instruct&#x27;</span><br>args.model_name_suffix = <span class="hljs-literal">None</span><br>args.model_provider = <span class="hljs-string">&#x27;LLaMA&#x27;</span><br>args.s_len = <span class="hljs-number">0</span><br>args.e_len = <span class="hljs-number">5000</span><br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>执行实验：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">ht = LLMNeedleHaystackTester(<br>    model_name=args.model_name, <br>    model_name_suffix=args.model_name_suffix,<br>    model_provider=args.model_provider,<br>    save_contexts=<span class="hljs-literal">False</span>,<br>    save_results=<span class="hljs-literal">False</span>,<br>    context_lengths_min=args.s_len,<br>    context_lengths_max=args.e_len,<br>)<br><br>ht.start_test(args)<br></code></pre></td></tr></table></figure>
+<br/>
+
+<pre><code class="hljs">loading from ../model/Llama-3-8B-Instruct
+layer number: 32, head number 32
+Loading checkpoint shards: 100%|██████████| 4/4 [00:25&lt;00:00,  6.32s/it]
+
+
+Starting Needle In A Haystack Testing...
+- Model: ../model/Llama-3-8B-Instruct
+- Context Lengths: 20, Min: 0, Max: 5000
+- Document Depths: 10, Min: 0%, Max: 100%
+- Needle: A new report from the WMO shows that records were once again broken, and in some cases smashed, for greenhouse gas levels, surface temperatures, ocean heat and acidification.
+
+
+insertion at 0
+records were once again broken, and in some cases smashed, for greenhouse gas levels, surface temperatures, ocean heat and acidification.
+[[&#39;15-30&#39;], [&#39;16-20&#39;], [&#39;2-22&#39;], [&#39;24-27&#39;], [&#39;20-14&#39;], [&#39;5-8&#39;], [&#39;10-14&#39;], [&#39;15-1&#39;], [&#39;16-1&#39;], [&#39;5-11&#39;], [&#39;16-23&#39;], [&#39;27-7&#39;], [&#39;19-3&#39;], [&#39;20-1&#39;], [&#39;27-5&#39;], [&#39;8-1&#39;], [&#39;27-6&#39;], [&#39;19-13&#39;], [&#39;16-0&#39;], [&#39;20-23&#39;]]
+-- Test Summary -- 
+Duration: 4.9 seconds
+Context: 0 tokens
+Depth: 0%
+Score: 100.0
+Response: The report shows that records were once again broken, and in some cases smashed, for greenhouse gas levels, surface temperatures, ocean heat and acidification. This suggests that the report highlights the alarming rate of climate change and the urgent need for action to mitigate
+
+...
+</code></pre>
+<ol start="3">
+<li>查看结果：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;./head_score/Llama-3-8B-Instruct.json&#x27;</span>) <span class="hljs-keyword">as</span> file:<br>    head_list = json.loads(file.readline())<br><br>head_score_list = [([<span class="hljs-built_in">int</span>(ll) <span class="hljs-keyword">for</span> ll <span class="hljs-keyword">in</span> l[<span class="hljs-number">0</span>].split(<span class="hljs-string">&quot;-&quot;</span>)],np.mean(l[<span class="hljs-number">1</span>])) <span class="hljs-keyword">for</span> l <span class="hljs-keyword">in</span> head_list.items()]<br>head_score_list = <span class="hljs-built_in">sorted</span>(head_score_list, key=<span class="hljs-keyword">lambda</span> x: x[<span class="hljs-number">1</span>], reverse=<span class="hljs-literal">True</span>) <br>top_retrieval_heads = [[l[<span class="hljs-number">0</span>],  <span class="hljs-built_in">round</span>(np.mean(l[<span class="hljs-number">1</span>]), <span class="hljs-number">2</span>)] <span class="hljs-keyword">for</span> l <span class="hljs-keyword">in</span> head_score_list][:<span class="hljs-number">10</span>]<br><span class="hljs-built_in">print</span>(top_retrieval_heads)<br></code></pre></td></tr></table></figure>
+<br/>
+
+<pre><code class="hljs">[[[15, 30], 0.93], [[24, 27], 0.53], [[16, 1], 0.51], [[27, 7], 0.51], [[16, 20], 0.49], [[8, 1], 0.49], [[15, 1], 0.48], [[27, 5], 0.46], [[20, 14], 0.45], [[10, 14], 0.44]]
+</code></pre>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/" class="category-chain-item">代码复现</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/RAG/" class="print-no-link">#RAG</a>
+      
+        <a href="/tags/LLM/" class="print-no-link">#LLM</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【论文复现】Retrieval Head</div>
+      <div>http://xuan-van.github.io/2ef7e94f9872/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>文晋</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年7月29日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-cc-nc"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-cc-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/e010e6dc6450/" title="【论文复现】SelfElicit">
+                        <span class="hidden-mobile">【论文复现】SelfElicit</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/background/background.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/background/background.js"></script><!-- hexo injector body_end end --></body>
+</html>
