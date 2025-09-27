@@ -1,0 +1,987 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/background/%E5%9B%BE%E6%A0%87.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="文晋">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="问题汇总  1 数据集 知识更新滞后：   问答数据集的答案过时：目前常用的问答数据集采集和创建的时间早于 LLM 预训练和发布的时间； 向量数据库的知识过时：向量数据库的知识采集和创建也是来源于较早的百科知识库。   问题实体歧义：常用问答数据集的问题十分简短，实体能指代的对象会有多个，比如人物重名、作品形式多样、同义词等等，会使得 LLM 的回答与检索文档的方向产生偏差，无法针对性作答。如问题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【趣味研究】多跳问答的难点与挑战">
+<meta property="og:url" content="http://xuan-van.github.io/aa8d310c63ae/index.html">
+<meta property="og:site_name" content="文心晋意">
+<meta property="og:description" content="问题汇总  1 数据集 知识更新滞后：   问答数据集的答案过时：目前常用的问答数据集采集和创建的时间早于 LLM 预训练和发布的时间； 向量数据库的知识过时：向量数据库的知识采集和创建也是来源于较早的百科知识库。   问题实体歧义：常用问答数据集的问题十分简短，实体能指代的对象会有多个，比如人物重名、作品形式多样、同义词等等，会使得 LLM 的回答与检索文档的方向产生偏差，无法针对性作答。如问题">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://xuan-van.github.io/aa8d310c63ae/1.png">
+<meta property="og:image" content="http://xuan-van.github.io/aa8d310c63ae/2.png">
+<meta property="article:published_time" content="2025-06-30T04:00:00.000Z">
+<meta property="article:modified_time" content="2025-09-27T09:01:04.930Z">
+<meta property="article:author" content="文晋">
+<meta property="article:tag" content="RAG">
+<meta property="article:tag" content="LLM">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://xuan-van.github.io/aa8d310c63ae/1.png">
+  
+  
+  
+  <title>【趣味研究】多跳问答的难点与挑战 - 文心晋意</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/background/background.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xuan-van.github.io","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":3},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>文晋的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-image"></i>
+                <span>图片</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/images/llama.svg" target="_self">
+                    
+                    <span>Llama 结构</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/images/rag.svg" target="_self">
+                    
+                    <span>多跳问答难点</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">【趣味研究】多跳问答的难点与挑战</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-06-30 12:00" pubdate>
+          2025年6月30日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          11 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="研究实践"
+        id="heading-47ec0b0984bb15945aeca500b8fbbc73" role="tab" data-toggle="collapse" href="#collapse-47ec0b0984bb15945aeca500b8fbbc73"
+        aria-expanded="true"
+      >
+        研究实践
+        <span class="list-group-count">(6)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-47ec0b0984bb15945aeca500b8fbbc73"
+           role="tabpanel" aria-labelledby="heading-47ec0b0984bb15945aeca500b8fbbc73">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/566326cfdd99/" title="【Java面向对象程序设计】双色球福利彩票系统"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【Java面向对象程序设计】双色球福利彩票系统</span>
+        </a>
+      
+    
+      
+      
+        <a href="/4dbd2d8100b8/" title="【多元关系抽取】基于大语言模型的地质实体多元关系抽取框架"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【多元关系抽取】基于大语言模型的地质实体多元关系抽取框架</span>
+        </a>
+      
+    
+      
+      
+        <a href="/ba2bb03ca55b/" title="【数据准备】常用问答数据集"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【数据准备】常用问答数据集</span>
+        </a>
+      
+    
+      
+      
+        <a href="/5306a0f67226/" title="【时间序列预测】基于深度学习的多变量时间序列预测家庭电力消耗"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【时间序列预测】基于深度学习的多变量时间序列预测家庭电力消耗</span>
+        </a>
+      
+    
+      
+      
+        <a href="/67e5abea4c9d/" title="【趣味研究】Embedding Rerank"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【趣味研究】Embedding Rerank</span>
+        </a>
+      
+    
+      
+      
+        <a href="/aa8d310c63ae/" title="【趣味研究】多跳问答的难点与挑战"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">【趣味研究】多跳问答的难点与挑战</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">【趣味研究】多跳问答的难点与挑战</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="问题汇总"><a href="#问题汇总" class="headerlink" title="问题汇总"></a>问题汇总</h1><img src="/aa8d310c63ae/1.png" srcset="/img/loading.gif" lazyload class="">
+
+<h2 id="1-数据集"><a href="#1-数据集" class="headerlink" title="1 数据集"></a>1 数据集</h2><ol>
+<li>知识更新滞后：</li>
+</ol>
+<ul>
+<li>问答数据集的答案过时：目前常用的问答数据集采集和创建的时间早于 LLM 预训练和发布的时间；</li>
+<li>向量数据库的知识过时：向量数据库的知识采集和创建也是来源于较早的百科知识库。</li>
+</ul>
+<ol start="2">
+<li>问题实体歧义：常用问答数据集的问题十分简短，实体能指代的对象会有多个，比如人物重名、作品形式多样、同义词等等，会使得 LLM 的回答与检索文档的方向产生偏差，无法针对性作答。如问题 <code>What genre is Mother?</code> 其实是想问音乐的类型，但是 LLM 回答的是电影的类型。</li>
+</ol>
+<h2 id="2-检索"><a href="#2-检索" class="headerlink" title="2 检索"></a>2 检索</h2><ol>
+<li>干扰信息多：庞大的向量数据库会导致检索到很多相似的文档块，但无法保证与问题的相关性，因此反而会干扰 LLM 的判断。</li>
+<li>检索方式不匹配：无论是稀疏检索、密集检索还是混合检索，不同的数据集适合的方式并不一致，有些数据集（2WikiMultiHopQA、PopQA、TriviaQA）更适合关键词，有些数据集（ASQA、NaturalQuestions）更适合语义。常用问答数据集的问题都非常简短，语义并不丰富，难以针对性检索，比如 PopQA 数据集：</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>问题模板</th>
+<th>数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>xxx的职业</td>
+<td>121</td>
+</tr>
+<tr>
+<td>xxx的出生城市</td>
+<td>173</td>
+</tr>
+<tr>
+<td>xxx作品的类型</td>
+<td>113</td>
+</tr>
+<tr>
+<td>xxx的父亲</td>
+<td>27</td>
+</tr>
+<tr>
+<td>xxx城市的国家</td>
+<td>274</td>
+</tr>
+<tr>
+<td>xxx作品的制片人</td>
+<td>37</td>
+</tr>
+<tr>
+<td>xxx作品的导演</td>
+<td>95</td>
+</tr>
+<tr>
+<td>xxx国家的首都</td>
+<td>34</td>
+</tr>
+<tr>
+<td>xxx作品的演员</td>
+<td>198</td>
+</tr>
+<tr>
+<td>xxx的运动</td>
+<td>196</td>
+</tr>
+<tr>
+<td>xxx作品的作曲家</td>
+<td>48</td>
+</tr>
+<tr>
+<td>xxx作品的编剧</td>
+<td>42</td>
+</tr>
+<tr>
+<td>xxx的宗教信仰</td>
+<td>40</td>
+</tr>
+</tbody></table>
+<h2 id="3-LLM"><a href="#3-LLM" class="headerlink" title="3 LLM"></a>3 LLM</h2><ol>
+<li>胡编乱造：LLM 在缺乏信息时会自信地生成错误答案，因此需要精心设计提示词。比如 LLM 基本上答不对人物职业和出生地的相关问题，而且这类问题也很难检索到正确答案。</li>
+<li>解码策略不稳定：</li>
+</ol>
+<ul>
+<li>未确定采样策略下，提问 LLM 会得到各种随机的答案，而有时会出现正确答案。</li>
+<li>确定采样策略下（比如贪心采样），随着生成长度的增加，未经过指令微调的 LLM 的回答质量严重下降，甚至泄露预训练信息。</li>
+</ul>
+<h2 id="4-评估方式"><a href="#4-评估方式" class="headerlink" title="4 评估方式"></a>4 评估方式</h2><ol>
+<li>答案多义：LLM 答案可能与标准答案意思一致但表达不同，却被判错。</li>
+<li>匹配方式僵化：评估时仅做字符串匹配 <code>any(answer in normalize_answer(response) for answer in answers if answer)</code>，忽略语义等价性。</li>
+</ol>
+<h1 id="案例分析"><a href="#案例分析" class="headerlink" title="案例分析"></a>案例分析</h1><h2 id="例1"><a href="#例1" class="headerlink" title="例1"></a>例1</h2><h3 id="Question"><a href="#Question" class="headerlink" title="Question"></a>Question</h3><p>Who has the highest goals in world football?</p>
+<h3 id="Gold-Answer"><a href="#Gold-Answer" class="headerlink" title="Gold Answer"></a>Gold Answer</h3><p>The players with the highest all-time goals and highest men’s and women’s international football goals differ. The player with the highest all-time men’s football goals is <strong>Josef Bican</strong>, who in 2020 was recognized by FIFA, the international governing body of football, as the record scorer with an estimated 805 goals. <strong>Christine Sinclair</strong> has the highest goals in women’s international football with 187 and is the all-time leader for international goals scored for men or women. <strong>Cristiano Ronaldo</strong> and <strong>Ali Daei</strong> are currently tied for leading goalscorer in the history of men’s international football with 109.</p>
+<p>评估时标准化后的答案列表：[‘daei’, ‘ali daei’, ‘bican’, ‘josef bican’, ‘sinclair’, ‘christine sinclair’]，并没有包含 Cristiano Ronaldo。</p>
+<h3 id="Response"><a href="#Response" class="headerlink" title="Response"></a>Response</h3><p>The highest goalscorer in world football is <strong>Josef Bican</strong>, an Austrian-Czech footballer who scored 805 goals in 530 games between 1931 and 1955. However, this record is not officially recognized by FIFA, as it is based on incomplete data and may include friendly matches and unofficial games.<br>The top 10 highest goalscorers in world football, according to FIFA, are:</p>
+<ol>
+<li><strong>Cristiano Ronaldo</strong> (Portugal) - 755 goals in 974 games</li>
+<li>Josef Bican (Austria&#x2F;Czech Republic) - 805 goals in 530 games (not officially recognized by FIFA)</li>
+<li>Ferenc Puskás (Hungary) - 746 goals in 629 games</li>
+<li>Gerd Müller (Germany) - 735 goals in 706 games</li>
+<li>Pelé (Brazil) - 725 goals in 656 games</li>
+<li>Romário (Brazil) - 714 goals in 744 games</li>
+</ol>
+<h3 id="Now-Answer"><a href="#Now-Answer" class="headerlink" title="Now Answer"></a>Now Answer</h3><p><strong>Cristiano Ronaldo</strong> (938)、Lionel Messi (865)、Josef Bican (805)。</p>
+<h3 id="Contexts"><a href="#Contexts" class="headerlink" title="Contexts"></a>Contexts</h3><p>检索到的 200 个文档的整体语义与 FIFA 的排名相关，但是并不包含 Gold Answers，并且仅有 8 个文档提到了 C 罗，但是对应的文档与问题无关：</p>
+<ol>
+<li>电视节目：Football’s Greatest；</li>
+<li>游戏：FIFA (video game series)；</li>
+<li>西班牙足球对抗赛：Spanish football rivalries；</li>
+<li>C 罗的庆祝动作：Cristiano Ronaldo；</li>
+<li>前锋评估指标：Actim Index；</li>
+<li>介绍国际足联最佳男足球员的历史：The Best FIFA Men’s Player；</li>
+<li>电视节目：Football’s Greatest；</li>
+<li>知名球员的身高：Height in sports。</li>
+</ol>
+<h2 id="例2"><a href="#例2" class="headerlink" title="例2"></a>例2</h2><h3 id="Question-1"><a href="#Question-1" class="headerlink" title="Question"></a>Question</h3><p>How many times have the lakers won the finals?</p>
+<h3 id="Gold-Answer-1"><a href="#Gold-Answer-1" class="headerlink" title="Gold Answer"></a>Gold Answer</h3><p>这个问题来源于 ASQA 数据集，它有两个答案列表（其他数据集不存在），分别是 QA 的答案和 QA Pairs 的答案列表。</p>
+<p>The Los Angeles Lakers are an American professional basketball team based in Los Angeles. The Lakers compete in the National Basketball Association, NBA, as a member of the league’s Western Conference Pacific Division. The Lakers are one of the most successful teams in the history of the NBA, since 2010 the Lakers won the championship finals <strong>16</strong> times, they won their <strong>17th</strong> in 2020. </p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span>&#x27;question&#x27;<span class="hljs-punctuation">:</span> &#x27;As of <span class="hljs-number">2017</span><span class="hljs-punctuation">,</span> how many times have the lakers won the finals?&#x27;<span class="hljs-punctuation">,</span> &#x27;answers&#x27;<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>&#x27;<span class="hljs-number">16</span>&#x27;<span class="hljs-punctuation">]</span><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span> <br>    <span class="hljs-punctuation">&#123;</span>&#x27;question&#x27;<span class="hljs-punctuation">:</span> &#x27;As of <span class="hljs-number">2016</span><span class="hljs-punctuation">,</span> how many times have the Lakers won the finals?&#x27;<span class="hljs-punctuation">,</span> &#x27;answers&#x27;<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>&#x27;<span class="hljs-number">16</span>&#x27;<span class="hljs-punctuation">]</span><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span> <br>    <span class="hljs-punctuation">&#123;</span>&#x27;question&#x27;<span class="hljs-punctuation">:</span> &#x27;As of <span class="hljs-number">2015</span><span class="hljs-punctuation">,</span> how many times have the Lakers won the finals?&#x27;<span class="hljs-punctuation">,</span> &#x27;answers&#x27;<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>&#x27;<span class="hljs-number">16</span>&#x27;<span class="hljs-punctuation">]</span><span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="Response-1"><a href="#Response-1" class="headerlink" title="Response"></a>Response</h3><p>由于问题本身并没有限定时间，LLM 的回答是 17 次，属于回答错误。</p>
+<h2 id="例3"><a href="#例3" class="headerlink" title="例3"></a>例3</h2><h3 id="Question-2"><a href="#Question-2" class="headerlink" title="Question"></a>Question</h3><p>Who is fruma sarah in fiddler on the roof?</p>
+<p>这个作品有电影、百老汇的两种艺术形式，因此并不清楚问题询问的是扮演者还是角色介绍。</p>
+<h3 id="Gold-Answer-2"><a href="#Gold-Answer-2" class="headerlink" title="Gold Answer"></a>Gold Answer</h3><p>There are several versions of Fiddler on the Roof. The original Broadway production of the show, which opened in 1964, had the first musical theatre run in history to surpass 3,000 performances. The character of Fruma Sarah, <strong>a ghostly depiction of the late wife of Lazar Wolf</strong>, is played by <strong>Carol Sawyer Yussel</strong>. In the 1971 film, Fiddler on the Roof, which theatrically released on November 3, 1971, by United Artists to critical and commercial success, <strong>Ruth Madoc</strong> played Fruma Sarah. In the 2015-2016 Broadway Revival of Fiddler on the Roof, American singer and actress <strong>Jessica Vosk</strong> played Fruma Sarah.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span>&#x27;question&#x27;<span class="hljs-punctuation">:</span> &#x27;Who played fruma sarah in the <span class="hljs-number">1971</span> film<span class="hljs-punctuation">,</span> Fiddler on the Roof?&#x27;<span class="hljs-punctuation">,</span> &#x27;answers&#x27;<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>&#x27;Ruth Madoc&#x27;<span class="hljs-punctuation">]</span><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span> <br>    <span class="hljs-punctuation">&#123;</span>&#x27;question&#x27;<span class="hljs-punctuation">:</span> &#x27;Who played Fruma Sarah in the original <span class="hljs-number">1964</span> Broadway cast of Fiddler on the Roof?&#x27;<span class="hljs-punctuation">,</span> &#x27;answers&#x27;<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>&#x27;Carol Sawyer Yussel&#x27;<span class="hljs-punctuation">]</span><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span> <br>    <span class="hljs-punctuation">&#123;</span>&#x27;question&#x27;<span class="hljs-punctuation">:</span> &#x27;Who is the character of Fruma Sarah in Fiddler on the Roof?&#x27;<span class="hljs-punctuation">,</span> &#x27;answers&#x27;<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>&#x27;a ghostly depiction of the late wife of Lazar Wolf&#x27;<span class="hljs-punctuation">]</span><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span> <br>    <span class="hljs-punctuation">&#123;</span>&#x27;question&#x27;<span class="hljs-punctuation">:</span> &#x27;Who played Fruma Sarah in the <span class="hljs-number">2015</span><span class="hljs-number">-2016</span> Broadway Revival of Fiddler on the Roof?&#x27;<span class="hljs-punctuation">,</span> &#x27;answers&#x27;<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>&#x27;Jessica Vosk&#x27;<span class="hljs-punctuation">]</span><span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="Response-2"><a href="#Response-2" class="headerlink" title="Response"></a>Response</h3><p>LLM 专注于对这个作品的介绍，也提到了答案，不过匹配失败。</p>
+<p>What is the story of Fiddler on the Roof? Fiddler on the Roof is a musical that tells the story of a Jewish family living in the small village of Anatevka, Russia, in the early 20th century. The story follows the life of Tevye, a poor but proud Jewish milkman, and his family as they face the challenges of poverty, anti-Semitism, and the changing world around them.<br>The story begins with Tevye’s daughter Tzeitel’s arranged marriage to the wealthy butcher, Lazar Wolf, but she falls in love with the poor tailor, Motel. Tevye’s other daughters, Hodel and Chava, also face their own challenges, including Hodel’s decision to leave her family to join her revolutionary lover in Siberia and Chava’s marriage to a non-Jew, Fyedka.<br>Throughout the story, Tevye struggles to balance his own desires and traditions with the changing world around him. He is forced to confront the harsh realities of poverty, anti-Semitism, and the Russian Revolution, all while trying to maintain his family’s dignity and traditions.<br>The musical features a range of memorable characters, including the village elder, Rabbi, and the matchmaker, Yente, <strong>as well as the ghost of Fruma-Sarah</strong>, who appears to Tevye in a dream and warns him of the dangers of marrying off his daughters too quickly.<br>The story of Fiddler on the Roof is a powerful exploration of the human experience, touching on themes of love, family, tradition, and the struggle for survival in the face of adversity. The musical features a range of iconic songs, including “If I Were a Rich Man,” “Sunrise, Sunset,” and “To Life,” and has become a beloved classic around the world. Read more<br>What is the significance of the fiddler in Fiddler on the Roof? The fiddler in Fiddler on the Roof is a symbolic character who represents the connection between the past and the present, as well as the struggle to maintain tradition in the face of change. The fiddler is a wandering musician who plays his fiddle on the roof of the village, and his music is a reminder of the village’s rich cultural heritage.</p>
+<h2 id="例4"><a href="#例4" class="headerlink" title="例4"></a>例4</h2><h3 id="Question-3"><a href="#Question-3" class="headerlink" title="Question"></a>Question</h3><p>When did <strong>toronto</strong> host the mlb all-star game?</p>
+<h3 id="Gold-Answer-3"><a href="#Gold-Answer-3" class="headerlink" title="Gold Answer"></a>Gold Answer</h3><p>The <strong>1991 Major League Baseball (MLB) All-Star Game</strong> was the <strong>62nd</strong> playing of the midsummer classic between the all-stars of the American League (AL) and National League (NL), the two leagues comprising Major League Baseball. The venue for each All-Star Game is chosen by an MLB selection committee. Toronto hosted the 1991 MLB All-Star Game on <strong>July 9, 1991</strong>.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span>&#x27;question&#x27;<span class="hljs-punctuation">:</span> &#x27;What date did toronto host the mlb all-star game?&#x27;<span class="hljs-punctuation">,</span> &#x27;answers&#x27;<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>&#x27;July <span class="hljs-number">9</span><span class="hljs-punctuation">,</span> <span class="hljs-number">1991</span>&#x27;<span class="hljs-punctuation">]</span><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span> <br>    <span class="hljs-punctuation">&#123;</span>&#x27;question&#x27;<span class="hljs-punctuation">:</span> &#x27;Which all-star game did toronto host?&#x27;<span class="hljs-punctuation">,</span> &#x27;answers&#x27;<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>&#x27;<span class="hljs-number">1991</span> Major League Baseball All-Star Game&#x27;<span class="hljs-punctuation">,</span> &#x27;the <span class="hljs-number">62</span>nd playing of the midsummer classic&#x27;<span class="hljs-punctuation">]</span><span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="Response-3"><a href="#Response-3" class="headerlink" title="Response"></a>Response</h3><img src="/aa8d310c63ae/2.png" srcset="/img/loading.gif" lazyload class="">
+
+<h3 id="Contexts-1"><a href="#Contexts-1" class="headerlink" title="Contexts"></a>Contexts</h3><p>检索到的 200 条文档中提到 toronto 的很少，而且含有 tornto 文档大多也与问题无关，能精确匹配答案的有 3 条。其中 top-10 都在介绍 National Hockey League All-Star Game，top-20 有 3 条 Major League Baseball All-Star Game 的介绍。</p>
+<h2 id="例5"><a href="#例5" class="headerlink" title="例5"></a>例5</h2><h3 id="Question-4"><a href="#Question-4" class="headerlink" title="Question"></a>Question</h3><p>What is Henry Feilden’s occupation?</p>
+<h3 id="Gold-Answer-4"><a href="#Gold-Answer-4" class="headerlink" title="Gold Answer"></a>Gold Answer</h3><p>[‘politician’, ‘political leader’, ‘political figure’, ‘polit.’, ‘pol’]</p>
+<h3 id="Response-4"><a href="#Response-4" class="headerlink" title="Response"></a>Response</h3><p> He is a British diplomat and a former British Ambassador to the United States.</p>
+<h3 id="Contexts-2"><a href="#Contexts-2" class="headerlink" title="Contexts"></a>Contexts</h3><p>检索到的 200 条文档中仅有 4 条提到了这个人，因此检索人物的相关问题时应该按关键字检索。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%A0%94%E7%A9%B6%E5%AE%9E%E8%B7%B5/" class="category-chain-item">研究实践</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/RAG/" class="print-no-link">#RAG</a>
+      
+        <a href="/tags/LLM/" class="print-no-link">#LLM</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【趣味研究】多跳问答的难点与挑战</div>
+      <div>http://xuan-van.github.io/aa8d310c63ae/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>文晋</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年6月30日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-cc-nc"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-cc-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/4dbd2d8100b8/" title="【多元关系抽取】基于大语言模型的地质实体多元关系抽取框架">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">【多元关系抽取】基于大语言模型的地质实体多元关系抽取框架</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/5306a0f67226/" title="【时间序列预测】基于深度学习的多变量时间序列预测家庭电力消耗">
+                        <span class="hidden-mobile">【时间序列预测】基于深度学习的多变量时间序列预测家庭电力消耗</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/background/background.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/background/background.js"></script><!-- hexo injector body_end end --></body>
+</html>
