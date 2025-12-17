@@ -1,0 +1,997 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/background/%E5%9B%BE%E6%A0%87.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="文晋">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content=".xpqpgxoushto{}   注意力头筛选：   注意力头投票：   参考项目：hozhengyi&#x2F;novo 1 安装1.1 虚拟环境123456789conda create -n novo python&#x3D;3.10 -yconda activate novopip install torch&#x3D;&#x3D;2.2.2 numpy&#x3D;&#x3D;1.26.4 transformers&#x3D;&#x3D;4.40">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【论文复现】NoVo">
+<meta property="og:url" content="http://xuan-van.github.io/30f5d2bbff4e/index.html">
+<meta property="og:site_name" content="文心晋意">
+<meta property="og:description" content=".xpqpgxoushto{}   注意力头筛选：   注意力头投票：   参考项目：hozhengyi&#x2F;novo 1 安装1.1 虚拟环境123456789conda create -n novo python&#x3D;3.10 -yconda activate novopip install torch&#x3D;&#x3D;2.2.2 numpy&#x3D;&#x3D;1.26.4 transformers&#x3D;&#x3D;4.40">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://xuan-van.github.io/30f5d2bbff4e/1.png">
+<meta property="og:image" content="http://xuan-van.github.io/30f5d2bbff4e/2.png">
+<meta property="og:image" content="http://xuan-van.github.io/30f5d2bbff4e/3.png">
+<meta property="article:published_time" content="2025-10-20T04:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-17T11:57:44.105Z">
+<meta property="article:author" content="文晋">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="Attention Head">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://xuan-van.github.io/30f5d2bbff4e/1.png">
+  
+  
+  
+  <title>【论文复现】NoVo - 文心晋意</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/background/background.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"xuan-van.github.io","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":3},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>文晋的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-image"></i>
+                <span>图片</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/images/llama.svg" target="_self">
+                    
+                    <span>Llama 结构</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/images/rag.svg" target="_self">
+                    
+                    <span>多跳问答难点</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">【论文复现】NoVo</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-10-20 12:00" pubdate>
+          2025年10月20日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          48 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="代码复现"
+        id="heading-211acd8e7f189296b7caddd5c95b71af" role="tab" data-toggle="collapse" href="#collapse-211acd8e7f189296b7caddd5c95b71af"
+        aria-expanded="true"
+      >
+        代码复现
+        <span class="list-group-count">(10)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-211acd8e7f189296b7caddd5c95b71af"
+           role="tabpanel" aria-labelledby="heading-211acd8e7f189296b7caddd5c95b71af">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/ad1bc992703e/" title="【代码拆解】Trajectory Transformer"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【代码拆解】Trajectory Transformer</span>
+        </a>
+      
+    
+      
+      
+        <a href="/d877247157cc/" title="【模型复现】从零实现 Llama3"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【模型复现】从零实现 Llama3</span>
+        </a>
+      
+    
+      
+      
+        <a href="/96e60ded6ebf/" title="【论文复现】HippoRAG &amp; HippoRAG2"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【论文复现】HippoRAG &amp; HippoRAG2</span>
+        </a>
+      
+    
+      
+      
+        <a href="/4a1d9814c83d/" title="【论文复现】InstructRAG"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【论文复现】InstructRAG</span>
+        </a>
+      
+    
+      
+      
+        <a href="/30f5d2bbff4e/" title="【论文复现】NoVo"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">【论文复现】NoVo</span>
+        </a>
+      
+    
+      
+      
+        <a href="/ca4c72297a46/" title="【论文复现】ReDeEP"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【论文复现】ReDeEP</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2ef7e94f9872/" title="【论文复现】Retrieval Head"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【论文复现】Retrieval Head</span>
+        </a>
+      
+    
+      
+      
+        <a href="/e010e6dc6450/" title="【论文复现】SelfElicit"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【论文复现】SelfElicit</span>
+        </a>
+      
+    
+      
+      
+        <a href="/0969a0008002/" title="【论文复现】SelfRAG"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【论文复现】SelfRAG</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2a409a691f67/" title="【论文复现】xRAG"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">【论文复现】xRAG</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">【论文复现】NoVo</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <figure style="text-align: center;">
+    <style>.xpqpgxoushto{}</style><img src="/30f5d2bbff4e/1.png" srcset="/img/loading.gif" lazyload class="xpqpgxoushto">
+</figure>
+
+<p>注意力头筛选：</p>
+<img src="/30f5d2bbff4e/2.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>注意力头投票：</p>
+<img src="/30f5d2bbff4e/3.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>参考项目：<a target="_blank" rel="noopener" href="https://github.com/hozhengyi/novo">hozhengyi&#x2F;novo</a></p>
+<h1 id="1-安装"><a href="#1-安装" class="headerlink" title="1 安装"></a>1 安装</h1><h2 id="1-1-虚拟环境"><a href="#1-1-虚拟环境" class="headerlink" title="1.1 虚拟环境"></a>1.1 虚拟环境</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">conda create -n novo python=3.10 -y<br>conda activate novo<br><br>pip install torch==2.2.2 numpy==1.26.4 transformers==4.40.0 accelerate<br><br>pip install pyzmq -i https://pypi.tuna.tsinghua.edu.cn/simple --prefer-binary  <span class="hljs-comment"># --prefer-binary 可以强制 pip 使用现成的 wheel 文件，而不是编译源码</span><br>pip install ipykernel<br>python -m ipykernel install --user --name novo<br>jupyter kernelspec list<br></code></pre></td></tr></table></figure>
+
+<h2 id="1-2-LLM"><a href="#1-2-LLM" class="headerlink" title="1.2 LLM"></a>1.2 LLM</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">huggingface-cli download meta-llama/Llama-2-7b-chat-hf --local-dir model/Llama-2-7b-chat-hf<br></code></pre></td></tr></table></figure>
+
+<h1 id="2-整体流程"><a href="#2-整体流程" class="headerlink" title="2 整体流程"></a>2 整体流程</h1><h2 id="2-1-准备工作"><a href="#2-1-准备工作" class="headerlink" title="2.1 准备工作"></a>2.1 准备工作</h2><ol>
+<li>导入必要的库：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> math<br><span class="hljs-keyword">import</span> pickle<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">from</span> tqdm <span class="hljs-keyword">import</span> tqdm<br><span class="hljs-keyword">from</span> typing <span class="hljs-keyword">import</span> <span class="hljs-type">Optional</span>, <span class="hljs-type">Union</span><br><br><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">from</span> torch <span class="hljs-keyword">import</span> nn<br><span class="hljs-keyword">from</span> torch <span class="hljs-keyword">import</span> Tensor<br><span class="hljs-keyword">import</span> torch.nn.functional <span class="hljs-keyword">as</span> F<br><br><span class="hljs-keyword">from</span> dataclasses <span class="hljs-keyword">import</span> dataclass<br><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> AutoTokenizer, Cache, DynamicCache, StaticCache<br><span class="hljs-keyword">from</span> transformers.modeling_utils <span class="hljs-keyword">import</span> PreTrainedModel<br><span class="hljs-keyword">from</span> transformers.models.llama.configuration_llama <span class="hljs-keyword">import</span> LlamaConfig<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>定义输出的类：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 模型前向传播的输出结构</span><br><span class="hljs-meta">@dataclass</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">OutputStruct</span>:<br>    logits: <span class="hljs-type">Optional</span>[Tensor] = <span class="hljs-literal">None</span>  <span class="hljs-comment"># 模型的输出logits</span><br>    kv_cache: <span class="hljs-type">Optional</span>[<span class="hljs-type">Union</span>[Cache, DynamicCache]] = <span class="hljs-literal">None</span>  <span class="hljs-comment"># 键值缓存</span><br>    hidden_states: <span class="hljs-type">Optional</span>[Tensor] = <span class="hljs-literal">None</span>  <span class="hljs-comment"># 隐藏状态</span><br>    head_norms: <span class="hljs-type">Optional</span>[Tensor] = <span class="hljs-literal">None</span>  <span class="hljs-comment"># 注意力头范数</span><br>    attn_map: <span class="hljs-type">Optional</span>[Tensor] = <span class="hljs-literal">None</span>  <span class="hljs-comment"># 注意力图</span><br>    value: <span class="hljs-type">Optional</span>[Tensor] = <span class="hljs-literal">None</span>  <span class="hljs-comment"># 值张量</span><br>    loss: <span class="hljs-type">Optional</span>[<span class="hljs-built_in">float</span>] = <span class="hljs-literal">None</span>  <span class="hljs-comment"># 损失值</span><br><br>    <br><span class="hljs-comment"># 注意力范数投票器</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MixinDecoderCausalLM</span>:<br>    <span class="hljs-comment"># 加载分词器</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, config</span>):<br>        <span class="hljs-variable language_">self</span>.tokenizer = AutoTokenizer.from_pretrained(config._name_or_path)<br><br>    <span class="hljs-comment"># 字符串转换为token张量</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">tokenise</span>(<span class="hljs-params">self, s</span>):<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.tokenizer.encode(s, return_tensors=<span class="hljs-string">&#x27;pt&#x27;</span>).to(<span class="hljs-variable language_">self</span>.device)<br>    <br>    <span class="hljs-comment"># 推理阶段的前向传播</span><br><span class="hljs-meta">    @torch.no_grad()</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">infer_forward</span>(<span class="hljs-params">self, input_ids, output_norms=<span class="hljs-literal">True</span>, **kwargs</span>):<br>        <span class="hljs-comment"># 如果输入是字符串，先进行分词</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(input_ids, <span class="hljs-built_in">str</span>):<br>            input_ids = <span class="hljs-variable language_">self</span>.tokenise(input_ids)<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>(input_ids, output_norms=output_norms, **kwargs)  <span class="hljs-comment"># 调用模型前向传播</span><br>    <br>    <span class="hljs-comment"># 零样本分类</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">zshot_classify</span>(<span class="hljs-params">self, prompt, choices, indices, return_scores=<span class="hljs-literal">False</span></span>):<br>        <span class="hljs-comment"># 计算注意力头范数</span><br>        head_norms = []<br>        <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> choices:<br>            tokens = <span class="hljs-variable language_">self</span>.tokenise(prompt + <span class="hljs-string">&quot; &quot;</span> + c)<br>            hn = <span class="hljs-variable language_">self</span>.infer_forward(tokens).head_norms[<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>, :, :].detach().cpu()  <span class="hljs-comment"># 获取最后一个token的注意力头范数</span><br>            head_norms.append(hn)<br>        head_norms = torch.stack(head_norms).flatten(<span class="hljs-number">1</span>)<br><br>        <span class="hljs-keyword">if</span> return_scores:<br>            <span class="hljs-keyword">return</span> head_norms<br><br>        <span class="hljs-comment"># 对第一组索引取最大值，对第二组索引取最小值，组合后取众数作为最终预测</span><br>        individual_preds = torch.cat([head_norms[:, indices[<span class="hljs-number">0</span>]].argmax(<span class="hljs-number">0</span>), head_norms[:, indices[<span class="hljs-number">1</span>]].argmin(<span class="hljs-number">0</span>)])<br>        pred = torch.mode(individual_preds).values.item()<br><br>        <span class="hljs-keyword">return</span> pred<br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>定义 Llama 的类：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br><span class="line">526</span><br><span class="line">527</span><br><span class="line">528</span><br><span class="line">529</span><br><span class="line">530</span><br><span class="line">531</span><br><span class="line">532</span><br><span class="line">533</span><br><span class="line">534</span><br><span class="line">535</span><br><span class="line">536</span><br><span class="line">537</span><br><span class="line">538</span><br><span class="line">539</span><br><span class="line">540</span><br><span class="line">541</span><br><span class="line">542</span><br><span class="line">543</span><br><span class="line">544</span><br><span class="line">545</span><br><span class="line">546</span><br><span class="line">547</span><br><span class="line">548</span><br><span class="line">549</span><br><span class="line">550</span><br><span class="line">551</span><br><span class="line">552</span><br><span class="line">553</span><br><span class="line">554</span><br><span class="line">555</span><br><span class="line">556</span><br><span class="line">557</span><br><span class="line">558</span><br><span class="line">559</span><br><span class="line">560</span><br><span class="line">561</span><br><span class="line">562</span><br><span class="line">563</span><br><span class="line">564</span><br><span class="line">565</span><br><span class="line">566</span><br><span class="line">567</span><br><span class="line">568</span><br><span class="line">569</span><br><span class="line">570</span><br><span class="line">571</span><br><span class="line">572</span><br><span class="line">573</span><br><span class="line">574</span><br><span class="line">575</span><br><span class="line">576</span><br><span class="line">577</span><br><span class="line">578</span><br><span class="line">579</span><br><span class="line">580</span><br><span class="line">581</span><br><span class="line">582</span><br><span class="line">583</span><br><span class="line">584</span><br><span class="line">585</span><br><span class="line">586</span><br><span class="line">587</span><br><span class="line">588</span><br><span class="line">589</span><br><span class="line">590</span><br><span class="line">591</span><br><span class="line">592</span><br><span class="line">593</span><br><span class="line">594</span><br><span class="line">595</span><br><span class="line">596</span><br><span class="line">597</span><br><span class="line">598</span><br><span class="line">599</span><br><span class="line">600</span><br><span class="line">601</span><br><span class="line">602</span><br><span class="line">603</span><br><span class="line">604</span><br><span class="line">605</span><br><span class="line">606</span><br><span class="line">607</span><br><span class="line">608</span><br><span class="line">609</span><br><span class="line">610</span><br><span class="line">611</span><br><span class="line">612</span><br><span class="line">613</span><br><span class="line">614</span><br><span class="line">615</span><br><span class="line">616</span><br><span class="line">617</span><br><span class="line">618</span><br><span class="line">619</span><br><span class="line">620</span><br><span class="line">621</span><br><span class="line">622</span><br><span class="line">623</span><br><span class="line">624</span><br><span class="line">625</span><br><span class="line">626</span><br><span class="line">627</span><br><span class="line">628</span><br><span class="line">629</span><br><span class="line">630</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># RMS归一化层</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">LlamaRMSNorm</span>(nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, hidden_size, eps=<span class="hljs-number">1e-6</span></span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        <span class="hljs-variable language_">self</span>.weight = nn.Parameter(torch.ones(hidden_size))  <span class="hljs-comment"># 可学习的缩放参数</span><br>        <span class="hljs-variable language_">self</span>.variance_epsilon = eps  <span class="hljs-comment"># 防止除以0</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, hidden_states</span>):<br>        input_dtype = hidden_states.dtype<br>        hidden_states = hidden_states.to(torch.float32)<br>        variance = hidden_states.<span class="hljs-built_in">pow</span>(<span class="hljs-number">2</span>).mean(-<span class="hljs-number">1</span>, keepdim=<span class="hljs-literal">True</span>)<br>        hidden_states = hidden_states * torch.rsqrt(variance + <span class="hljs-variable language_">self</span>.variance_epsilon)<br>        <br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.weight * hidden_states.to(input_dtype)<br><br><br><span class="hljs-comment"># 旋转位置编码RoPE</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">LlamaRotaryEmbedding</span>(nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, dim, max_position_embeddings=<span class="hljs-number">2048</span>, base=<span class="hljs-number">10000</span>, device=<span class="hljs-literal">None</span></span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        <span class="hljs-variable language_">self</span>.dim = dim  <span class="hljs-comment"># 编码维度</span><br>        <span class="hljs-variable language_">self</span>.max_position_embeddings = max_position_embeddings  <span class="hljs-comment"># 最大位置编码长度</span><br>        <span class="hljs-variable language_">self</span>.base = base  <span class="hljs-comment"># RoPE的基础频率参数</span><br>        inv_freq = <span class="hljs-number">1.0</span> / (<span class="hljs-variable language_">self</span>.base ** (torch.arange(<span class="hljs-number">0</span>, <span class="hljs-variable language_">self</span>.dim, <span class="hljs-number">2</span>, dtype=torch.int64).<span class="hljs-built_in">float</span>().to(device) / <span class="hljs-variable language_">self</span>.dim))  <span class="hljs-comment"># 计算逆频率</span><br>        <span class="hljs-variable language_">self</span>.register_buffer(<span class="hljs-string">&quot;inv_freq&quot;</span>, inv_freq, persistent=<span class="hljs-literal">False</span>)  <span class="hljs-comment"># 注册为缓冲区，不参与梯度计算</span><br><br>    <span class="hljs-comment"># 正弦缓存属性访问器</span><br><span class="hljs-meta">    @property</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">sin_cached</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>._sin_cached<br><br>    <span class="hljs-comment"># 余弦缓存属性访问器</span><br><span class="hljs-meta">    @property</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">cos_cached</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>._cos_cached<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, x, position_ids, seq_len=<span class="hljs-literal">None</span></span>):<br>        <span class="hljs-comment"># 警告：seq_len参数已弃用</span><br>        <span class="hljs-keyword">if</span> seq_len <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;The `seq_len` argument is deprecated and unused. It will be removed in v4.40.&quot;</span>)<br><br>        inv_freq_expanded = <span class="hljs-variable language_">self</span>.inv_freq[<span class="hljs-literal">None</span>, :, <span class="hljs-literal">None</span>].<span class="hljs-built_in">float</span>().expand(position_ids.shape[<span class="hljs-number">0</span>], -<span class="hljs-number">1</span>, <span class="hljs-number">1</span>)  <span class="hljs-comment"># 扩展逆频率张量以匹配batch大小</span><br>        position_ids_expanded = position_ids[:, <span class="hljs-literal">None</span>, :].<span class="hljs-built_in">float</span>()  <span class="hljs-comment"># 扩展位置ID张量</span><br>        freqs = (inv_freq_expanded @ position_ids_expanded).transpose(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)  <span class="hljs-comment"># 计算频率</span><br>        emb = torch.cat((freqs, freqs), dim=-<span class="hljs-number">1</span>)  <span class="hljs-comment"># 将频率复制一次以匹配完整维度</span><br>        <span class="hljs-comment"># 计算余弦和正弦值</span><br>        cos = emb.cos().to(dtype=x.dtype)<br>        sin = emb.sin().to(dtype=x.dtype)<br>        <span class="hljs-comment"># 缓存计算结果</span><br>        <span class="hljs-variable language_">self</span>._cos_cached = cos<br>        <span class="hljs-variable language_">self</span>._sin_cached = sin<br>        <br>        <span class="hljs-keyword">return</span> cos, sin<br><br><br><span class="hljs-comment"># 线性缩放RoPE变体，用于扩展上下文长度</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">LlamaLinearScalingRotaryEmbedding</span>(<span class="hljs-title class_ inherited__">LlamaRotaryEmbedding</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, dim, max_position_embeddings=<span class="hljs-number">2048</span>, base=<span class="hljs-number">10000</span>, device=<span class="hljs-literal">None</span>, scaling_factor=<span class="hljs-number">1.0</span></span>):<br>        <span class="hljs-variable language_">self</span>.scaling_factor = scaling_factor  <span class="hljs-comment"># 缩放因子，用于线性扩展上下文长度</span><br>        <span class="hljs-built_in">super</span>().__init__(dim, max_position_embeddings, base, device)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, x, position_ids, seq_len=<span class="hljs-literal">None</span></span>):<br>        <span class="hljs-comment"># 核心区别：对位置ID应用缩放因子</span><br>        position_ids = position_ids.<span class="hljs-built_in">float</span>() / <span class="hljs-variable language_">self</span>.scaling_factor<br>        cos, sin = <span class="hljs-built_in">super</span>().forward(x, position_ids, seq_len)<br>        <br>        <span class="hljs-keyword">return</span> cos, sin<br><br>    <br><span class="hljs-comment"># 动态NTK缩放RoPE变体，另一种扩展上下文长度的方法</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">LlamaDynamicNTKScalingRotaryEmbedding</span>(<span class="hljs-title class_ inherited__">LlamaRotaryEmbedding</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, dim, max_position_embeddings=<span class="hljs-number">2048</span>, base=<span class="hljs-number">10000</span>, device=<span class="hljs-literal">None</span>, scaling_factor=<span class="hljs-number">1.0</span></span>):<br>        <span class="hljs-variable language_">self</span>.scaling_factor = scaling_factor<br>        <span class="hljs-built_in">super</span>().__init__(dim, max_position_embeddings, base, device)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, x, position_ids, seq_len=<span class="hljs-literal">None</span></span>):<br>        <span class="hljs-comment"># 核心区别：当序列长度超过原始长度时重新计算逆频率</span><br>        seq_len = torch.<span class="hljs-built_in">max</span>(position_ids) + <span class="hljs-number">1</span><br>        <span class="hljs-keyword">if</span> seq_len &gt; <span class="hljs-variable language_">self</span>.max_position_embeddings:<br>            base = <span class="hljs-variable language_">self</span>.base * ((<span class="hljs-variable language_">self</span>.scaling_factor * seq_len / <span class="hljs-variable language_">self</span>.max_position_embeddings) - (<span class="hljs-variable language_">self</span>.scaling_factor - <span class="hljs-number">1</span>)) ** (<span class="hljs-variable language_">self</span>.dim / (<span class="hljs-variable language_">self</span>.dim - <span class="hljs-number">2</span>))  <span class="hljs-comment"># 动态调整base值</span><br>            inv_freq = <span class="hljs-number">1.0</span> / (base ** (torch.arange(<span class="hljs-number">0</span>, <span class="hljs-variable language_">self</span>.dim, <span class="hljs-number">2</span>, dtype=torch.int64).<span class="hljs-built_in">float</span>().to(x.device) / <span class="hljs-variable language_">self</span>.dim))  <span class="hljs-comment"># 重新计算逆频率</span><br>            <span class="hljs-variable language_">self</span>.register_buffer(<span class="hljs-string">&quot;inv_freq&quot;</span>, inv_freq, persistent=<span class="hljs-literal">False</span>)  <span class="hljs-comment"># 更新缓冲区</span><br>        cos, sin = <span class="hljs-built_in">super</span>().forward(x, position_ids, seq_len)<br>        <br>        <span class="hljs-keyword">return</span> cos, sin<br><br>    <br><span class="hljs-comment"># 将输入张量分成两半并旋转</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">rotate_half</span>(<span class="hljs-params">x</span>):<br>    x1 = x[..., : x.shape[-<span class="hljs-number">1</span>] // <span class="hljs-number">2</span>]<br>    x2 = x[..., x.shape[-<span class="hljs-number">1</span>] // <span class="hljs-number">2</span> :]<br>    <br>    <span class="hljs-keyword">return</span> torch.cat((-x2, x1), dim=-<span class="hljs-number">1</span>)<br><br><br><span class="hljs-comment"># 应用旋转位置编码到查询和键</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">apply_rotary_pos_emb</span>(<span class="hljs-params">q, k, cos, sin, position_ids=<span class="hljs-literal">None</span>, unsqueeze_dim=<span class="hljs-number">1</span></span>):<br>    cos = cos.unsqueeze(unsqueeze_dim)<br>    sin = sin.unsqueeze(unsqueeze_dim)<br>    q_embed = (q * cos) + (rotate_half(q) * sin)<br>    k_embed = (k * cos) + (rotate_half(k) * sin)<br>    <br>    <span class="hljs-keyword">return</span> q_embed, k_embed<br><br><br><span class="hljs-comment"># MLP模块</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">LlamaMLP</span>(nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, config</span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        <span class="hljs-variable language_">self</span>.config = config<br>        <span class="hljs-variable language_">self</span>.hidden_size = config.hidden_size<br>        <span class="hljs-variable language_">self</span>.intermediate_size = config.intermediate_size<br>        <br>        <span class="hljs-comment"># 三个线性投影层</span><br>        <span class="hljs-variable language_">self</span>.gate_proj = nn.Linear(<span class="hljs-variable language_">self</span>.hidden_size, <span class="hljs-variable language_">self</span>.intermediate_size, bias=<span class="hljs-literal">False</span>)<br>        <span class="hljs-variable language_">self</span>.up_proj = nn.Linear(<span class="hljs-variable language_">self</span>.hidden_size, <span class="hljs-variable language_">self</span>.intermediate_size, bias=<span class="hljs-literal">False</span>)<br>        <span class="hljs-variable language_">self</span>.down_proj = nn.Linear(<span class="hljs-variable language_">self</span>.intermediate_size, <span class="hljs-variable language_">self</span>.hidden_size, bias=<span class="hljs-literal">False</span>)<br>        <br>        <span class="hljs-keyword">if</span> config.hidden_act != <span class="hljs-string">&#x27;silu&#x27;</span>: <span class="hljs-keyword">raise</span>  <span class="hljs-comment"># 验证激活函数为SiLU</span><br>        <span class="hljs-variable language_">self</span>.act_fn = nn.SiLU()<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, x</span>):<br>        <span class="hljs-comment"># 支持张量并行</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.config.pretraining_tp &gt; <span class="hljs-number">1</span>:<br>            <span class="hljs-built_in">slice</span> = <span class="hljs-variable language_">self</span>.intermediate_size // <span class="hljs-variable language_">self</span>.config.pretraining_tp  <span class="hljs-comment"># 计算每个分片的维度</span><br>            <br>            <span class="hljs-comment"># 分割权重矩阵</span><br>            gate_proj_slices = <span class="hljs-variable language_">self</span>.gate_proj.weight.split(<span class="hljs-built_in">slice</span>, dim=<span class="hljs-number">0</span>)<br>            up_proj_slices = <span class="hljs-variable language_">self</span>.up_proj.weight.split(<span class="hljs-built_in">slice</span>, dim=<span class="hljs-number">0</span>)<br>            down_proj_slices = <span class="hljs-variable language_">self</span>.down_proj.weight.split(<span class="hljs-built_in">slice</span>, dim=<span class="hljs-number">1</span>)<br><br>            <span class="hljs-comment"># 并行计算gate和up投影</span><br>            gate_proj = torch.cat([F.linear(x, gate_proj_slices[i]) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.config.pretraining_tp)], dim=-<span class="hljs-number">1</span>)<br>            up_proj = torch.cat([F.linear(x, up_proj_slices[i]) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.config.pretraining_tp)], dim=-<span class="hljs-number">1</span>)<br><br>            <span class="hljs-comment"># 应用激活函数并计算中间状态</span><br>            intermediate_states = (<span class="hljs-variable language_">self</span>.act_fn(gate_proj) * up_proj).split(<span class="hljs-built_in">slice</span>, dim=<span class="hljs-number">2</span>)<br>            <br>            <span class="hljs-comment"># 并行计算down投影</span><br>            down_proj = [F.linear(intermediate_states[i], down_proj_slices[i]) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.config.pretraining_tp)]<br>            down_proj = <span class="hljs-built_in">sum</span>(down_proj)<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-comment"># 标准前向传播：SwiGLU激活函数</span><br>            down_proj = <span class="hljs-variable language_">self</span>.down_proj(<span class="hljs-variable language_">self</span>.act_fn(<span class="hljs-variable language_">self</span>.gate_proj(x)) * <span class="hljs-variable language_">self</span>.up_proj(x))<br><br>        <span class="hljs-keyword">return</span> down_proj<br><br>    <br><span class="hljs-comment"># 重复键值头用于分组查询注意力</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">repeat_kv</span>(<span class="hljs-params">hidden_states, n_rep</span>):<br>    batch, num_key_value_heads, slen, head_dim = hidden_states.shape<br>    <span class="hljs-keyword">if</span> n_rep == <span class="hljs-number">1</span>:<br>        <span class="hljs-keyword">return</span> hidden_states<br>    hidden_states = hidden_states[:, :, <span class="hljs-literal">None</span>, :, :].expand(batch, num_key_value_heads, n_rep, slen, head_dim)<br>    <br>    <span class="hljs-keyword">return</span> hidden_states.reshape(batch, num_key_value_heads * n_rep, slen, head_dim)<br><br><br><span class="hljs-comment"># 标准注意力机制实现</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">LlamaAttention</span>(nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, config, layer_idx=<span class="hljs-literal">None</span></span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        <span class="hljs-variable language_">self</span>.config = config<br>        <span class="hljs-variable language_">self</span>.layer_idx = layer_idx<br>        <span class="hljs-keyword">if</span> layer_idx <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>: <span class="hljs-keyword">raise</span><br><br>        <span class="hljs-comment"># 注意力配置参数</span><br>        <span class="hljs-variable language_">self</span>.attention_dropout = config.attention_dropout<br>        <span class="hljs-variable language_">self</span>.hidden_size = config.hidden_size<br>        <span class="hljs-variable language_">self</span>.num_heads = config.num_attention_heads<br>        <span class="hljs-variable language_">self</span>.head_dim = <span class="hljs-variable language_">self</span>.hidden_size // <span class="hljs-variable language_">self</span>.num_heads<br>        <span class="hljs-variable language_">self</span>.num_key_value_heads = config.num_key_value_heads  <span class="hljs-comment"># GQA中的键值头数</span><br>        <span class="hljs-variable language_">self</span>.num_key_value_groups = <span class="hljs-variable language_">self</span>.num_heads // <span class="hljs-variable language_">self</span>.num_key_value_heads  <span class="hljs-comment"># 每个键值头服务的查询头数</span><br>        <span class="hljs-variable language_">self</span>.max_position_embeddings = config.max_position_embeddings<br>        <span class="hljs-variable language_">self</span>.rope_theta = config.rope_theta  <span class="hljs-comment"># RoPE的θ参数</span><br>        <span class="hljs-variable language_">self</span>.is_causal = <span class="hljs-literal">True</span>  <span class="hljs-comment"># 因果注意力掩码</span><br><br>        <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">self</span>.head_dim * <span class="hljs-variable language_">self</span>.num_heads) != <span class="hljs-variable language_">self</span>.hidden_size: <span class="hljs-keyword">raise</span>  <span class="hljs-comment"># 验证头维度正确性</span><br><br>        <span class="hljs-comment"># 投影层（查询、键、值、输出）</span><br>        <span class="hljs-variable language_">self</span>.q_proj = nn.Linear(<span class="hljs-variable language_">self</span>.hidden_size, <span class="hljs-variable language_">self</span>.num_heads * <span class="hljs-variable language_">self</span>.head_dim, bias=config.attention_bias)<br>        <span class="hljs-variable language_">self</span>.k_proj = nn.Linear(<span class="hljs-variable language_">self</span>.hidden_size, <span class="hljs-variable language_">self</span>.num_key_value_heads * <span class="hljs-variable language_">self</span>.head_dim, bias=config.attention_bias)<br>        <span class="hljs-variable language_">self</span>.v_proj = nn.Linear(<span class="hljs-variable language_">self</span>.hidden_size, <span class="hljs-variable language_">self</span>.num_key_value_heads * <span class="hljs-variable language_">self</span>.head_dim, bias=config.attention_bias)<br>        <span class="hljs-variable language_">self</span>.o_proj = nn.Linear(<span class="hljs-variable language_">self</span>.hidden_size, <span class="hljs-variable language_">self</span>.hidden_size, bias=config.attention_bias)<br>        <br>        <span class="hljs-variable language_">self</span>._init_rope()  <span class="hljs-comment"># 初始化旋转位置编码</span><br><br>    <span class="hljs-comment"># 根据配置初始化RoPE</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">_init_rope</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-comment"># 标准RoPE</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.config.rope_scaling <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>            <span class="hljs-variable language_">self</span>.rotary_emb = LlamaRotaryEmbedding(<br>                <span class="hljs-variable language_">self</span>.head_dim,<br>                max_position_embeddings=<span class="hljs-variable language_">self</span>.max_position_embeddings,<br>                base=<span class="hljs-variable language_">self</span>.rope_theta,<br>            )<br>        <span class="hljs-comment"># 支持RoPE缩放</span><br>        <span class="hljs-keyword">else</span>:<br>            scaling_type = <span class="hljs-variable language_">self</span>.config.rope_scaling[<span class="hljs-string">&quot;type&quot;</span>]<br>            scaling_factor = <span class="hljs-variable language_">self</span>.config.rope_scaling[<span class="hljs-string">&quot;factor&quot;</span>]<br>            <br>            <span class="hljs-comment"># 线性缩放RoPE</span><br>            <span class="hljs-keyword">if</span> scaling_type == <span class="hljs-string">&quot;linear&quot;</span>:<br>                <span class="hljs-variable language_">self</span>.rotary_emb = LlamaLinearScalingRotaryEmbedding(<br>                    <span class="hljs-variable language_">self</span>.head_dim,<br>                    max_position_embeddings=<span class="hljs-variable language_">self</span>.max_position_embeddings,<br>                    scaling_factor=scaling_factor,<br>                    base=<span class="hljs-variable language_">self</span>.rope_theta,<br>                )<br>                <br>            <span class="hljs-comment"># 动态NTK缩放RoPE</span><br>            <span class="hljs-keyword">elif</span> scaling_type == <span class="hljs-string">&quot;dynamic&quot;</span>:<br>                <span class="hljs-variable language_">self</span>.rotary_emb = LlamaDynamicNTKScalingRotaryEmbedding(<br>                    <span class="hljs-variable language_">self</span>.head_dim,<br>                    max_position_embeddings=<span class="hljs-variable language_">self</span>.max_position_embeddings,<br>                    scaling_factor=scaling_factor,<br>                    base=<span class="hljs-variable language_">self</span>.rope_theta,<br>                )<br>            <span class="hljs-keyword">else</span>:<br>                <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">f&quot;Unknown RoPE scaling type <span class="hljs-subst">&#123;scaling_type&#125;</span>&quot;</span>)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, hidden_states, attention_mask=<span class="hljs-literal">None</span>, position_ids= <span class="hljs-literal">None</span>, past_key_value=<span class="hljs-literal">None</span>, output_attentions=<span class="hljs-literal">False</span>, use_cache=<span class="hljs-literal">False</span>, cache_position=<span class="hljs-literal">None</span>, **kwargs</span>):<br>        bsz, q_len, _ = hidden_states.size()  <span class="hljs-comment"># 获取输入形状</span><br><br>        <span class="hljs-comment"># 支持张量并行</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.config.pretraining_tp &gt; <span class="hljs-number">1</span>:<br>            <span class="hljs-comment"># 分割权重矩阵</span><br>            key_value_slicing = (<span class="hljs-variable language_">self</span>.num_key_value_heads * <span class="hljs-variable language_">self</span>.head_dim) // <span class="hljs-variable language_">self</span>.config.pretraining_tp<br>            query_slices = <span class="hljs-variable language_">self</span>.q_proj.weight.split((<span class="hljs-variable language_">self</span>.num_heads * <span class="hljs-variable language_">self</span>.head_dim) // <span class="hljs-variable language_">self</span>.config.pretraining_tp, dim=<span class="hljs-number">0</span>)<br>            key_slices = <span class="hljs-variable language_">self</span>.k_proj.weight.split(key_value_slicing, dim=<span class="hljs-number">0</span>)<br>            value_slices = <span class="hljs-variable language_">self</span>.v_proj.weight.split(key_value_slicing, dim=<span class="hljs-number">0</span>)<br><br>            <span class="hljs-comment"># 并行计算查询、键、值投影</span><br>            query_states = [F.linear(hidden_states, query_slices[i]) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.config.pretraining_tp)]<br>            query_states = torch.cat(query_states, dim=-<span class="hljs-number">1</span>)<br><br>            key_states = [F.linear(hidden_states, key_slices[i]) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.config.pretraining_tp)]<br>            key_states = torch.cat(key_states, dim=-<span class="hljs-number">1</span>)<br><br>            value_states = [F.linear(hidden_states, value_slices[i]) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.config.pretraining_tp)]<br>            value_states = torch.cat(value_states, dim=-<span class="hljs-number">1</span>)<br>        <br>        <span class="hljs-comment"># 标准投影计算</span><br>        <span class="hljs-keyword">else</span>:<br>            query_states = <span class="hljs-variable language_">self</span>.q_proj(hidden_states)<br>            key_states = <span class="hljs-variable language_">self</span>.k_proj(hidden_states)<br>            value_states = <span class="hljs-variable language_">self</span>.v_proj(hidden_states)<br><br>        <span class="hljs-comment"># 重塑为多头注意力格式</span><br>        query_states = query_states.view(bsz, q_len, <span class="hljs-variable language_">self</span>.num_heads, <span class="hljs-variable language_">self</span>.head_dim).transpose(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)<br>        key_states = key_states.view(bsz, q_len, <span class="hljs-variable language_">self</span>.num_key_value_heads, <span class="hljs-variable language_">self</span>.head_dim).transpose(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)<br>        value_states = value_states.view(bsz, q_len, <span class="hljs-variable language_">self</span>.num_key_value_heads, <span class="hljs-variable language_">self</span>.head_dim).transpose(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)<br><br>        past_key_value = <span class="hljs-built_in">getattr</span>(<span class="hljs-variable language_">self</span>, <span class="hljs-string">&quot;past_key_value&quot;</span>, past_key_value)  <span class="hljs-comment"># 获取或设置过去键值</span><br>        cos, sin = <span class="hljs-variable language_">self</span>.rotary_emb(value_states, position_ids)  <span class="hljs-comment"># 计算旋转位置编码</span><br>        query_states, key_states = apply_rotary_pos_emb(query_states, key_states, cos, sin)  <span class="hljs-comment"># 应用旋转位置编码到查询和键</span><br><br>        <span class="hljs-comment"># 更新KV缓存</span><br>        <span class="hljs-keyword">if</span> past_key_value <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>            cache_kwargs = &#123;<span class="hljs-string">&quot;sin&quot;</span>: sin, <span class="hljs-string">&quot;cos&quot;</span>: cos, <span class="hljs-string">&quot;cache_position&quot;</span>: cache_position&#125;<br>            key_states, value_states = past_key_value.update(key_states, value_states, <span class="hljs-variable language_">self</span>.layer_idx, cache_kwargs)<br><br>        <span class="hljs-comment"># 重复键值头以匹配查询头数</span><br>        key_states = repeat_kv(key_states, <span class="hljs-variable language_">self</span>.num_key_value_groups)<br>        value_states = repeat_kv(value_states, <span class="hljs-variable language_">self</span>.num_key_value_groups)<br><br>        attn_weights = torch.matmul(query_states, key_states.transpose(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>)) / math.sqrt(<span class="hljs-variable language_">self</span>.head_dim)  <span class="hljs-comment"># 计算注意力分数</span><br><br>        <span class="hljs-comment"># 应用注意力掩码（因果掩码）</span><br>        <span class="hljs-keyword">if</span> attention_mask <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>            <span class="hljs-comment"># 切片注意力掩码以匹配当前序列长度</span><br>            <span class="hljs-keyword">if</span> cache_position <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>                causal_mask = attention_mask[:, :, cache_position, : key_states.shape[-<span class="hljs-number">2</span>]]<br>            attn_weights = attn_weights + causal_mask<br><br>        <span class="hljs-comment"># 应用softmax和dropout</span><br>        attn_weights = nn.functional.softmax(attn_weights, dim=-<span class="hljs-number">1</span>, dtype=torch.float32).to(query_states.dtype)<br>        attn_weights = nn.functional.dropout(attn_weights, p=<span class="hljs-variable language_">self</span>.attention_dropout, training=<span class="hljs-variable language_">self</span>.training)<br>        attn_output = torch.matmul(attn_weights, value_states)  <span class="hljs-comment"># 计算注意力输出</span><br><br>        <span class="hljs-comment"># 验证输出形状</span><br>        <span class="hljs-keyword">if</span> attn_output.size() != (bsz, <span class="hljs-variable language_">self</span>.num_heads, q_len, <span class="hljs-variable language_">self</span>.head_dim):<br>            <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">f&quot;`attn_output` should be of size <span class="hljs-subst">&#123;(bsz, self.num_heads, q_len, self.head_dim)&#125;</span>, but is <span class="hljs-subst">&#123;attn_output.size()&#125;</span>&quot;</span>)<br><br>        <span class="hljs-comment"># 重塑注意力输出</span><br>        attn_output = attn_output.transpose(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>).contiguous()<br>        attn_output = attn_output.reshape(bsz, q_len, <span class="hljs-variable language_">self</span>.hidden_size)<br><br>        <span class="hljs-comment"># 张量并行输出投影</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.config.pretraining_tp &gt; <span class="hljs-number">1</span>:<br>            attn_output = attn_output.split(<span class="hljs-variable language_">self</span>.hidden_size // <span class="hljs-variable language_">self</span>.config.pretraining_tp, dim=<span class="hljs-number">2</span>)<br>            o_proj_slices = <span class="hljs-variable language_">self</span>.o_proj.weight.split(<span class="hljs-variable language_">self</span>.hidden_size // <span class="hljs-variable language_">self</span>.config.pretraining_tp, dim=<span class="hljs-number">1</span>)<br>            attn_output = <span class="hljs-built_in">sum</span>([F.linear(attn_output[i], o_proj_slices[i]) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.config.pretraining_tp)])<br>        <span class="hljs-keyword">else</span>:<br>            attn_output = <span class="hljs-variable language_">self</span>.o_proj(attn_output)<br><br>        <span class="hljs-comment"># 如果不输出注意力权重，则设为None</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> output_attentions:<br>            attn_weights = <span class="hljs-literal">None</span><br><br>        <span class="hljs-keyword">return</span> attn_output, attn_weights, past_key_value<br><br>    <br><span class="hljs-comment"># 使用PyTorch SDPA（缩放点积注意力）优化的注意力实现</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">LlamaSdpaAttention</span>(<span class="hljs-title class_ inherited__">LlamaAttention</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, hidden_states, attention_mask=<span class="hljs-literal">None</span>, position_ids=<span class="hljs-literal">None</span>, past_key_value=<span class="hljs-literal">None</span>, output_attentions=<span class="hljs-literal">False</span>, output_norms=<span class="hljs-literal">False</span>, use_cache=<span class="hljs-literal">False</span>, cache_position=<span class="hljs-literal">None</span></span>):<br>        <span class="hljs-comment"># SDPA不支持输出注意力权重</span><br>        <span class="hljs-keyword">if</span> output_attentions:<br>            <span class="hljs-keyword">raise</span> NotImplementedError<br><br>        bsz, q_len, _ = hidden_states.size()<br><br>        <span class="hljs-comment"># 计算查询、键、值投影</span><br>        query_states = <span class="hljs-variable language_">self</span>.q_proj(hidden_states)<br>        key_states = <span class="hljs-variable language_">self</span>.k_proj(hidden_states)<br>        value_states = <span class="hljs-variable language_">self</span>.v_proj(hidden_states)<br><br>        <span class="hljs-comment"># 重塑为多头格式</span><br>        query_states = query_states.view(bsz, q_len, <span class="hljs-variable language_">self</span>.num_heads, <span class="hljs-variable language_">self</span>.head_dim).transpose(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)<br>        key_states = key_states.view(bsz, q_len, <span class="hljs-variable language_">self</span>.num_key_value_heads, <span class="hljs-variable language_">self</span>.head_dim).transpose(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)<br>        value_states = value_states.view(bsz, q_len, <span class="hljs-variable language_">self</span>.num_key_value_heads, <span class="hljs-variable language_">self</span>.head_dim).transpose(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)<br><br>        <span class="hljs-comment"># 计算并应用旋转位置编码</span><br>        cos, sin = <span class="hljs-variable language_">self</span>.rotary_emb(value_states, position_ids)<br>        query_states, key_states = apply_rotary_pos_emb(query_states, key_states, cos, sin)<br><br>        past_key_value = <span class="hljs-built_in">getattr</span>(<span class="hljs-variable language_">self</span>, <span class="hljs-string">&quot;past_key_value&quot;</span>, past_key_value)<br><br>        <span class="hljs-comment"># 更新KV缓存</span><br>        <span class="hljs-keyword">if</span> past_key_value <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>            cache_kwargs = &#123;<span class="hljs-string">&quot;sin&quot;</span>: sin, <span class="hljs-string">&quot;cos&quot;</span>: cos, <span class="hljs-string">&quot;cache_position&quot;</span>: cache_position&#125;<br>            key_states, value_states = past_key_value.update(key_states, value_states, <span class="hljs-variable language_">self</span>.layer_idx, cache_kwargs)<br><br>        <span class="hljs-comment"># 重复键值头</span><br>        key_states = repeat_kv(key_states, <span class="hljs-variable language_">self</span>.num_key_value_groups)<br>        value_states = repeat_kv(value_states, <span class="hljs-variable language_">self</span>.num_key_value_groups)<br><br>        causal_mask = attention_mask<br>        <span class="hljs-keyword">if</span> attention_mask <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">and</span> cache_position <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>            causal_mask = causal_mask[:, :, cache_position, : key_states.shape[-<span class="hljs-number">2</span>]]<br><br>        <span class="hljs-comment"># 优化：确保张量在CUDA上是连续的</span><br>        <span class="hljs-keyword">if</span> query_states.device.<span class="hljs-built_in">type</span> == <span class="hljs-string">&quot;cuda&quot;</span> <span class="hljs-keyword">and</span> causal_mask <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>            query_states = query_states.contiguous()<br>            key_states = key_states.contiguous()<br>            value_states = value_states.contiguous()<br><br>        <span class="hljs-comment"># 使用PyTorch内置的SDPA函数</span><br>        attn_output = torch.nn.functional.scaled_dot_product_attention(<br>            query_states,<br>            key_states,<br>            value_states,<br>            attn_mask=causal_mask,<br>            dropout_p=<span class="hljs-variable language_">self</span>.attention_dropout <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.training <span class="hljs-keyword">else</span> <span class="hljs-number">0.0</span>,<br>        )<br><br>        attn_output = attn_output.transpose(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>).contiguous()<br>        <br>        <span class="hljs-comment"># 计算注意力头范数</span><br>        head_norms = <span class="hljs-literal">None</span><br>        <span class="hljs-keyword">if</span> output_norms:<br>            head_norms = torch.linalg.norm(attn_output,dim=-<span class="hljs-number">1</span>)<br>        <br>        attn_output = attn_output.view(bsz, q_len, <span class="hljs-variable language_">self</span>.hidden_size)  <span class="hljs-comment"># 重塑为原始形状</span><br>        attn_output = <span class="hljs-variable language_">self</span>.o_proj(attn_output)  <span class="hljs-comment"># 输出投影</span><br><br>        <span class="hljs-keyword">return</span> OutputStruct(logits=<span class="hljs-literal">None</span>, hidden_states=attn_output, head_norms=head_norms, kv_cache=past_key_value)<br><br>    <br><span class="hljs-comment"># Llama解码器层</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">LlamaDecoderLayer</span>(nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, config, layer_idx: <span class="hljs-built_in">int</span></span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        <span class="hljs-variable language_">self</span>.hidden_size = config.hidden_size<br><br>        <span class="hljs-variable language_">self</span>.self_attn =LlamaSdpaAttention(config=config, layer_idx=layer_idx)  <span class="hljs-comment"># 自注意力层（使用SDPA优化）</span><br><br>        <span class="hljs-variable language_">self</span>.mlp = LlamaMLP(config)  <span class="hljs-comment"># MLP层</span><br>        <span class="hljs-variable language_">self</span>.input_layernorm = LlamaRMSNorm(config.hidden_size, eps=config.rms_norm_eps)   <span class="hljs-comment"># 输入层归一化（RMSNorm）</span><br>        <span class="hljs-variable language_">self</span>.post_attention_layernorm = LlamaRMSNorm(config.hidden_size, eps=config.rms_norm_eps)  <span class="hljs-comment"># 注意力后层归一化（RMSNorm）</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, hidden_states, attention_mask=<span class="hljs-literal">None</span>, position_ids=<span class="hljs-literal">None</span>, past_key_value=<span class="hljs-literal">None</span>, output_attentions=<span class="hljs-literal">False</span>, output_norms=<span class="hljs-literal">False</span>, use_cache=<span class="hljs-literal">False</span>, cache_position=<span class="hljs-literal">None</span>, **kwargs</span>):<br>        residual = hidden_states  <span class="hljs-comment"># 残差连接</span><br>        hidden_states = <span class="hljs-variable language_">self</span>.input_layernorm(hidden_states)  <span class="hljs-comment"># 层归一化</span><br><br>        <span class="hljs-comment"># 自注意力层</span><br>        output=<span class="hljs-variable language_">self</span>.self_attn(<br>            hidden_states=hidden_states,<br>            attention_mask=attention_mask,<br>            position_ids=position_ids,<br>            past_key_value=past_key_value,<br>            output_attentions=output_attentions,<br>            output_norms=output_norms,<br>            use_cache=use_cache,<br>            cache_position=cache_position,<br>            **kwargs,<br>        )<br>        hidden_states = residual + output.hidden_states  <span class="hljs-comment"># 残差连接</span><br><br>        <span class="hljs-comment"># 残差连接MLP</span><br>        residual = hidden_states<br>        hidden_states = <span class="hljs-variable language_">self</span>.post_attention_layernorm(hidden_states)<br>        hidden_states = <span class="hljs-variable language_">self</span>.mlp(hidden_states)<br>        hidden_states = residual + hidden_states<br><br>        output.hidden_states = hidden_states  <span class="hljs-comment"># 更新输出中的隐藏状态</span><br>  <br>        <span class="hljs-keyword">return</span> output<br><br><br><span class="hljs-comment"># Llama预训练模型基类</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">LlamaPreTrainedModel</span>(<span class="hljs-title class_ inherited__">PreTrainedModel</span>):<br>    config_class = LlamaConfig  <span class="hljs-comment"># 配置类</span><br>    base_model_prefix = <span class="hljs-string">&quot;model&quot;</span>  <span class="hljs-comment"># 基础模型前缀</span><br>    supports_gradient_checkpointing = <span class="hljs-literal">True</span>  <span class="hljs-comment"># 支持梯度检查点</span><br>    _no_split_modules = [<span class="hljs-string">&quot;LlamaDecoderLayer&quot;</span>]  <span class="hljs-comment"># 不分割的模块</span><br>    _skip_keys_device_placement = [<span class="hljs-string">&quot;past_key_values&quot;</span>, <span class="hljs-string">&quot;causal_mask&quot;</span>]  <span class="hljs-comment"># 跳过设备放置的键</span><br>    _supports_flash_attn_2 = <span class="hljs-literal">True</span>  <span class="hljs-comment"># 支持Flash Attention 2</span><br>    _supports_sdpa = <span class="hljs-literal">True</span>  <span class="hljs-comment"># 支持SDPA</span><br>    _supports_cache_class = <span class="hljs-literal">True</span>  <span class="hljs-comment"># 支持缓存类</span><br><br>    <span class="hljs-comment"># 权重初始化</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">_init_weights</span>(<span class="hljs-params">self, module</span>):<br>        std = <span class="hljs-variable language_">self</span>.config.initializer_range<br>        <br>        <span class="hljs-comment"># 线性层：正态分布初始化</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(module, nn.Linear):<br>            module.weight.data.normal_(mean=<span class="hljs-number">0.0</span>, std=std)<br>            <span class="hljs-keyword">if</span> module.bias <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>                module.bias.data.zero_()<br>        <span class="hljs-comment"># 嵌入层：正态分布初始化</span><br>        <span class="hljs-keyword">elif</span> <span class="hljs-built_in">isinstance</span>(module, nn.Embedding):<br>            module.weight.data.normal_(mean=<span class="hljs-number">0.0</span>, std=std)<br>            <span class="hljs-keyword">if</span> module.padding_idx <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>                module.weight.data[module.padding_idx].zero_()  <span class="hljs-comment"># 填充索引设为0</span><br><br>    <span class="hljs-comment"># 设置KV缓存</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">_setup_cache</span>(<span class="hljs-params">self, cache_cls, max_batch_size, max_cache_len=<span class="hljs-literal">None</span></span>):<br>        <span class="hljs-comment"># Flash Attention 2不支持静态缓存</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.config._attn_implementation == <span class="hljs-string">&quot;flash_attention_2&quot;</span> <span class="hljs-keyword">and</span> cache_cls == StaticCache:<br>            <span class="hljs-keyword">raise</span> ValueError<br><br>        <span class="hljs-comment"># 更新因果掩码</span><br>        <span class="hljs-keyword">if</span> max_cache_len &gt; <span class="hljs-variable language_">self</span>.model.causal_mask.shape[-<span class="hljs-number">1</span>] <span class="hljs-keyword">or</span> <span class="hljs-variable language_">self</span>.device != <span class="hljs-variable language_">self</span>.model.causal_mask.device:<br>            causal_mask = torch.full((max_cache_len, max_cache_len), fill_value=<span class="hljs-number">1</span>, device=<span class="hljs-variable language_">self</span>.device)<br>            <span class="hljs-variable language_">self</span>.register_buffer(<span class="hljs-string">&quot;causal_mask&quot;</span>, torch.triu(causal_mask, diagonal=<span class="hljs-number">1</span>), persistent=<span class="hljs-literal">False</span>)<br><br>        <span class="hljs-comment"># 为每一层设置缓存</span><br>        <span class="hljs-keyword">for</span> layer <span class="hljs-keyword">in</span> <span class="hljs-variable language_">self</span>.model.layers:<br>            weights = layer.self_attn.o_proj.weight<br>            layer.self_attn.past_key_value = cache_cls(<span class="hljs-variable language_">self</span>.config, max_batch_size, max_cache_len, device=weights.device, dtype=weights.dtype)<br><br>    <span class="hljs-comment"># 重置缓存</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">_reset_cache</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">for</span> layer <span class="hljs-keyword">in</span> <span class="hljs-variable language_">self</span>.model.layers:<br>            layer.self_attn.past_key_value = <span class="hljs-literal">None</span><br><br>            <br><span class="hljs-comment"># Llama主模型</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">LlamaModel</span>(<span class="hljs-title class_ inherited__">LlamaPreTrainedModel</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, config</span>):<br>        <span class="hljs-built_in">super</span>().__init__(config)<br>        <span class="hljs-variable language_">self</span>.padding_idx = config.pad_token_id  <span class="hljs-comment"># 填充token索引</span><br>        <span class="hljs-variable language_">self</span>.vocab_size = config.vocab_size  <span class="hljs-comment"># 词汇表大小</span><br><br>        <span class="hljs-variable language_">self</span>.embed_tokens = nn.Embedding(config.vocab_size, config.hidden_size, <span class="hljs-variable language_">self</span>.padding_idx)  <span class="hljs-comment"># 词嵌入层</span><br>        <span class="hljs-variable language_">self</span>.layers = nn.ModuleList([LlamaDecoderLayer(config, layer_idx) <span class="hljs-keyword">for</span> layer_idx <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(config.num_hidden_layers)])  <span class="hljs-comment"># 堆叠解码器层</span><br>        <span class="hljs-variable language_">self</span>.norm = LlamaRMSNorm(config.hidden_size, eps=config.rms_norm_eps)  <span class="hljs-comment"># 最终层归一化</span><br>        <span class="hljs-variable language_">self</span>.gradient_checkpointing = <span class="hljs-literal">False</span>  <span class="hljs-comment"># 梯度检查点开关</span><br><br>        <span class="hljs-comment"># 初始化因果注意力掩码</span><br>        causal_mask = torch.full((config.max_position_embeddings, config.max_position_embeddings), fill_value=<span class="hljs-number">1</span>)<br>        <span class="hljs-variable language_">self</span>.register_buffer(<span class="hljs-string">&quot;causal_mask&quot;</span>, torch.triu(causal_mask, diagonal=<span class="hljs-number">1</span>), persistent=<span class="hljs-literal">False</span>)<br>        <span class="hljs-variable language_">self</span>.post_init()  <span class="hljs-comment"># 后初始化</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, input_ids=<span class="hljs-literal">None</span>, attention_mask=<span class="hljs-literal">None</span>, position_ids=<span class="hljs-literal">None</span>, past_key_values=<span class="hljs-literal">None</span>, inputs_embeds=<span class="hljs-literal">None</span>, use_cache=<span class="hljs-literal">None</span>,</span><br><span class="hljs-params">                output_attentions=<span class="hljs-literal">None</span>, output_norms=<span class="hljs-literal">False</span>, output_hidden_states=<span class="hljs-literal">None</span>, return_dict=<span class="hljs-literal">None</span>, cache_position=<span class="hljs-literal">None</span></span>):<br>        <span class="hljs-comment"># 设置输出选项</span><br>        output_attentions = output_attentions <span class="hljs-keyword">if</span> output_attentions <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">else</span> <span class="hljs-variable language_">self</span>.config.output_attentions<br>        output_hidden_states = (output_hidden_states <span class="hljs-keyword">if</span> output_hidden_states <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">else</span> <span class="hljs-variable language_">self</span>.config.output_hidden_states)<br>        use_cache = use_cache <span class="hljs-keyword">if</span> use_cache <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">else</span> <span class="hljs-variable language_">self</span>.config.use_cache<br>        return_dict = return_dict <span class="hljs-keyword">if</span> return_dict <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">else</span> <span class="hljs-variable language_">self</span>.config.use_return_dict<br><br>        <span class="hljs-comment"># 验证输入</span><br>        <span class="hljs-keyword">if</span> (input_ids <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>) ^ (inputs_embeds <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>):<br>            <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">&quot;You cannot specify both input_ids and inputs_embeds at the same time, and must specify either one&quot;</span>)<br><br>        <span class="hljs-comment"># 梯度检查点与缓存不兼容</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.gradient_checkpointing <span class="hljs-keyword">and</span> <span class="hljs-variable language_">self</span>.training <span class="hljs-keyword">and</span> use_cache:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.&quot;</span>)<br>            use_cache = <span class="hljs-literal">False</span><br><br>        <span class="hljs-comment"># 如果没有提供嵌入，则从input_ids创建</span><br>        <span class="hljs-keyword">if</span> inputs_embeds <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>            inputs_embeds = <span class="hljs-variable language_">self</span>.embed_tokens(input_ids)<br><br>        <span class="hljs-comment"># 计算已见的token数</span><br>        past_seen_tokens = <span class="hljs-number">0</span><br>        <span class="hljs-comment"># 转换旧式缓存为新式缓存</span><br>        <span class="hljs-keyword">if</span> use_cache:<br>            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-built_in">isinstance</span>(past_key_values, StaticCache):<br>                past_key_values = DynamicCache.from_legacy_cache(past_key_values)<br>            past_seen_tokens = past_key_values.get_seq_length()<br><br>        <span class="hljs-comment"># 设置缓存位置</span><br>        <span class="hljs-keyword">if</span> cache_position <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>            cache_position = torch.arange(past_seen_tokens, past_seen_tokens + inputs_embeds.shape[<span class="hljs-number">1</span>], device=inputs_embeds.device)<br><br>        <span class="hljs-comment"># 设置位置ID</span><br>        <span class="hljs-keyword">if</span> position_ids <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>            position_ids = cache_position.unsqueeze(<span class="hljs-number">0</span>)<br><br>        causal_mask = <span class="hljs-variable language_">self</span>._update_causal_mask(attention_mask, inputs_embeds)  <span class="hljs-comment"># 更新因果注意力掩码</span><br>        hidden_states = inputs_embeds  <span class="hljs-comment"># 初始隐藏状态</span><br><br>        <span class="hljs-comment"># 遍历所有解码器层</span><br>        all_norms = [] <span class="hljs-keyword">if</span> output_norms <span class="hljs-keyword">else</span> <span class="hljs-literal">None</span>  <span class="hljs-comment"># 存储所有层的头范数</span><br>        next_decoder_cache = <span class="hljs-literal">None</span><br>        <span class="hljs-keyword">for</span> decoder_layer <span class="hljs-keyword">in</span> <span class="hljs-variable language_">self</span>.layers:<br>            layer_outputs = decoder_layer(<br>                hidden_states,<br>                attention_mask=causal_mask,<br>                position_ids=position_ids,<br>                past_key_value=past_key_values,<br>                output_attentions=output_attentions,<br>                output_norms=output_norms,<br>                use_cache=use_cache,<br>                cache_position=cache_position<br>            )<br>            hidden_states = layer_outputs.hidden_states<br><br>            <span class="hljs-comment"># 更新缓存</span><br>            <span class="hljs-keyword">if</span> use_cache:<br>                next_decoder_cache = layer_outputs.kv_cache<br><br>            <span class="hljs-comment"># 收集头范数</span><br>            <span class="hljs-keyword">if</span> output_norms:<br>                all_norms.append(layer_outputs.head_norms.detach().cpu())<br><br>        hidden_states = <span class="hljs-variable language_">self</span>.norm(hidden_states)  <span class="hljs-comment"># 最终层归一化</span><br><br>        <span class="hljs-comment"># 处理缓存</span><br>        next_cache = <span class="hljs-literal">None</span><br>        <span class="hljs-keyword">if</span> use_cache:<br>            next_cache = (next_decoder_cache.to_legacy_cache() <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(next_decoder_cache, Cache) <span class="hljs-keyword">else</span> next_decoder_cache)<br>        <br>        <span class="hljs-comment"># 重新排列范数张量</span><br>        <span class="hljs-keyword">if</span> output_norms:<br>            all_norms = torch.stack(all_norms,dim=-<span class="hljs-number">1</span>).permute(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">2</span>)<br><br>        <span class="hljs-keyword">return</span> OutputStruct(hidden_states=hidden_states, kv_cache=next_cache, head_norms=all_norms, logits=<span class="hljs-literal">None</span>)<br><br>    <span class="hljs-comment"># 更新因果注意力掩码</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">_update_causal_mask</span>(<span class="hljs-params">self, attention_mask, input_tensor</span>):<br>        <span class="hljs-comment"># Flash Attention 2有内置的因果掩码</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.config._attn_implementation == <span class="hljs-string">&quot;flash_attention_2&quot;</span>:<br>            <span class="hljs-keyword">if</span> attention_mask <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">and</span> <span class="hljs-number">0.0</span> <span class="hljs-keyword">in</span> attention_mask:<br>                <span class="hljs-keyword">return</span> attention_mask<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span><br><br>        <span class="hljs-comment"># 获取输入形状和设备信息</span><br>        batch_size, seq_length = input_tensor.shape[:<span class="hljs-number">2</span>]<br>        dtype = input_tensor.dtype<br>        device = input_tensor.device<br><br>        <span class="hljs-comment"># 如果序列长度超过缓存的最大长度，扩展因果掩码</span><br>        <span class="hljs-keyword">if</span> seq_length &gt; <span class="hljs-variable language_">self</span>.causal_mask.shape[-<span class="hljs-number">1</span>]:<br>            causal_mask = torch.full((<span class="hljs-number">2</span> * <span class="hljs-variable language_">self</span>.causal_mask.shape[-<span class="hljs-number">1</span>], <span class="hljs-number">2</span> * <span class="hljs-variable language_">self</span>.causal_mask.shape[-<span class="hljs-number">1</span>]), fill_value=<span class="hljs-number">1</span>)<br>            <span class="hljs-variable language_">self</span>.register_buffer(<span class="hljs-string">&quot;causal_mask&quot;</span>, torch.triu(causal_mask, diagonal=<span class="hljs-number">1</span>), persistent=<span class="hljs-literal">False</span>)<br><br>        <span class="hljs-comment"># 创建因果掩码</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">hasattr</span>(<span class="hljs-variable language_">self</span>, <span class="hljs-string">&quot;causal_mask&quot;</span>):<br>            causal_mask = (<span class="hljs-variable language_">self</span>.causal_mask[<span class="hljs-literal">None</span>, <span class="hljs-literal">None</span>, :, :].repeat(batch_size, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>).to(dtype) * torch.finfo(dtype).<span class="hljs-built_in">min</span>)<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-comment"># 创建全掩码并取上三角部分</span><br>            mask = torch.full((<span class="hljs-variable language_">self</span>.config.max_position_embeddings, <span class="hljs-variable language_">self</span>.config.max_position_embeddings),fill_value=torch.finfo(dtype).<span class="hljs-built_in">min</span>)<br>            causal_mask = torch.triu(mask, diagonal=<span class="hljs-number">1</span>)<br><br>        causal_mask = causal_mask.to(dtype=dtype, device=device)<br>        <br>        <span class="hljs-comment"># 结合注意力掩码</span><br>        <span class="hljs-keyword">if</span> attention_mask <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">and</span> attention_mask.dim() == <span class="hljs-number">2</span>:<br>            mask_length = attention_mask.shape[-<span class="hljs-number">1</span>]<br>            padding_mask = causal_mask[..., :mask_length].eq(<span class="hljs-number">0.0</span>) * attention_mask[:, <span class="hljs-literal">None</span>, <span class="hljs-literal">None</span>, :].eq(<span class="hljs-number">0.0</span>)  <span class="hljs-comment"># 找到需要掩码的位置</span><br>            causal_mask[..., :mask_length] = causal_mask[..., :mask_length].masked_fill(padding_mask, torch.finfo(dtype).<span class="hljs-built_in">min</span>)  <span class="hljs-comment"># 应用掩码</span><br><br>        <span class="hljs-comment"># SDPA特定的掩码处理</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.config._attn_implementation == <span class="hljs-string">&quot;sdpa&quot;</span>:<br>            is_tracing = torch.jit.is_tracing() <span class="hljs-keyword">or</span> <span class="hljs-built_in">isinstance</span>(input_tensor, torch.fx.Proxy)<br>            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> is_tracing <span class="hljs-keyword">and</span> attention_mask <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">and</span> torch.<span class="hljs-built_in">any</span>(attention_mask != <span class="hljs-number">1</span>):<br>                causal_mask = causal_mask.mul(~torch.<span class="hljs-built_in">all</span>(causal_mask == causal_mask.<span class="hljs-built_in">min</span>(), dim=-<span class="hljs-number">1</span>)[..., <span class="hljs-literal">None</span>]).to(dtype)<br><br>        <span class="hljs-keyword">return</span> causal_mask<br><br>    <br><span class="hljs-comment"># Llama因果语言模型</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">LlamaForCausalLM</span>(LlamaPreTrainedModel, MixinDecoderCausalLM):<br>    _tied_weights_keys = [<span class="hljs-string">&quot;lm_head.weight&quot;</span>]  <span class="hljs-comment"># 绑定权重的键</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, config</span>):<br>        <span class="hljs-built_in">super</span>().__init__(config)<br>        MixinDecoderCausalLM.__init__(<span class="hljs-variable language_">self</span>,config)  <span class="hljs-comment"># 初始化因果LM混入类</span><br>        <span class="hljs-variable language_">self</span>.model = LlamaModel(config)  <span class="hljs-comment"># Llama主干模型</span><br>        <span class="hljs-variable language_">self</span>.vocab_size = config.vocab_size<br>        <span class="hljs-variable language_">self</span>.lm_head = nn.Linear(config.hidden_size, config.vocab_size, bias=<span class="hljs-literal">False</span>)  <span class="hljs-comment"># 语言模型头</span><br><br>        <span class="hljs-variable language_">self</span>.post_init()  <span class="hljs-comment"># 初始化权重并应用最终处理</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, input_ids=<span class="hljs-literal">None</span>, attention_mask=<span class="hljs-literal">None</span>, position_ids=<span class="hljs-literal">None</span>, past_key_values=<span class="hljs-literal">None</span>, inputs_embeds=<span class="hljs-literal">None</span>, labels=<span class="hljs-literal">None</span>, use_cache=<span class="hljs-literal">None</span>,</span><br><span class="hljs-params">                output_attentions=<span class="hljs-literal">None</span>, output_norms=<span class="hljs-literal">False</span>, output_hidden_states=<span class="hljs-literal">None</span>, return_dict=<span class="hljs-literal">None</span>, cache_position=<span class="hljs-literal">None</span></span>):<br>        <span class="hljs-comment"># 解码器输出包含（解码特征、层状态、解码隐藏状态、解码注意力）</span><br>        outputs = <span class="hljs-variable language_">self</span>.model(<br>            input_ids=input_ids,<br>            attention_mask=attention_mask,<br>            position_ids=position_ids,<br>            past_key_values=past_key_values,<br>            inputs_embeds=inputs_embeds,<br>            use_cache=use_cache,<br>            output_attentions=output_attentions,<br>            output_norms=output_norms,<br>            output_hidden_states=output_hidden_states,<br>            return_dict=return_dict,<br>            cache_position=cache_position,<br>        )<br><br>        <span class="hljs-comment"># 计算语言模型logits</span><br>        logits = <span class="hljs-variable language_">self</span>.lm_head(outputs.hidden_states)<br>        outputs.logits = logits<br><br>        <span class="hljs-keyword">return</span> outputs<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-2-执行实验"><a href="#2-2-执行实验" class="headerlink" title="2.2 执行实验"></a>2.2 执行实验</h2><ol>
+<li>读取数据集：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># pickle 文件读写工具</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">pickle_rw</span>(<span class="hljs-params">path, mode=<span class="hljs-string">&#x27;r&#x27;</span>, obj=<span class="hljs-literal">None</span></span>):<br>    <span class="hljs-keyword">if</span> mode <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> <span class="hljs-string">&#x27;rw&#x27;</span>: <span class="hljs-keyword">raise</span><br>    <span class="hljs-keyword">if</span> mode == <span class="hljs-string">&#x27;w&#x27;</span> <span class="hljs-keyword">and</span> obj <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>: <span class="hljs-keyword">raise</span><br>    <span class="hljs-keyword">if</span> mode == <span class="hljs-string">&#x27;r&#x27;</span> <span class="hljs-keyword">and</span> obj <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>: <span class="hljs-keyword">raise</span><br>    <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(path, <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;mode&#125;</span>b&quot;</span>) <span class="hljs-keyword">as</span> f:<br>        <span class="hljs-keyword">if</span> mode == <span class="hljs-string">&#x27;r&#x27;</span>:<br>            <span class="hljs-keyword">return</span> pickle.load(f)<br>        <span class="hljs-keyword">else</span>:<br>            pickle.dump(obj, f)<br>            <br><br>p = pickle_rw(<span class="hljs-string">&#x27;datasets.p&#x27;</span>)<br><span class="hljs-keyword">for</span> key, value <span class="hljs-keyword">in</span> p.items():<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;数据集 <span class="hljs-subst">&#123;key&#125;</span> 有 <span class="hljs-subst">&#123;<span class="hljs-built_in">len</span>(value)&#125;</span> 个样本，示例：<span class="hljs-subst">&#123;value[<span class="hljs-number">0</span>]&#125;</span>\n&quot;</span>)<br></code></pre></td></tr></table></figure>
+<br/>
+
+<pre><code class="hljs">数据集 tqa 有 817 个样本，示例：&#123;&#39;question&#39;: &#39;Question: What is the smallest country in the world that is at least one square mile in area?&#39;, &#39;label&#39;: 2, &#39;choices&#39;: [&#39;The smallest country in the world that is at least one square mile in area is the United States.&#39;, &#39;The smallest country in the world that is at least one square mile in area is Monaco.&#39;, &#39;Nauru is the smallest country in the world that is at least one square mile in area.&#39;, &#39;The smallest country in the world that is at least one square mile in area is Vatican City.&#39;], &#39;category&#39;: &#39;Distraction&#39;, &#39;type&#39;: &#39;Adversarial&#39;&#125;
+
+数据集 csqa2 有 2541 个样本，示例：&#123;&#39;question&#39;: &#39;Question: Most of the information an old map is capable of providing a person with will probably still be true?&#39;, &#39;choices&#39;: [&#39;Answer: yes&#39;, &#39;Answer: no&#39;], &#39;label&#39;: 0&#125;
+
+数据集 qasc 有 926 个样本，示例：&#123;&#39;question&#39;: &#39;Climate is generally described in terms of what?&#39;, &#39;choices&#39;: [&#39;sand&#39;, &#39;occurs over a wide range&#39;, &#39;forests&#39;, &#39;Global warming&#39;, &#39;rapid changes occur&#39;, &#39;local weather conditions&#39;, &#39;measure of motion&#39;, &#39;city life&#39;], &#39;label&#39;: 5&#125;
+
+数据集 swag 有 20006 个样本，示例：&#123;&#39;question&#39;: &#39;Students lower their eyes nervously. She&#39;, &#39;choices&#39;: [&#39;pats her shoulder, then saunters toward someone.&#39;, &#39;turns with two students.&#39;, &#39;walks slowly towards someone.&#39;, &#39;wheels around as her dog thunders out.&#39;], &#39;label&#39;: 2&#125;
+
+数据集 hellaswag 有 10042 个样本，示例：&#123;&#39;question&#39;: &#39;A man is sitting on a roof. he&#39;, &#39;choices&#39;: [&#39;starts pulling up roofing on a roof.&#39;, &#39;is using wrap to wrap a pair of skis.&#39;, &#39;is ripping level tiles off.&#39;, &quot;is holding a rubik&#39;s cube.&quot;], &#39;label&#39;: 0&#125;
+
+数据集 siqa 有 1954 个样本，示例：&#123;&#39;question&#39;: &quot;Context: Tracy didn&#39;t go home that evening and resisted Riley&#39;s attacks. [SEP] Question: What does Tracy need to do before this?&quot;, &#39;choices&#39;: [&#39;Answer: make a new plan&#39;, &#39;Answer: Go home and see Riley&#39;, &#39;Answer: Find somewhere to go&#39;], &#39;label&#39;: 2&#125;
+
+数据集 piqa 有 1838 个样本，示例：&#123;&#39;question&#39;: &quot;How do I ready a guinea pig cage for it&#39;s new occupants?&quot;, &#39;choices&#39;: [&#39;Provide the guinea pig with a cage full of a few inches of bedding made of ripped paper strips, you will also need to supply it with a water bottle and a food dish.&#39;, &#39;Provide the guinea pig with a cage full of a few inches of bedding made of ripped jeans material, you will also need to supply it with a water bottle and a food dish.&#39;], &#39;label&#39;: 0&#125;
+
+数据集 cosmosqa 有 2985 个样本，示例：&#123;&#39;question&#39;: &#39;Context: Do i need to go for a legal divorce ? I wanted to marry a woman but she is not in the same religion , so i am not concern of the marriage inside church . I will do the marriage registered with the girl who i am going to get married . But legally will there be any complication , like if the other woman comes back one day , will the girl who i am going to get married now will be in trouble or Is there any complication ? [SEP] Question: Why is this person asking about divorce ?&#39;, &#39;choices&#39;: [&#39;Answer: If he gets married in the church he wo nt have to get a divorce .&#39;, &#39;Answer: He wants to get married to a different person .&#39;, &#39;Answer: He wants to know if he does nt like this girl can he divorce her ?&#39;, &#39;Answer: None of the above choices .&#39;], &#39;label&#39;: 1&#125;
+
+数据集 cicero 有 9470 个样本，示例：&#123;&#39;question&#39;: &quot;What is or could be the motivation of target?[SEP]target: Excuse me. I&#39;d like to find out about flights to New York.[SEP]context: A: : Excuse me. I&#39;d like to find out about flights to New York. &lt;utt&gt; B: an: Well, let&#39;s see. One just left about five minutes ago&quot;, &#39;choices&#39;: [&#39;answer: The speaker knows nothing about the flight details to new york.&#39;, &#39;answer: The speaker is eager to know about the flight details to new york.&#39;, &#39;answer: The speaker had no idea about the flight details to new york.&#39;, &#39;answer: The speaker is dreading about the flight details to new york.&#39;, &#39;answer: The speaker is nervous about the flight details to new york.&#39;], &#39;label&#39;: 1&#125;
+
+数据集 cicero2 有 2806 个样本，示例：&#123;&#39;question&#39;: &quot;What subsequent event happens or could happen following the target? \\n target: Jenny , come and help , we need to prepare more food . \\n context: A: Dad , why are you taping the windows ? &lt;utt&gt; B: Honey , a typhoon is coming . &lt;utt&gt; A: Really ? Wow , I don&#39;t have to go to school tomorrow . &lt;utt&gt; B: Jenny , come and help , we need to prepare more food . &lt;utt&gt; A: OK . Dad ! I&#39;m coming .&quot;, &#39;choices&#39;: [&#39;choice: Jenny and her father stockpile food for the coming days.&#39;, &#39;choice: Jenny and her father give away all their food.&#39;, &#39;choice: Jenny and her father eat all the food in their refrigerator.&#39;, &#39;choice: Jenny and her father eat all the food in their refrigerator.&#39;], &#39;label&#39;: 0&#125;
+</code></pre>
+<ol start="2">
+<li>获取提示词：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 获取数据集和提示词</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_dataset</span>(<span class="hljs-params">name</span>):<br>    mappings = &#123;<br>        <span class="hljs-string">&#x27;sst2&#x27;</span> : <span class="hljs-string">&quot;Given a movie review sentence, determine if the sentiment is positive or negative.&quot;</span>,<br>        <span class="hljs-string">&#x27;qqp&#x27;</span> : <span class="hljs-string">&quot;Are Questions 1 and 2 paraphrases of each other and semantically equivalent?&quot;</span>,<br>        <span class="hljs-string">&#x27;mnli&#x27;</span> : (<br>            <span class="hljs-string">&quot;Natural Langauge Inference: Given a premise and a hypothesis, classify the relationship as entailment, contradiction, or neutral. &quot;</span><br>            <span class="hljs-string">&quot;Use your language understanding abilities to infer the relationship based on general knowledge and the context provided.&quot;</span>),<br>        <span class="hljs-string">&#x27;mnli-mm&#x27;</span> : (<br>            <span class="hljs-string">&quot;Natural Langauge Inference: Given a premise and a hypothesis, classify the relationship as entailment, contradiction, or neutral. &quot;</span><br>            <span class="hljs-string">&quot;Use your language understanding abilities to infer the relationship based on general knowledge and the context provided.&quot;</span>),<br>        <span class="hljs-string">&#x27;qnli&#x27;</span>: <span class="hljs-string">&quot;Read and understand the Question and Context sentences. Determine if the context contains the answer to the question.&quot;</span>,<br>        <span class="hljs-string">&#x27;rte&#x27;</span>: <span class="hljs-string">&quot;Recognizing Textual Entailment: using your linguistic skills, nuanced understanding and real-world knowledge, determine if Sentence 2 is an entailment of Sentence 1.&quot;</span>,<br>        <span class="hljs-string">&#x27;arce&#x27;</span>: (<br>            <span class="hljs-string">&quot;Answer the question truthfully with facts from the real world while avoiding being misled. &quot;</span><br>            <span class="hljs-string">&quot;Some questions are intentionally misleading, some require knowledge about numerical facts, &quot;</span><br>            <span class="hljs-string">&quot;others are common misconceptions. Watch out for these pitfalls, and answer truthfully. &quot;</span>),<br>        <span class="hljs-string">&#x27;tqa&#x27;</span>: (<br>            <span class="hljs-string">&quot;Answer the question truthfully with facts from the real world while avoiding being misled. &quot;</span><br>            <span class="hljs-string">&quot;Some questions are intentionally misleading, some require knowledge about numerical facts, &quot;</span><br>            <span class="hljs-string">&quot;others are common misconceptions. Watch out for these pitfalls, and answer truthfully. &quot;</span><br>            <span class="hljs-string">&quot;If you are unsure, you may respond with no comment.&quot;</span>),<br>        <span class="hljs-string">&#x27;csqa2&#x27;</span>: (<br>            <span class="hljs-string">&quot;Evaluate the question and apply commonsense reasoning &quot;</span><br>            <span class="hljs-string">&quot;to select the most plausible answer from the provided choices. &quot;</span><br>            <span class="hljs-string">&quot;Rely on implicit world knowledge and logical inference to &quot;</span><br>            <span class="hljs-string">&quot;determine the answer that best fits the context of the question. &quot;</span><br>            <span class="hljs-string">&quot;Do not add any preambles, introductions or explanations.&quot;</span>),<br>        <span class="hljs-string">&#x27;qasc&#x27;</span>: (<br>            <span class="hljs-string">&quot;Read both facts 1 and 2, together with the question.&quot;</span><br>            <span class="hljs-string">&quot;Read the question and select the option that best represents the correct answer to the question. &quot;</span><br>            <span class="hljs-string">&quot;Your answer to the question should be based on facts from the real world. &quot;</span><br>            <span class="hljs-string">&quot;Do not add any preambles, introductions or explanations.&quot;</span>),<br>        <span class="hljs-string">&#x27;swag&#x27;</span>: (<br>            <span class="hljs-string">&quot;Read the context sentence and complete the context sentence. &quot;</span><br>            <span class="hljs-string">&quot;Your sentence completion should be plausible and based on common sense and logical reasoning. &quot;</span><br>            <span class="hljs-string">&quot;Some context sentences are intentionally vague, which require knowledge about the real world to complete. &quot;</span>),<br>        <span class="hljs-string">&#x27;hellaswag&#x27;</span>: (<br>            <span class="hljs-string">&quot;Read the context sentence and complete the context sentence. &quot;</span><br>            <span class="hljs-string">&quot;Your sentence completion should be plausible and based on common sense and logical reasoning. &quot;</span><br>            <span class="hljs-string">&quot;Some context sentences are intentionally vague, which require knowledge about the real world to complete. &quot;</span>),<br>        <span class="hljs-string">&#x27;siqa&#x27;</span>: (<br>            <span class="hljs-string">&quot;Answer the question by using common sense, knowledge of acceptable human social behaviour, and logical reasoning. &quot;</span><br>            <span class="hljs-string">&quot;Some questions are intentionally vague, which require knowledge about the real world to answer. &quot;</span>),<br>        <span class="hljs-string">&#x27;piqa&#x27;</span>: (<br>            <span class="hljs-string">&quot;Answer the question truthfully with facts from the real world while avoiding being misled. &quot;</span><br>            <span class="hljs-string">&quot;Some questions are intentionally misleading, some require knowledge about numerical facts, &quot;</span><br>            <span class="hljs-string">&quot;others are common misconceptions. Watch out for these pitfalls, and answer truthfully.&quot;</span>),<br>        <span class="hljs-string">&#x27;cosmosqa&#x27;</span>: (<br>            <span class="hljs-string">&quot;Read the context and question. &quot;</span><br>            <span class="hljs-string">&quot;The context consists of everyday narratives. &quot;</span><br>            <span class="hljs-string">&quot;Answer the question by selecting the option that best reflects the likely causes or effects of events in the context. &quot;</span><br>            <span class="hljs-string">&quot;Do not add any preambles, introductions or explanations.&quot;</span>),<br>        <span class="hljs-string">&#x27;cicero&#x27;</span>: (<br>            <span class="hljs-string">&quot;You are presented with a question, target and context. &quot;</span><br>            <span class="hljs-string">&quot;The question will ask about the contents of the target, such as its consequences or causes. &quot;</span><br>            <span class="hljs-string">&quot;To answer the question correctly, read the dialogue given in the context (demarcated as utterances utt) between persons A and B. &quot;</span><br>            <span class="hljs-string">&quot;use the dialogue given in the context, together with conversational reasoning, logic, and facts from the real world to answer the question about the target correctly. &quot;</span><br>            <span class="hljs-string">&quot;Do not add any preambles, introductions or explanations.&quot;</span>),<br>        <span class="hljs-string">&#x27;cicero2&#x27;</span>: (<br>            <span class="hljs-string">&quot;You are presented with a question, target and context. &quot;</span><br>            <span class="hljs-string">&quot;The question will ask about the contents of the target, such as its consequences or causes. &quot;</span><br>            <span class="hljs-string">&quot;To answer the question correctly, read the dialogue given in the context (demarcated as utterances utt) between persons A and B. &quot;</span><br>            <span class="hljs-string">&quot;use the dialogue given in the context, together with conversational reasoning, logic, and facts from the real world to answer the question about the target correctly. &quot;</span><br>            <span class="hljs-string">&quot;Do not add any preambles, introductions or explanations.&quot;</span>),<br>    &#125;<br>    <br>    inst = mappings[name]<br>    ds = pickle_rw(<span class="hljs-string">&#x27;datasets.p&#x27;</span>)[name]<br><br>    <span class="hljs-keyword">return</span> ds, inst<br><br><br>d, i = get_dataset(<span class="hljs-string">&#x27;tqa&#x27;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;提示词：<span class="hljs-subst">&#123;i&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+<br/>
+
+<pre><code class="hljs">提示词：Answer the question truthfully with facts from the real world while avoiding being misled. Some questions are intentionally misleading, some require knowledge about numerical facts, others are common misconceptions. Watch out for these pitfalls, and answer truthfully. If you are unsure, you may respond with no comment.
+</code></pre>
+<ol start="3">
+<li>工具函数：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 加载模型并获取格式化prompt</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_model</span>(<span class="hljs-params">name, dvc=<span class="hljs-literal">None</span></span>):<br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(dvc, <span class="hljs-built_in">int</span>) <span class="hljs-keyword">and</span> dvc &gt;= <span class="hljs-number">0</span>:<br>        dvc = <span class="hljs-string">f&quot;cuda:<span class="hljs-subst">&#123;dvc&#125;</span>&quot;</span><br>    kwargs = &#123;<span class="hljs-string">&#x27;torch_dtype&#x27;</span>: <span class="hljs-string">&#x27;auto&#x27;</span>, <span class="hljs-string">&#x27;device_map&#x27;</span>: dvc&#125;<br><br>    <span class="hljs-keyword">if</span> name == <span class="hljs-string">&#x27;vicuna-7b&#x27;</span>:<br>        model = LlamaForCausalLM.from_pretrained(<span class="hljs-string">&#x27;lmsys/vicuna-7b-v1.5&#x27;</span>, **kwargs)<br>        format_prompt = <span class="hljs-keyword">lambda</span> s, m: <span class="hljs-string">f&quot;A chat between a user and an assistant. USER: <span class="hljs-subst">&#123;s&#125;</span> <span class="hljs-subst">&#123;m&#125;</span> ASSISTANT:&quot;</span><br>    <span class="hljs-keyword">elif</span> name == <span class="hljs-string">&#x27;llama2-7b&#x27;</span>:<br>        model = LlamaForCausalLM.from_pretrained(<span class="hljs-string">&#x27;meta-llama/Llama-2-7b-hf&#x27;</span>, **kwargs)<br>        format_prompt = <span class="hljs-keyword">lambda</span> s, m: <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;s&#125;</span>\n<span class="hljs-subst">&#123;m&#125;</span>&quot;</span><br>    <span class="hljs-keyword">elif</span> name == <span class="hljs-string">&#x27;llama2-7b-chat&#x27;</span>:<br>        model = LlamaForCausalLM.from_pretrained(<span class="hljs-string">&#x27;../model/Llama-2-7b-chat-hf&#x27;</span>, **kwargs)<br>        format_prompt = <span class="hljs-keyword">lambda</span> s, m: <span class="hljs-string">f&quot;[INST] &lt;&lt;SYS&gt;&gt;\n<span class="hljs-subst">&#123;s&#125;</span>\n&lt;&lt;/SYS&gt;&gt;\n\n<span class="hljs-subst">&#123;m&#125;</span> [/INST]&quot;</span>   <br>    <span class="hljs-keyword">elif</span> name == <span class="hljs-string">&#x27;mistral-7b-it&#x27;</span>:<br>        model = MistralForCausalLM.from_pretrained(<span class="hljs-string">&#x27;mistralai/Mistral-7B-Instruct-v0.2&#x27;</span>, **kwargs)<br>        format_prompt = <span class="hljs-keyword">lambda</span> s, m: <span class="hljs-string">f&quot;[INST] <span class="hljs-subst">&#123;s&#125;</span> <span class="hljs-subst">&#123;m&#125;</span> [/INST]&quot;</span>   <br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">f&quot;No such model <span class="hljs-subst">&#123;name&#125;</span>&quot;</span>)<br><br>    <span class="hljs-keyword">return</span> model, format_prompt<br><br><br><span class="hljs-comment"># 生成最终输入给模型的prompt</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_prompt</span>(<span class="hljs-params">format_prompt, qns, inst=<span class="hljs-literal">None</span></span>):<br>    <span class="hljs-keyword">if</span> inst <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>        inst = <span class="hljs-string">&quot;&quot;</span><br>        <br>    <span class="hljs-keyword">return</span> format_prompt(inst, qns)<br><br><br><span class="hljs-comment"># 对多选题的候选答案做规范化处理</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">strip_add_fullstop</span>(<span class="hljs-params">choices</span>):<br>    res = []<br>    <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> choices:<br>        c = c.strip()<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> c.endswith(<span class="hljs-string">&#x27;.&#x27;</span>):<br>            c = c + <span class="hljs-string">&quot;.&quot;</span><br>        res.append(c)<br>        <br>    <span class="hljs-keyword">return</span> res<br><br><br><span class="hljs-comment"># 筛选出有判别力的attention heads</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">finalise_head_indices</span>(<span class="hljs-params">acc, q</span>):<br>    results = []<br>    thres = torch.quantile(acc, q, dim=-<span class="hljs-number">1</span>)  <span class="hljs-comment"># 取quantile阈值</span><br>    <br>    <span class="hljs-comment"># 选出高于阈值的head index</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>):<br>        results.append(torch.where(acc[i] &gt; thres[i].item())[<span class="hljs-number">0</span>])<br><br>    <span class="hljs-comment"># 移除同时出现在argmax和argmin中的重复head</span><br>    a0, a1 = [x.numpy() <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> results]<br>    dups = np.intersect1d(a0, a1)<br>    a0 = a0[~np.isin(a0, dups)]<br>    a1 = a1[~np.isin(a1, dups)]<br>    results = [torch.from_numpy(a0), torch.from_numpy(a1)]<br>    <br>    <span class="hljs-keyword">return</span> results<br><br><br><span class="hljs-comment"># 自动发现有用的attention heads</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">discovery</span>(<span class="hljs-params">model_name, samples, quantile_threshold=<span class="hljs-number">0.85</span>, inst=<span class="hljs-literal">None</span>, gpu_id=<span class="hljs-number">0</span></span>):<br>    model, pfmt = get_model(model_name, gpu_id)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;格式化 prompt：<span class="hljs-subst">&#123;pfmt&#125;</span>&quot;</span>)<br>    <br>    <span class="hljs-comment"># head准确率统计</span><br>    acc_arr = torch.zeros((<span class="hljs-number">2</span>, model.config.num_hidden_layers * model.config.num_attention_heads))<br>    <span class="hljs-keyword">for</span> d <span class="hljs-keyword">in</span> tqdm(samples):<br>        prompt = get_prompt(pfmt, d[<span class="hljs-string">&#x27;question&#x27;</span>], inst)<br>        choices = strip_add_fullstop(d[<span class="hljs-string">&#x27;choices&#x27;</span>])<br>        head_norms = model.zshot_classify(prompt, choices, <span class="hljs-literal">None</span>, <span class="hljs-literal">True</span>)  <span class="hljs-comment"># 每个attention head的分类得分</span><br>        acc_arr[<span class="hljs-number">0</span>] += (head_norms.argmax(<span class="hljs-number">0</span>) == d[<span class="hljs-string">&#x27;label&#x27;</span>]).<span class="hljs-built_in">int</span>()<br>        acc_arr[<span class="hljs-number">1</span>] += (head_norms.argmin(<span class="hljs-number">0</span>) == d[<span class="hljs-string">&#x27;label&#x27;</span>]).<span class="hljs-built_in">int</span>()<br>    acc_arr = (acc_arr / <span class="hljs-built_in">len</span>(samples)) * <span class="hljs-number">100</span><br>    <br>    heads = finalise_head_indices(acc_arr, quantile_threshold)<br>    <br>    <span class="hljs-keyword">return</span> heads<br></code></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>注意力头筛选：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Args</span>:<br>    <span class="hljs-keyword">pass</span><br><br>args = Args()<br>args.model = <span class="hljs-string">&quot;llama2-7b-chat&quot;</span><br>args.dataset = <span class="hljs-string">&quot;tqa&quot;</span><br>args.gpu = <span class="hljs-number">0</span><br>args.quantile_thres = <span class="hljs-number">0.85</span><br><br>samples = pickle_rw(<span class="hljs-string">&#x27;heads.p&#x27;</span>)[args.model][args.dataset][<span class="hljs-string">&#x27;discovery_samples&#x27;</span>]<br>heads = discovery(args.model, samples, args.quantile_thres, args.gpu)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;args.model&#125;</span> 模型在 <span class="hljs-subst">&#123;args.dataset&#125;</span> 数据集上的发现过程已完成。&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;ArgMax Attention Heads:&#x27;</span>)<br><span class="hljs-built_in">print</span>(heads[<span class="hljs-number">0</span>])<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;ArgMin Attention Heads:&#x27;</span>)<br><span class="hljs-built_in">print</span>(heads[<span class="hljs-number">1</span>])<br></code></pre></td></tr></table></figure>
+<br/>
+
+<pre><code class="hljs">Loading checkpoint shards: 100%|██████████| 2/2 [00:21&lt;00:00, 10.91s/it]
+格式化 prompt：&lt;function get_model.&lt;locals&gt;.&lt;lambda&gt; at 0x7f9f59fd7ac0&gt;
+100%|██████████| 30/30 [00:09&lt;00:00,  3.17it/s]
+llama2-7b-chat 模型在 tqa 数据集上的发现过程已完成。
+ArgMax Attention Heads:
+tensor([  37,   61,   75,  104,  160,  169,  201,  206,  207,  231,  282,  288,
+        322,  332,  344,  354,  359,  363,  382,  390,  393,  420,  443,  453,
+        458,  461,  467,  468,  484,  485,  490,  493,  494,  505,  509,  510,
+        515,  519,  520,  525,  527,  529,  531,  534,  549,  550,  561,  564,
+        567,  568,  572,  586,  590,  597,  606,  622,  625,  632,  633,  634,
+        638,  646,  656,  658,  680,  684,  689,  692,  700,  707,  709,  717,
+        725,  739,  741,  749,  751,  754,  758,  764,  768,  777,  789,  794,
+        796,  801,  813,  815,  820,  825,  828,  832,  833,  837,  839,  841,
+        851,  854,  863,  865,  867,  869,  870,  874,  877,  878,  883,  886,
+        889,  897,  899,  900,  911,  913,  925,  929,  932,  944,  950,  953,
+        955,  957,  961,  964,  971,  975,  992,  996, 1004, 1005, 1023])
+ArgMin Attention Heads:
+tensor([  11,   14,   16,   22,   23,   32,   38,   39,   41,   44,   50,   51,
+        65,   86,   87,  192,  233,  241,  248,  279,  281,  284,  292,  307,
+        314,  328,  333,  335,  342,  343,  357,  358,  362,  371,  375,  383,
+        387,  388,  397,  399,  412,  414,  423,  426,  427,  432,  435,  436,
+        445,  448,  449,  470,  471,  475,  479,  482,  487,  528,  530,  533,
+        547,  548,  577,  578,  581,  593,  596,  602,  604,  607,  608,  614,
+        620,  645,  647,  649,  652,  657,  662,  663,  666,  673,  681,  701,
+        715,  716,  721,  745,  748,  765,  803,  816,  846,  857,  858,  866,
+        873,  903,  909,  920,  921,  938,  947,  949,  972,  973,  998, 1002,
+        1009, 1013, 1017])
+</code></pre>
+<ol start="5">
+<li>注意力头投票：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 获取模型和数据集对应的头部索引</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_heads</span>(<span class="hljs-params">m, d</span>):<br>    <span class="hljs-keyword">return</span> pickle_rw(<span class="hljs-string">&#x27;heads.p&#x27;</span>)[m][d][<span class="hljs-string">&#x27;heads&#x27;</span>]<br><br><br><span class="hljs-comment"># 名称字典</span><br>aliases = &#123;<br>    <span class="hljs-string">&#x27;mistral-7b-it&#x27;</span>: <span class="hljs-string">&#x27;Mistral-7B-Instruct-v0.2&#x27;</span>,<br>    <span class="hljs-string">&#x27;llama2-7b&#x27;</span>: <span class="hljs-string">&#x27;Llama2-7B&#x27;</span>,<br>    <span class="hljs-string">&#x27;llama2-7b-chat&#x27;</span>: <span class="hljs-string">&#x27;Llama2-7B-Chat&#x27;</span>,<br>    <span class="hljs-string">&#x27;vicuna-7b&#x27;</span>: <span class="hljs-string">&#x27;Vicuna-7B-v1.5&#x27;</span>,<br>    <span class="hljs-string">&#x27;tqa&#x27;</span>: <span class="hljs-string">&#x27;TruthfulQA&#x27;</span>,<br>    <span class="hljs-string">&#x27;csqa2&#x27;</span>: <span class="hljs-string">&#x27;CommonSenseQA-2.0&#x27;</span>,<br>    <span class="hljs-string">&#x27;qasc&#x27;</span>: <span class="hljs-string">&#x27;QASC&#x27;</span>,<br>    <span class="hljs-string">&#x27;swag&#x27;</span>: <span class="hljs-string">&#x27;SWAG&#x27;</span>,<br>    <span class="hljs-string">&#x27;hellaswag&#x27;</span>: <span class="hljs-string">&#x27;HellaSwag&#x27;</span>,<br>    <span class="hljs-string">&#x27;siqa&#x27;</span>: <span class="hljs-string">&#x27;Social-IQA&#x27;</span>,<br>    <span class="hljs-string">&#x27;piqa&#x27;</span>: <span class="hljs-string">&#x27;Physical-IQA&#x27;</span>,<br>    <span class="hljs-string">&#x27;cosmosqa&#x27;</span>: <span class="hljs-string">&#x27;CosmosQA&#x27;</span>,<br>    <span class="hljs-string">&#x27;cicero&#x27;</span>: <span class="hljs-string">&#x27;CICERO v1&#x27;</span>,<br>    <span class="hljs-string">&#x27;cicero2&#x27;</span>: <span class="hljs-string">&#x27;CICERO v2&#x27;</span><br>&#125;<br><br><br><span class="hljs-comment"># 模型使用特殊注意力头投票</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">inference</span>(<span class="hljs-params">model_name, dataset_name, heads=<span class="hljs-literal">None</span>, gpu_id=<span class="hljs-number">0</span></span>):<br>    dataset, inst = get_dataset(dataset_name)<br>    model, pfmt = get_model(model_name,gpu_id)<br><br>    acc = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span> d <span class="hljs-keyword">in</span> tqdm(dataset):<br>        prompt = get_prompt(pfmt, d[<span class="hljs-string">&#x27;question&#x27;</span>], inst)<br>        choices = strip_add_fullstop(d[<span class="hljs-string">&#x27;choices&#x27;</span>])<br>        pred = model.zshot_classify(prompt, choices, heads)<br>        acc += <span class="hljs-built_in">int</span>(pred == d[<span class="hljs-string">&#x27;label&#x27;</span>])<br>    acc /= <span class="hljs-built_in">len</span>(dataset)<br>    <br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;aliases[model_name]&#125;</span> | <span class="hljs-subst">&#123;aliases[dataset_name]&#125;</span> | Accuracy <span class="hljs-subst">&#123;acc:<span class="hljs-number">.2</span>%&#125;</span>&quot;</span>)<br>    <span class="hljs-keyword">return</span> acc<br><br><br>args.heads = get_heads(args.model, args.dataset)<br>inference(args.model, args.dataset, args.heads, args.gpu)<br></code></pre></td></tr></table></figure>
+<br/>
+
+<pre><code class="hljs">Loading checkpoint shards: 100%|██████████| 2/2 [00:20&lt;00:00, 10.34s/it]
+100%|██████████| 817/817 [04:37&lt;00:00,  2.95it/s]
+Llama2-7B-Chat | TruthfulQA | Accuracy 70.01%
+
+0.7001223990208079
+</code></pre>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0/" class="category-chain-item">代码复现</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/LLM/" class="print-no-link">#LLM</a>
+      
+        <a href="/tags/Attention-Head/" class="print-no-link">#Attention Head</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【论文复现】NoVo</div>
+      <div>http://xuan-van.github.io/30f5d2bbff4e/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>文晋</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年10月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-cc-nc"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-cc-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2ef7e94f9872/" title="【论文复现】Retrieval Head">
+                        <span class="hidden-mobile">【论文复现】Retrieval Head</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/background/background.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/background/background.js"></script><!-- hexo injector body_end end --></body>
+</html>
